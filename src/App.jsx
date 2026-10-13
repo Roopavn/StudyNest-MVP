@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
-  Activity, ArrowDownRight, ArrowRight, Bell, BookOpen, Bookmark, Brain, CalendarDays,
-  Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, Code2, Compass,
-  Flame, GraduationCap, LayoutDashboard, Landmark, Menu, MoreHorizontal, Play, Plus,
-  Search, Settings2, Sparkles, Target, TrendingUp, Trophy, X, Zap,
+  ArrowDownRight, ArrowRight, Bell, BookOpen, Bookmark, Brain,
+  Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, Code2,
+  Flame, GraduationCap, LayoutDashboard, Menu, MoreHorizontal, Play, Plus,
+  Search, Sparkles, Target, TrendingUp, Trophy, X,
 } from 'lucide-react'
 import { activities, courses, initialTasks, quizQuestion, tracks } from './data.js'
 import LearningCenter from './LearningCenter.jsx'
 
-const iconMap = { landmark: Landmark, code: Code2, 'book-open': BookOpen }
+const iconMap = { code: Code2, 'book-open': BookOpen }
 const navItems = [
   { label: 'Overview', icon: LayoutDashboard },
   { label: 'My learning', icon: BookOpen },
@@ -39,14 +39,14 @@ export default function App() {
   const [tasks, setTasks] = useState(() => {
     try {
       const saved = localStorage.getItem('studynest.tasks')
-      return saved ? JSON.parse(saved) : initialTasks
+      return saved ? JSON.parse(saved).filter((task) => !/polity|geography|current affairs|fundamental rights|parliament/i.test(`${task.title} ${task.detail}`)) : initialTasks
     } catch {
       return initialTasks
     }
   })
   const [bookmarks, setBookmarks] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem('studynest.bookmarks') || '[]')
+      return JSON.parse(localStorage.getItem('studynest.bookmarks') || '[]').filter((id) => courses.some((course) => course.id === id))
     } catch {
       return []
     }
