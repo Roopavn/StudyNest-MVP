@@ -12,14 +12,14 @@ StudyNest helps learners explore structured lessons, practice technical question
 ### Learning workspace
 - Responsive dashboard with overview cards, study-plan tasks, course progress and learning-track cards.
 - Dedicated **My learning**, **Learning path**, **Practice & quizzes**, **Interview preparation**, and **Bookmarks** sections.
-- Course catalog covering Python, SQL, REST APIs, Java, JavaScript, C, HTML & CSS, DevOps, cloud fundamentals, Linux and shell, Docker, Git & GitHub, Kubernetes basics, Generative AI, and Agentic AI.
+- Course catalog covering Python, SQL, REST APIs, PySpark & Apache Spark, Java, JavaScript, C, HTML & CSS, DevOps, cloud fundamentals, Linux and shell, Docker, Git & GitHub, Kubernetes basics, Generative AI, and Agentic AI.
 - Course cards open their matching learning track. The Generative AI and Agentic AI courses include eight detailed lessons each, ordered from Basic through Intermediate to Advanced.
 - Search and IT-track filtering for courses.
 - Course bookmarks and study tasks saved in browser localStorage.
 - Mobile-friendly navigation and expandable lesson content.
 
 ### Learning paths and practice
-- Structured learning tracks for Python, SQL, REST APIs, Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub, Kubernetes, Generative AI, and Agentic AI.
+- Structured learning tracks for Python, SQL, REST APIs, PySpark & Apache Spark, Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub, Kubernetes, Generative AI, and Agentic AI.
 - Every course track starts with a course introduction explaining what the technology is, why it is used, where it is used, and the recommended learning roadmap.
 - Course lessons are ordered Basic → Intermediate → Advanced, with plain-language explanations, code/configuration examples, small tasks and topic-specific video search links.
 - **Generative AI (8 lessons):** model fundamentals, prompt engineering, safe API integration, embeddings and semantic search, RAG, structured output, evaluation and safety, and production architecture/cost/observability.
@@ -45,10 +45,11 @@ Interview preparation is split into **three separate subject tracks**—not one 
 | Web development | HTML & CSS |
 | DevOps & cloud | DevOps Foundations, Cloud Fundamentals, Linux & Shell, Docker & Containers, Kubernetes Basics |
 | Developer tools | Git & GitHub |
+| Data engineering & big data | PySpark & Apache Spark: distributed processing, DataFrames, CSV/JSON/Parquet, transformations and actions, Spark SQL, joins, window functions, cleaning, partitions, shuffles, performance tuning and ETL pipelines |
 | Generative AI | LLM fundamentals, prompt engineering, embeddings, RAG, structured outputs, evaluation and production design |
 | Agentic AI | Agent loops, tools, planning, memory, multi-agent patterns, approvals, recovery and security |
 
-**Course catalog lesson totals:** Python (15), SQL (12), REST APIs (12), Generative AI (8), Agentic AI (8), plus eight lessons each for Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub and Kubernetes. This gives **135 lessons across 15 learning tracks**. Lesson examples are educational; cloud, container and provider examples may need environment-specific configuration before use. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
+**Course catalog lesson totals:** Python (15), SQL (12), REST APIs (12), PySpark & Apache Spark (8), Generative AI (8), Agentic AI (8), plus eight lessons each for Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub and Kubernetes. This gives **143 lessons across 16 learning tracks**. Lesson examples are educational; cloud, container and provider examples may need environment-specific configuration before use. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
 
 Each subject contains **Basic → Intermediate → Advanced** lessons. Choose a subject card to open its own learning track, then use the difficulty roadmap or selector and search to find lessons. Expand a question to read an interview-ready answer, example syntax, expected output/behavior, and an interview tip. Code examples include a copy action.
 
@@ -152,7 +153,7 @@ Firebase Hosting configuration exists in firebase.json, but the current GitHub A
 
 ### Python frameworks & libraries explorer
 - The Python frameworks & libraries explorer appears after the Python lessons when the Python track is selected, keeping the core Python curriculum first. Nested category buttons expand on demand; select a tool to open its purpose, install/setup command, starter code sample, and official documentation link.
-- Covers web/API frameworks (Django, Django REST Framework, FastAPI, Flask, Starlette, Pyramid, Litestar); data/science (NumPy, pandas, Polars, SciPy, Matplotlib, Seaborn); ML/AI (scikit-learn, PyTorch, TensorFlow/Keras, XGBoost, LightGBM, Hugging Face Transformers, LangChain, LlamaIndex); database/ORM/cache (SQLAlchemy, Alembic, Psycopg, PyMongo, redis-py); testing/quality (pytest, unittest, Pydantic, Ruff, mypy); async/tasks/networking (asyncio, Celery, RQ, HTTPX, Requests); and files/scraping/productivity (Pillow, Beautiful Soup, Scrapy, OpenPyXL, python-dotenv).
+- Covers web/API frameworks (Django, Django REST Framework, FastAPI, Flask, Starlette, Pyramid, Litestar); data/science (NumPy, pandas, Polars, PySpark, SciPy, Matplotlib, Seaborn); ML/AI (scikit-learn, PyTorch, TensorFlow/Keras, XGBoost, LightGBM, Hugging Face Transformers, LangChain, LlamaIndex); database/ORM/cache (SQLAlchemy, Alembic, Psycopg, PyMongo, redis-py); testing/quality (pytest, unittest, Pydantic, Ruff, mypy); async/tasks/networking (asyncio, Celery, RQ, HTTPX, Requests); and files/scraping/productivity (Pillow, Beautiful Soup, Scrapy, OpenPyXL, python-dotenv).
 - Includes copy buttons for install commands and code examples. The catalog is a curated set of commonly used tools, not an exhaustive list of every Python package on PyPI.
 
 ## Keeping this README current
