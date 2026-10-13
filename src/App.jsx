@@ -6,11 +6,13 @@ import {
   Search, Settings2, Sparkles, Target, TrendingUp, Trophy, X, Zap,
 } from 'lucide-react'
 import { activities, courses, initialTasks, quizQuestion, tracks } from './data.js'
+import LearningCenter from './LearningCenter.jsx'
 
 const iconMap = { landmark: Landmark, code: Code2, 'book-open': BookOpen }
 const navItems = [
   { label: 'Overview', icon: LayoutDashboard },
   { label: 'My learning', icon: BookOpen },
+  { label: 'Learning path', icon: GraduationCap },
   { label: 'Practice & quizzes', icon: Brain },
   { label: 'Current affairs', icon: Compass },
   { label: 'Bookmarks', icon: Bookmark },
@@ -18,6 +20,7 @@ const navItems = [
 const pageTitles = {
   Overview: ['Your learning space', 'A little progress each day adds up to big results.'],
   'My learning': ['My learning', 'Pick up where you left off and keep your momentum.'],
+  'Learning path': ['Learning path', 'Learn concepts step by step, from the foundations to advanced practice.'],
   'Practice & quizzes': ['Practice & quizzes', 'Test what you know and learn from every answer.'],
   'Current affairs': ['Current affairs', 'Make staying informed part of your daily routine.'],
   Bookmarks: ['Your bookmarks', 'Keep important lessons close at hand.'],
@@ -150,6 +153,8 @@ export default function App() {
 
             <section className="courses-section"><SectionHeading title="Your learning tracks" action="View all courses" onAction={() => navigate('My learning')} /><div className="course-grid">{courses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><button className="course-bookmark" onClick={() => toggleBookmark(course.id)} aria-label={bookmarks.includes(course.id) ? `Remove ${course.title} from bookmarks` : `Bookmark ${course.title}`} title={bookmarks.includes(course.id) ? "Remove bookmark" : "Save course"}><Bookmark size={16} fill={bookmarks.includes(course.id) ? "currentColor" : "none"} /></button><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /><span className="course-art-number">0{course.id}</span></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={() => { setSelectedTrack(course.category.includes('UPSC') ? 'upsc' : 'it'); navigate('My learning') }}>Continue course <ArrowRight size={14} /></button></div></article>})}</div></section>
           </>}
+
+          {activePage === 'Learning path' && <LearningCenter />}
 
           {activePage === 'My learning' && <section className="learning-view"><div className="filter-row"><div><h2>All courses</h2><p>Choose a course to continue your journey.</p></div><div className="filter-buttons">{[['all','All tracks'],['upsc','UPSC'],['it','IT skills']].map(([id,label]) => <button key={id} className={selectedTrack === id ? 'filter-active' : ''} onClick={() => setSelectedTrack(id)}>{label}</button>)}</div></div>{filteredCourses.length ? <div className="course-grid">{filteredCourses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><button className="course-bookmark" onClick={() => toggleBookmark(course.id)} aria-label={bookmarks.includes(course.id) ? `Remove ${course.title} from bookmarks` : `Bookmark ${course.title}`} title={bookmarks.includes(course.id) ? "Remove bookmark" : "Save course"}><Bookmark size={16} fill={bookmarks.includes(course.id) ? "currentColor" : "none"} /></button><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={openQuiz}>Open course <ArrowRight size={14} /></button></div></article>})}</div> : <div className="empty-state"><Search size={25} /><h3>No courses found</h3><p>Try a different search or track filter.</p></div>}</section>}
 
