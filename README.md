@@ -12,15 +12,16 @@ StudyNest helps learners explore structured lessons, practice technical question
 ### Learning workspace
 - Responsive dashboard with overview cards, study-plan tasks, course progress and learning-track cards.
 - Dedicated **My learning**, **Learning path**, **Practice & quizzes**, **Interview preparation**, and **Bookmarks** sections.
-- Course cards for Python Foundations, Database & SQL Essentials, and REST API Development.
+- Course catalog covering Python, SQL, REST APIs, Java, JavaScript, C, HTML & CSS, DevOps, cloud fundamentals, Linux and shell, Docker, Git & GitHub, and Kubernetes basics.
+- Course cards open a matching structured learning track with beginner and intermediate starter lessons for the newer subjects.
 - Search and IT-track filtering for courses.
 - Course bookmarks and study tasks saved in browser localStorage.
 - Mobile-friendly navigation and expandable lesson content.
 
 ### Learning paths and practice
-- Lessons organized around Python, SQL and REST API topics.
-- Sample multiple-choice quiz with answer feedback and an explanation.
-- Lesson pages intended to support step-by-step learning.
+- Structured learning tracks for Python, SQL, REST APIs, Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub, and Kubernetes.
+- The new language, web and infrastructure tracks include starter lessons with explanations, code/configuration examples, small tasks and video explainers.
+- Sample multiple-choice quiz with answer feedback and an explanation for supported tracks.
 
 ### Interview preparation
 Interview preparation is split into **three separate subject tracks**—not one combined topic list:
@@ -30,6 +31,17 @@ Interview preparation is split into **three separate subject tracks**—not one 
 | Python | Data structures, equality vs identity, mutable defaults, generators, decorators, arguments, copying, exceptions, concurrency/GIL | 10 |
 | SQL | WHERE vs HAVING, joins, second-highest salary, indexes, keys, CTEs, transactions/ACID | 7 |
 | REST APIs | HTTP methods/status codes, REST resources, idempotency, validation/errors, authentication/authorization, pagination, safe retries | 7 |
+
+### Additional course catalog
+
+| Area | Courses |
+|---|---|
+| Programming languages | Java, JavaScript, C Programming |
+| Web development | HTML & CSS |
+| DevOps & cloud | DevOps Foundations, Cloud Fundamentals, Linux & Shell, Docker & Containers, Kubernetes Basics |
+| Developer tools | Git & GitHub |
+
+The newer tracks currently provide starter content and are intended to grow over time. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
 
 Each subject contains **Basic → Intermediate → Advanced** lessons. Choose a subject card to open its own learning track, then use the difficulty roadmap or selector and search to find lessons. Expand a question to read an interview-ready answer, example syntax, expected output/behavior, and an interview tip. Code examples include a copy action.
 
@@ -106,7 +118,7 @@ Firebase Hosting configuration exists in firebase.json, but the current GitHub A
     ├── public/                  # Static assets
     ├── src/
     │   ├── App.jsx              # Main app layout and navigation
-    │   ├── data.js              # Demo courses, tasks, quiz and dashboard data
+    │   ├── data.js              # Course catalog, tasks, quiz and dashboard data
     │   ├── firebase.js          # Optional Firebase initialization
     │   ├── LearningCenter.jsx   # Lesson/learning-path experience
     │   ├── InterviewPrep.jsx    # Separate Python, SQL and REST API tracks
