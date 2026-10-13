@@ -99,6 +99,7 @@ export default function LearningCenter({ initialTrack = 'All topics' }) {
   useEffect(() => { localStorage.setItem('studynest.lessons.done', JSON.stringify(completed)) }, [completed])
   useEffect(() => { setTrack(initialTrack); setQuery('') }, [initialTrack])
   useEffect(() => { setSelectedAnswer(null); setQuizSubmitted(false) }, [openLesson])
+  useEffect(() => { if (visible.length && !visible.some((lesson) => lesson.id === openLesson)) setOpenLesson(visible[0].id) }, [visible, openLesson])
   const visible = useMemo(() => lessons.filter((lesson) => (track === 'All topics' || lesson.track === track) && (level === 'All levels' || lesson.level === level) && (lesson.title + ' ' + lesson.summary + ' ' + lesson.track).toLowerCase().includes(query.toLowerCase())), [track, level, query])
   const active = lessons.find((lesson) => lesson.id === openLesson)
   const questionSet = active ? (mcqBank[active.track] || extraMcqBank[active.track]) : null
