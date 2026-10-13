@@ -1,109 +1,139 @@
 # StudyNest
 
-**A focused learning workspace for UPSC preparation and IT skills.**
+**A focused, IT-skills learning workspace built with React and Vite.**
 
-StudyNest brings study planning, structured learning tracks, quiz practice, and progress tracking into one responsive interface. This repository contains the React + Vite web MVP, a Firebase-ready client setup, and GitHub Actions workflow for GitHub Pages deployment.
+StudyNest helps learners explore structured lessons, practice technical questions, organize study tasks, and save courses. This repository contains the web MVP and a GitHub Actions workflow for publishing it to GitHub Pages.
 
-## Features in this MVP
+- **Live app:** https://roopavn.github.io/StudyNest-MVP/
+- **Repository:** https://github.com/Roopavn/StudyNest-MVP
 
-- Responsive dashboard with study progress, streak, study-time chart, and quiz average.
-- Daily study checklist with completion toggles and add-task dialog.
-- UPSC and IT course cards with progress indicators and track filtering.
-- Interactive sample quiz with answer feedback and explanation.
-- Searchable course list, sample current-affairs layout, and bookmarks placeholder.
-- Mobile navigation and accessible dialog controls.
-- Optional Firebase Authentication and Firestore initialization.
-- GitHub Actions workflow to lint, build, and deploy to GitHub Pages.
+## Current features
 
-> **MVP note:** Tasks and progress currently live in React state and reset on refresh. Login, synced progress, real course content, live current affairs, AI tutoring, and admin CRUD require backend integration. Current-affairs cards are sample study prompts, not live news.
+### Learning workspace
+- Responsive dashboard with overview cards, study-plan tasks, course progress and learning-track cards.
+- Dedicated **My learning**, **Learning path**, **Practice & quizzes**, **Interview preparation**, and **Bookmarks** sections.
+- Course cards for Python Foundations, Database & SQL Essentials, and REST API Development.
+- Search and IT-track filtering for courses.
+- Course bookmarks and study tasks saved in browser localStorage.
+- Mobile-friendly navigation and expandable lesson content.
+
+### Learning paths and practice
+- Lessons organized around Python, SQL and REST API topics.
+- Sample multiple-choice quiz with answer feedback and an explanation.
+- Lesson pages intended to support step-by-step learning.
+
+### Interview preparation
+Interview preparation is split into **three separate subject tracks**—not one combined topic list:
+
+| Track | Coverage | Current lessons |
+|---|---|---:|
+| Python | Data structures, equality vs identity, mutable defaults, generators, decorators, arguments, copying, exceptions, concurrency/GIL | 10 |
+| SQL | WHERE vs HAVING, joins, second-highest salary, indexes, keys, CTEs, transactions/ACID | 7 |
+| REST APIs | HTTP methods/status codes, REST resources, idempotency, validation/errors, authentication/authorization, pagination, safe retries | 7 |
+
+Each subject contains **Basic → Intermediate → Advanced** lessons. Choose a subject card to open its own learning track, then use the difficulty roadmap or selector and search to find lessons. Expand a question to read an interview-ready answer, example syntax, expected output/behavior, and an interview tip. Code examples include a copy action.
 
 ## Tech stack
 
 - React 19
 - Vite 7
 - JavaScript (ES modules)
-- Lucide icons
-- Firebase Web SDK (optional, environment-configured)
-- GitHub Actions + GitHub Pages
+- Lucide React icons
+- Firebase Web SDK (optional starter integration)
+- GitHub Actions and GitHub Pages
 
 ## Run locally
 
 Requirements: Node.js 22+ and npm.
 
-```bash
-git clone https://github.com/Roopavn/StudyNest-MVP.git
-cd StudyNest-MVP
-npm install
-npm run dev
-```
+    git clone https://github.com/Roopavn/StudyNest-MVP.git
+    cd StudyNest-MVP
+    npm install
+    npm run dev
 
 Open the local URL printed by Vite.
 
 ### Quality checks
 
-```bash
-npm run lint
-npm run build
-npm run preview
-```
+Run these before submitting application changes:
 
-## Firebase setup (optional)
+    npm run lint
+    npm run build
+    npm run preview
+
+- npm run lint checks the code with ESLint.
+- npm run build creates the production build in dist/.
+- npm run preview serves the production build locally.
+
+## Data persistence and MVP limitations
+
+- Study tasks and course bookmarks are stored in the current browser's localStorage; they are not synced between devices or accounts.
+- Dashboard statistics and course progress include demo/sample values and should not be treated as a complete analytics backend.
+- The sample quiz and learning content are for demonstration and practice.
+- Firebase initialization is optional. Authentication and cloud-synced user progress are not fully wired into the current experience.
+- There is no production admin/content-management backend yet.
+
+## Optional Firebase setup
 
 1. Create a Firebase project and register a Web app.
-2. Copy `.env.example` to `.env.local`.
-3. Add the Firebase web app configuration values to the `VITE_FIREBASE_*` variables.
-4. Enable only the Firebase products you intend to use and deploy secure rules before storing real user data.
+2. Copy .env.example to .env.local.
+3. Add the Firebase web app configuration values to the VITE_FIREBASE_* variables.
+4. Enable only the Firebase products you need and configure secure rules before storing real user data.
 
-The app exports `auth`, `db`, and `isFirebaseConfigured` from `src/firebase.js`. Firebase is not required to run the demo UI.
+The app exports auth, db, and isFirebaseConfigured from src/firebase.js. Firebase is not required to run the demo UI.
 
-**Security:** Never put service-account credentials, private API keys, or AI provider secrets in client-side `VITE_*` variables. AI calls and privileged operations belong in Cloud Functions or a trusted backend. The included Firestore rules deny all reads and writes by default; design and test ownership-aware rules before production use.
+**Security:** Never place service-account credentials, private API keys, or AI provider secrets in client-side VITE_* variables. Privileged operations belong in Cloud Functions or a trusted backend. The starter Firestore rules deny reads and writes by default; design and test ownership-aware rules before production use.
 
 ## Deployment with GitHub Actions
 
-The workflow at `.github/workflows/deploy.yml` runs on pushes to `main` and can also be started manually.
+The workflow is located at .github/workflows/deploy.yml. It runs on pushes to main and can also be started manually.
 
-1. Open the repository's **Settings → Pages**.
-2. Set the build/deployment source to **GitHub Actions**.
-3. Ensure Actions are allowed to use the repository's workflow permissions.
-4. Push to `main`; the workflow installs dependencies, runs lint and build, then publishes `dist` to GitHub Pages.
-5. Open the URL shown in the workflow's **deploy** job.
+1. In the repository, open **Settings → Pages**.
+2. Set the deployment source to **GitHub Actions**.
+3. Ensure the workflow has the permissions it needs to publish Pages.
+4. Push changes to main, or manually run the workflow from the Actions tab.
+5. Check the workflow run and its deploy job for the published URL.
 
-The Vite base path is configured for the repository name `StudyNest-MVP` when the workflow sets `GITHUB_PAGES=true`. If you rename the repository, update `vite.config.js`.
+The Vite base path is configured for the StudyNest-MVP repository when the workflow sets GITHUB_PAGES=true. If the repository is renamed, update vite.config.js and the deployment configuration as needed.
 
-For Firebase Hosting instead, build with `npm run build`, install the Firebase CLI, authenticate through a secure CI identity, and deploy the `dist` folder using the included `firebase.json`. Firebase Hosting deployment is not configured in the current workflow.
+Firebase Hosting configuration exists in firebase.json, but the current GitHub Actions workflow publishes to GitHub Pages; Firebase Hosting deployment is not configured in that workflow.
 
 ## Project structure
 
-```text
-StudyNest-MVP/
-├── .github/workflows/deploy.yml  # CI, build, GitHub Pages deployment
-├── public/favicon.svg
-├── src/
-│   ├── App.jsx                   # Dashboard and interactive screens
-│   ├── data.js                   # Demo courses, tasks, quiz and chart data
-│   ├── firebase.js               # Optional Firebase initialization
-│   ├── main.jsx                  # React entry point
-│   └── styles.css                # Responsive UI styles
-├── .env.example                  # Firebase config template
-├── eslint.config.js
-├── firebase.json
-├── firestore.rules               # Deny-by-default starter rules
-├── index.html
-├── package.json
-└── vite.config.js
-```
+    StudyNest-MVP/
+    ├── .github/workflows/
+    │   └── deploy.yml           # Lint/build and GitHub Pages deployment
+    ├── public/                  # Static assets
+    ├── src/
+    │   ├── App.jsx              # Main app layout and navigation
+    │   ├── data.js              # Demo courses, tasks, quiz and dashboard data
+    │   ├── firebase.js          # Optional Firebase initialization
+    │   ├── LearningCenter.jsx   # Lesson/learning-path experience
+    │   ├── InterviewPrep.jsx    # Separate Python, SQL and REST API tracks
+    │   ├── InterviewPrep.css    # Interview preparation page styles
+    │   ├── main.jsx             # React entry point and app error boundary
+    │   └── styles.css           # Main responsive application styles
+    ├── .env.example             # Firebase configuration template
+    ├── eslint.config.js
+    ├── firebase.json
+    ├── firestore.rules          # Deny-by-default starter rules
+    ├── index.html
+    ├── package.json
+    └── vite.config.js
 
 ## Roadmap
 
-- [ ] Firebase Authentication (email/password and Google sign-in)
-- [ ] Persist courses, lesson content, quiz results, bookmarks, and streaks in Firestore
-- [ ] Nested category browser and full lesson viewer for UPSC and IT tracks
-- [ ] PYQ bank with filters and explanations
-- [ ] Secure admin panel for course/content/question management
-- [ ] Cloud Functions for AI tutor and Mains answer evaluation
-- [ ] Scheduled, sourced current-affairs publishing and push reminders
-- [ ] Automated tests and Firebase Emulator Suite security-rule tests
-- [ ] Production monitoring, accessibility review, and user testing
+- [ ] Add automated component and interaction tests.
+- [ ] Persist lessons, quiz results, progress and bookmarks in Firestore.
+- [ ] Implement user authentication and account-specific progress.
+- [ ] Expand course content and quiz banks with explanations.
+- [ ] Add a secure admin interface for course and question management.
+- [ ] Add monitoring, accessibility checks and user testing.
+- [ ] Test Firebase security rules with the Firebase Emulator Suite.
+
+## Keeping this README current
+
+**Update this README whenever an application change affects features, navigation, setup, data persistence, project structure, testing or deployment.** Keep the feature list and project structure aligned with the actual code, and clearly label demo behavior versus implemented functionality.
 
 ## License
 
