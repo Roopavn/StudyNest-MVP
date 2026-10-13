@@ -29,13 +29,11 @@ StudyNest helps learners explore structured lessons, practice technical question
 - Sample multiple-choice quiz with answer feedback and an explanation for supported tracks.
 
 ### Interview preparation
-Interview preparation is split into **three separate subject tracks**—not one combined topic list:
-
-| Track | Coverage | Current lessons |
-|---|---|---:|
-| Python | Data structures, equality vs identity, mutable defaults, generators, decorators, arguments, copying, exceptions, concurrency/GIL | 10 |
-| SQL | WHERE vs HAVING, joins, second-highest salary, indexes, keys, CTEs, transactions/ACID | 7 |
-| REST APIs | HTTP methods/status codes, REST resources, idempotency, validation/errors, authentication/authorization, pagination, safe retries | 7 |
+- Dedicated, separate interview-preparation buttons for **all 16 learning tracks**, not just Python, SQL and REST APIs.
+- **63 interview questions** across Python (10), SQL (7), REST APIs (7), Java (3), JavaScript (3), C Programming (3), HTML & CSS (3), DevOps (3), Cloud Fundamentals (3), Linux & Shell (3), Docker & Containers (3), Git & GitHub (3), Kubernetes (3), Generative AI (3), Agentic AI (3), and Data Engineering / Big Data (3).
+- Each track includes Basic, Intermediate and Advanced questions. Expand a question to see an interview-ready explanation, example syntax, expected output or behavior, and a practical interview tip.
+- Search questions by keyword, filter by difficulty, follow the Basic → Intermediate → Advanced roadmap, and copy code examples for practice.
+- The interview question bank is educational sample content. It does not connect to external interview platforms or provide a live mock-interview evaluator.
 
 ### Additional course catalog
 
