@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   Activity, ArrowDownRight, ArrowRight, Bell, BookOpen, Bookmark, Brain, CalendarDays,
   Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, Code2, Compass,
@@ -35,7 +35,21 @@ function SectionHeading({ title, action, onAction }) {
 
 export default function App() {
   const [activePage, setActivePage] = useState('Overview')
-  const [tasks, setTasks] = useState(initialTasks)
+  const [tasks, setTasks] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest.tasks')
+      return saved ? JSON.parse(saved) : initialTasks
+    } catch {
+      return initialTasks
+    }
+  })
+  const [bookmarks, setBookmarks] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('studynest.bookmarks') || '[]')
+    } catch {
+      return []
+    }
+  })
   const [search, setSearch] = useState('')
   const [showQuiz, setShowQuiz] = useState(false)
   const [answer, setAnswer] = useState(null)
@@ -45,7 +59,21 @@ export default function App() {
   const [selectedTrack, setSelectedTrack] = useState('all')
   const [showAddTask, setShowAddTask] = useState(false)
   const [newTask, setNewTask] = useState('')
+  useEffect(() => {
+    localStorage.setItem('studynest.tasks', JSON.stringify(tasks))
+  }, [tasks])
+
+  useEffect(() => {
+    localStorage.setItem('studynest.bookmarks', JSON.stringify(bookmarks))
+  }, [bookmarks])
+
   const completed = tasks.filter((task) => task.done).length
+  function toggleBookmark(courseId) {
+    setBookmarks((current) => current.includes(courseId)
+      ? current.filter((id) => id !== courseId)
+      : [...current, courseId])
+    setNotice(bookmarks.includes(courseId) ? 'Course removed from bookmarks.' : 'Course saved to your bookmarks.')
+  }
   const filteredCourses = useMemo(() => courses.filter((course) =>
     (selectedTrack === 'all' || (selectedTrack === 'upsc' ? course.category.includes('UPSC') : course.category.includes('IT')))
     && `${course.title} ${course.category}`.toLowerCase().includes(search.toLowerCase())), [search, selectedTrack])
@@ -120,7 +148,7 @@ export default function App() {
               <section className="panel focus-panel"><SectionHeading title="Pick up where you left off" /><div className="focus-illustration"><div className="focus-shape shape-back" /><div className="focus-shape shape-front"><BookOpen size={35} /></div><div className="focus-sparkle"><Sparkles size={18} /></div><div className="focus-circle" /></div><div className="focus-meta"><span className="tag tag-blue">UPSC · POLITY</span><span className="muted-meta"><Clock3 size={13} /> 12 min left</span></div><h3>Fundamental Rights</h3><p>Understand the rights that protect every citizen.</p><ProgressBar value={68} /><div className="focus-bottom"><span>68% completed</span><button className="round-arrow" onClick={openQuiz} aria-label="Continue lesson"><ArrowRight size={17} /></button></div></section>
             </div>
 
-            <section className="courses-section"><SectionHeading title="Your learning tracks" action="View all courses" onAction={() => navigate('My learning')} /><div className="course-grid">{courses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /><span className="course-art-number">0{course.id}</span></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={() => { setSelectedTrack(course.category.includes('UPSC') ? 'upsc' : 'it'); navigate('My learning') }}>Continue course <ArrowRight size={14} /></button></div></article>})}</div></section>
+            <section className="courses-section"><SectionHeading title="Your learning tracks" action="View all courses" onAction={() => navigate('My learning')} /><div className="course-grid">{courses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><button className="course-bookmark" onClick={() => toggleBookmark(course.id)} aria-label={bookmarks.includes(course.id) ? `Remove ${course.title} from bookmarks` : `Bookmark ${course.title}`} title={bookmarks.includes(course.id) ? "Remove bookmark" : "Save course"}><Bookmark size={16} fill={bookmarks.includes(course.id) ? "currentColor" : "none"} /></button><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /><span className="course-art-number">0{course.id}</span></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={() => { setSelectedTrack(course.category.includes('UPSC') ? 'upsc' : 'it'); navigate('My learning') }}>Continue course <ArrowRight size={14} /></button></div></article>})}</div></section>
           </>}
 
           {activePage === 'My learning' && <section className="learning-view"><div className="filter-row"><div><h2>All courses</h2><p>Choose a course to continue your journey.</p></div><div className="filter-buttons">{[['all','All tracks'],['upsc','UPSC'],['it','IT skills']].map(([id,label]) => <button key={id} className={selectedTrack === id ? 'filter-active' : ''} onClick={() => setSelectedTrack(id)}>{label}</button>)}</div></div>{filteredCourses.length ? <div className="course-grid">{filteredCourses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={openQuiz}>Open course <ArrowRight size={14} /></button></div></article>})}</div> : <div className="empty-state"><Search size={25} /><h3>No courses found</h3><p>Try a different search or track filter.</p></div>}</section>}
@@ -129,7 +157,7 @@ export default function App() {
 
           {activePage === 'Current affairs' && <section className="panel news-panel"><div className="news-heading"><span className="news-icon"><CalendarDays size={23} /></span><div><h2>Your daily briefing</h2><p>A sample layout for topic-tagged current affairs. Connect a trusted news source before publishing live updates.</p></div></div>{[{tag:'POLITY',title:'Understanding constitutional values in public policy',desc:'Review how constitutional principles inform institutions and governance.'},{tag:'ENVIRONMENT',title:'Biodiversity and conservation: key concepts',desc:'Revise protected areas, ecosystems, and conservation approaches.'},{tag:'SCIENCE & TECH',title:'Digital public infrastructure explained',desc:'Explore the building blocks behind accessible digital services.'}].map((item,i)=><article className="news-item" key={item.title}><div className="news-index">0{i+1}</div><div><span className="course-category">{item.tag} · STUDY NOTE</span><h3>{item.title}</h3><p>{item.desc}</p></div><button className="icon-button" onClick={() => setNotice('This sample briefing can be bookmarked after content storage is connected.')} aria-label="Save briefing"><Bookmark size={17} /></button></article>)}</section>}
 
-          {activePage === 'Bookmarks' && <section className="panel bookmarks-panel"><div className="empty-state"><Bookmark size={28} /><h2>Your learning library</h2><p>Saved lessons, useful questions, and important notes will appear here once bookmarks are connected to your account.</p><button className="primary-button" onClick={() => navigate('My learning')}>Explore courses <ArrowRight size={16} /></button></div></section>}
+          {activePage === 'Bookmarks' && <section className="panel bookmarks-panel"><div className="section-heading"><h2>Your saved courses</h2><span className="course-category">{bookmarks.length} SAVED</span></div>{bookmarks.length ? <div className="course-grid">{courses.filter((course) => bookmarks.includes(course.id)).map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><div className="course-art-icon"><Icon size={25} /></div></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} /><button className="course-open" onClick={() => { setSelectedTrack(course.category.includes('UPSC') ? 'upsc' : 'it'); navigate('My learning') }}>Continue course <ArrowRight size={14} /></button><button className="panel-footer-link" onClick={() => toggleBookmark(course.id)}><X size={14} /> Remove bookmark</button></div></article>})}</div> : <div className="empty-state"><Bookmark size={28} /><h2>Your learning library is empty</h2><p>Use the bookmark icon on any course to save it here. Your saved courses stay on this device.</p><button className="primary-button" onClick={() => navigate('My learning')}>Explore courses <ArrowRight size={16} /></button></div>}</section>}
 
           <footer className="page-footer"><span>© 2026 StudyNest</span><span><span className="footer-status" /> Your learning journey, one step at a time</span><button onClick={() => setNotice('StudyNest MVP · Firebase integration is optional and not yet configured.')}><CircleHelp size={14} /> Help & feedback</button></footer>
         </div>
