@@ -20,7 +20,8 @@ StudyNest helps learners explore structured lessons, practice technical question
 
 ### Learning paths and practice
 - Structured learning tracks for Python, SQL, REST APIs, Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub, and Kubernetes.
-- The new language, web and infrastructure tracks include starter lessons with explanations, code/configuration examples, small tasks and video explainers.
+- Every course track starts with a course introduction explaining what the technology is, why it is used, where it is used, and the recommended learning roadmap.
+- Course lessons are ordered Basic → Intermediate → Advanced. The newer language, web and infrastructure tracks now have a lesson at each level, with explanations, code/configuration examples, small tasks and video explainers.
 - Sample multiple-choice quiz with answer feedback and an explanation for supported tracks.
 
 ### Interview preparation
@@ -41,7 +42,7 @@ Interview preparation is split into **three separate subject tracks**—not one 
 | DevOps & cloud | DevOps Foundations, Cloud Fundamentals, Linux & Shell, Docker & Containers, Kubernetes Basics |
 | Developer tools | Git & GitHub |
 
-The newer tracks currently provide starter content and are intended to grow over time. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
+The newer tracks include introductory, Basic, Intermediate and Advanced content; course depth will continue to expand as more examples and practice questions are added. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
 
 Each subject contains **Basic → Intermediate → Advanced** lessons. Choose a subject card to open its own learning track, then use the difficulty roadmap or selector and search to find lessons. Expand a question to read an interview-ready answer, example syntax, expected output/behavior, and an interview tip. Code examples include a copy action.
 
