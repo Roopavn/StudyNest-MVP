@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
-  ArrowDownRight, ArrowRight, Bell, BookOpen, Bookmark, Brain,
+  ArrowDownRight, ArrowRight, Bell, BookOpen, Bookmark, Brain, BriefcaseBusiness,
   Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, Code2,
   Flame, GraduationCap, LayoutDashboard, Menu, MoreHorizontal, Play, Plus,
   Search, Sparkles, Target, TrendingUp, Trophy, X,
 } from 'lucide-react'
 import { activities, courses, initialTasks, quizQuestion, tracks } from './data.js'
 import LearningCenter from './LearningCenter.jsx'
+import InterviewPrep from './InterviewPrep.jsx'
 
 const iconMap = { code: Code2, 'book-open': BookOpen }
 const navItems = [
@@ -14,6 +15,7 @@ const navItems = [
   { label: 'My learning', icon: BookOpen },
   { label: 'Learning path', icon: GraduationCap },
   { label: 'Practice & quizzes', icon: Brain },
+  { label: 'Interview preparation', icon: BriefcaseBusiness },
   { label: 'Bookmarks', icon: Bookmark },
 ]
 const pageTitles = {
@@ -21,6 +23,7 @@ const pageTitles = {
   'My learning': ['My learning', 'Pick up where you left off and keep your momentum.'],
   'Learning path': ['Learning path', 'Learn concepts step by step, from the foundations to advanced practice.'],
   'Practice & quizzes': ['Practice & quizzes', 'Test what you know and learn from every answer.'],
+  'Interview preparation': ['Interview preparation', 'Practice technical questions with clear answers, syntax and examples.'],
   Bookmarks: ['Your bookmarks', 'Keep important lessons close at hand.'],
 }
 
@@ -166,6 +169,8 @@ export default function App() {
           {activePage === 'My learning' && <section className="learning-view"><div className="filter-row"><div><h2>All courses</h2><p>Choose a course to continue your journey.</p></div><div className="filter-buttons">{[['all','All courses'],['it','IT skills']].map(([id,label]) => <button key={id} className={selectedTrack === id ? 'filter-active' : ''} onClick={() => setSelectedTrack(id)}>{label}</button>)}</div></div>{filteredCourses.length ? <div className="course-grid">{filteredCourses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><img className="course-art-image" src={course.image} alt={course.imageAlt} loading="lazy" /><div className="course-art-shade" /><button className="course-bookmark" onClick={() => toggleBookmark(course.id)} aria-label={bookmarks.includes(course.id) ? `Remove ${course.title} from bookmarks` : `Bookmark ${course.title}`} title={bookmarks.includes(course.id) ? "Remove bookmark" : "Save course"}><Bookmark size={16} fill={bookmarks.includes(course.id) ? "currentColor" : "none"} /></button><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={() => openCourse(course)}>Open course <ArrowRight size={14} /></button></div></article>})}</div> : <div className="empty-state"><Search size={25} /><h3>No courses found</h3><p>Try a different search or track filter.</p></div>}</section>}
 
           {activePage === 'Practice & quizzes' && <section className="panel practice-panel"><div className="practice-intro"><span className="practice-icon"><Brain size={25} /></span><div><h2>Ready for a quick challenge?</h2><p>Try a sample question and get an instant explanation.</p></div></div><div className="quiz-preview"><div className="quiz-preview-top"><span className="tag tag-blue">BACKEND · SAMPLE</span><span className="muted-meta"><Clock3 size={14} /> 2 min</span></div><h3>{quizQuestion.question}</h3><div className="quiz-options-preview">{quizQuestion.options.map((option, index) => <div className="quiz-preview-option" key={option}><span>{String.fromCharCode(65 + index)}</span>{option}</div>)}</div><button className="primary-button" onClick={openQuiz}>Start sample quiz <ArrowRight size={16} /></button></div><div className="practice-subjects"><h3>Practice by subject</h3><p>Open a subject to study lessons and answer its MCQs.</p><div className="practice-subject-grid">{[["Python","Code & backend"],["SQL","Databases"],["REST APIs","Web services"]].map(([topic,subtitle])=><button key={topic} onClick={()=>{setLearningTopic(topic);setActivePage("Learning path");setMobileNav(false)}}><span>{topic}</span><small>{subtitle}</small><ArrowRight size={14}/></button>)}</div></div></section>}
+
+          {activePage === 'Interview preparation' && <InterviewPrep />}
 
           {activePage === 'Bookmarks' && <section className="panel bookmarks-panel"><div className="section-heading"><h2>Your saved courses</h2><span className="course-category">{bookmarks.length} SAVED</span></div>{bookmarks.length ? <div className="course-grid">{courses.filter((course) => bookmarks.includes(course.id)).map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><img className="course-art-image" src={course.image} alt={course.imageAlt} loading="lazy" /><div className="course-art-shade" /><div className="course-art-icon"><Icon size={25} /></div></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} /><button className="course-open" onClick={() => openCourse(course)}>Continue course <ArrowRight size={14} /></button><button className="panel-footer-link" onClick={() => toggleBookmark(course.id)}><X size={14} /> Remove bookmark</button></div></article>})}</div> : <div className="empty-state"><Bookmark size={28} /><h2>Your learning library is empty</h2><p>Use the bookmark icon on any course to save it here. Your saved courses stay on this device.</p><button className="primary-button" onClick={() => navigate('My learning')}>Explore courses <ArrowRight size={16} /></button></div>}</section>}
 
