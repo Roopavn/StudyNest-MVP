@@ -107,54 +107,143 @@ Content-Type: application/json
   -> Apply rate limits
   -> Execute handler
   -> Log safe audit metadata`, output:'A caller with a valid identity but insufficient permission should generally receive 403 Forbidden.', tip:'Never trust a user ID or role supplied only in the request body. Derive identity from verified credentials and check access to the specific resource.' },
+
+  { id:16, topic:'Python', level:'Basic', title:'How do *args and **kwargs work?', prompt:'How can a function accept a variable number of arguments?', answer:'*args collects extra positional arguments into a tuple. **kwargs collects extra keyword arguments into a dictionary. They are useful for flexible wrappers and APIs, but explicit parameters are clearer when the expected inputs are known.', syntax:`def show_profile(name, *skills, **details):
+    print(name)
+    print(skills)
+    print(details)
+
+show_profile("Asha", "Python", "SQL", city="Bengaluru")`, output:"Asha\n('Python', 'SQL')\n{'city': 'Bengaluru'}", tip:'Remember the difference: *args is positional and **kwargs is keyword-based.' },
+  { id:17, topic:'Python', level:'Intermediate', title:'What is the difference between shallow and deep copy?', prompt:'What happens when a nested list is copied?', answer:'A shallow copy creates a new outer container but keeps references to nested objects. A deep copy recursively copies nested objects. Use copy.copy for shallow copies and copy.deepcopy when independent nested structures are required.', syntax:`import copy
+
+original = [[1, 2], [3, 4]]
+shallow = copy.copy(original)
+deep = copy.deepcopy(original)
+original[0].append(99)
+
+print(shallow)  # [[1, 2, 99], [3, 4]]
+print(deep)     # [[1, 2], [3, 4]]`, output:'The shallow copy reflects the nested-list change; the deep copy does not.', tip:'A shallow copy is often sufficient for flat collections. Deep copying can be expensive and may not be suitable for every object.' },
+  { id:18, topic:'Python', level:'Advanced', title:'How do you handle exceptions in production code?', prompt:'Explain try, except, else and finally.', answer:'Put risky operations in try, catch expected exception types in except, use else for work that should run only when no exception occurred, and use finally for cleanup that must happen either way. Log enough context to debug without exposing secrets.', syntax:`try:
+    number = int("42")
+except ValueError:
+    print("Invalid number")
+else:
+    print("Parsed:", number)
+finally:
+    print("Finished")`, output:'Parsed: 42\nFinished', tip:'Avoid broad except blocks that silently hide bugs. Raise or translate errors when the caller needs to handle them.' },
+  { id:19, topic:'SQL', level:'Basic', title:'What is the difference between PRIMARY KEY and UNIQUE?', prompt:'How do these constraints protect data?', answer:'A primary key uniquely identifies each row and cannot be NULL. A table has one primary-key constraint, which may include multiple columns. UNIQUE prevents duplicate values for a column or column combination; NULL handling for UNIQUE varies by database.', syntax:`CREATE TABLE departments (
+  id INT PRIMARY KEY,
+  name VARCHAR(100) UNIQUE
+);`, output:'Duplicate department IDs are rejected, and duplicate non-NULL department names are rejected by this example.', tip:'Mention that exact NULL behavior for UNIQUE constraints depends on the database engine.' },
+  { id:20, topic:'SQL', level:'Intermediate', title:'What is a CTE, and when would you use one?', prompt:'Show how WITH can make a query easier to read.', answer:'A common table expression (CTE) names a query result for use by the following statement. It can make complex queries easier to read and can support recursive queries in databases that implement recursive CTEs. A CTE is not automatically faster than a subquery.', syntax:`WITH high_scores AS (
+  SELECT id, name, score
+  FROM candidates
+  WHERE score >= 80
+)
+SELECT name, score
+FROM high_scores
+ORDER BY score DESC;`, output:'Returns candidates with scores of at least 80, ordered from highest to lowest.', tip:'Use a CTE to improve readability, then check the query plan if performance matters.' },
+  { id:21, topic:'SQL', level:'Advanced', title:'What are transactions and ACID properties?', prompt:'Why use a transaction for related updates?', answer:'A transaction groups changes into a single logical unit. ACID means Atomicity (all or nothing), Consistency (valid rules remain satisfied), Isolation (concurrent work is controlled), and Durability (committed changes persist). Roll back when part of the operation fails.', syntax:`BEGIN TRANSACTION;
+
+UPDATE accounts
+SET balance = balance - 100
+WHERE id = 1;
+
+UPDATE accounts
+SET balance = balance + 100
+WHERE id = 2;
+
+COMMIT;`, output:'Both updates commit together if successful. Application code should roll back on failure; transaction syntax differs by database.', tip:'Discuss isolation levels and deadlocks when the interviewer asks about concurrent transactions.' },
+  { id:22, topic:'REST APIs', level:'Basic', title:'What is REST, and what is a resource?', prompt:'How would you model a simple candidates endpoint?', answer:'REST is an architectural style that treats data and functionality as resources identified by URLs and manipulated through standard HTTP semantics. A resource URL should represent a thing, usually using nouns, while the HTTP method describes the operation.', syntax:`GET    /api/candidates
+GET    /api/candidates/42
+POST   /api/candidates
+PATCH  /api/candidates/42
+DELETE /api/candidates/42`, output:'The collection is /api/candidates and an individual candidate is /api/candidates/42.', tip:'Keep resource paths consistent and avoid embedding action verbs in every URL when an HTTP method expresses the action.' },
+  { id:23, topic:'REST APIs', level:'Intermediate', title:'How should pagination be designed?', prompt:'Why should an API avoid returning an unbounded collection?', answer:'Pagination limits response size and reduces memory, network and database load. Offset/limit pagination is simple, while cursor pagination is often more stable for frequently changing or very large datasets. Enforce a maximum page size and return a continuation indicator.', syntax:`{
+  "results": [{"id": 41}, {"id": 42}],
+  "limit": 2,
+  "next_cursor": "eyJpZCI6NDJ9"
+}`, output:'The client requests the next page using the returned cursor when one is available.', tip:'Use a deterministic sort order. Offset pagination can skip or repeat rows when data changes between requests.' },
+  { id:24, topic:'REST APIs', level:'Advanced', title:'How do you design safe retries for a payment API?', prompt:'What problem does an idempotency key solve?', answer:'A client may retry after a timeout without knowing whether the server processed the first request. An idempotency key lets the server associate retries with the original operation and return the stored result rather than charging twice. Store keys safely with appropriate scope and expiration.', syntax:`POST /api/payments
+Idempotency-Key: order-8472-attempt-1
+Content-Type: application/json
+
+{"order_id": 8472, "amount": 1250}`, output:'Repeated requests using the same key and same operation should not create duplicate charges.', tip:'Define behavior for key reuse with a different payload, concurrent requests, key retention and failed operations.' },
 ]
 
-const topics = ['All topics', 'Python', 'SQL', 'REST APIs']
+const topics = [
+  { name: 'Python', subtitle: 'Core language, data structures and backend coding', icon: 'code', color: 'python' },
+  { name: 'SQL', subtitle: 'Queries, joins, transactions and performance', icon: 'database', color: 'sql' },
+  { name: 'REST APIs', subtitle: 'HTTP, endpoint design, security and reliability', icon: 'network', color: 'api' },
+]
 const levels = ['All levels', 'Basic', 'Intermediate', 'Advanced']
+const levelOrder = { Basic: 0, Intermediate: 1, Advanced: 2 }
 
 export default function InterviewPrep() {
-  const [topic, setTopic] = useState('All topics')
+  const [topic, setTopic] = useState(null)
   const [level, setLevel] = useState('All levels')
   const [query, setQuery] = useState('')
-  const [opened, setOpened] = useState([1])
-  const filtered = useMemo(() => questions.filter((q) =>
-    (topic === 'All topics' || q.topic === topic) &&
-    (level === 'All levels' || q.level === level) &&
-    (q.title + ' ' + q.prompt + ' ' + q.answer).toLowerCase().includes(query.toLowerCase())
-  ), [topic, level, query])
-  const countByTopic = (name) => questions.filter((q) => name === 'All topics' || q.topic === name).length
+  const [opened, setOpened] = useState([])
+  const filtered = useMemo(() => questions
+    .filter((q) => topic === q.topic)
+    .filter((q) => level === 'All levels' || q.level === level)
+    .filter((q) => (q.title + ' ' + q.prompt + ' ' + q.answer).toLowerCase().includes(query.toLowerCase()))
+    .sort((a, b) => levelOrder[a.level] - levelOrder[b.level] || a.id - b.id),
+  [topic, level, query])
+  const chooseTopic = (name) => {
+    setTopic(name)
+    setLevel('All levels')
+    setQuery('')
+    setOpened([])
+  }
+  const topicQuestions = topic ? questions.filter((q) => q.topic === topic) : []
+  const topicCounts = (name, difficulty) => questions.filter((q) => q.topic === name && q.level === difficulty).length
 
   return <section className="interview-prep">
     <div className="interview-hero">
       <div className="interview-hero-icon"><BookOpen size={25} /></div>
-      <div className="interview-hero-copy"><span className="interview-eyebrow"><Sparkles size={13} /> INTERVIEW STUDY ROOM</span><h2>Prepare with confidence.</h2><p>Practical interview questions, working syntax, sample output and clear explanations — from fundamentals to advanced concepts.</p></div>
-      <div className="interview-total"><strong>{questions.length}</strong><span>questions</span><small>3 technical tracks</small></div>
+      <div className="interview-hero-copy"><span className="interview-eyebrow"><Sparkles size={13} /> INTERVIEW STUDY ROOM</span><h2>{topic || 'Prepare with confidence.'}</h2><p>{topic ? topics.find((item) => item.name === topic)?.subtitle : 'Choose one subject to open its dedicated interview lessons. Each track is organized from Basic to Intermediate to Advanced, with answers, syntax and examples.'}</p></div>
+      <div className="interview-total"><strong>{questions.length}</strong><span>questions</span><small>3 separate tracks</small></div>
     </div>
-    <div className="interview-controls">
-      <label className="interview-search"><Search size={17} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search questions or concepts..." aria-label="Search interview questions" /></label>
-      <div className="interview-filters"><label><span>Subject</span><select value={topic} onChange={(e) => setTopic(e.target.value)}>{topics.map((item) => <option key={item}>{item}</option>)}</select></label><label><span>Difficulty</span><select value={level} onChange={(e) => setLevel(e.target.value)}>{levels.map((item) => <option key={item}>{item}</option>)}</select></label></div>
-    </div>
-    <div className="interview-results"><span>{filtered.length} questions</span><span>Read the answer, study the syntax, then explain it aloud.</span></div>
-    <div className="interview-question-list">
-      {filtered.map((q, index) => {
-        const isOpen = opened.includes(q.id)
-        return <article className="interview-question-card" key={q.id}>
-          <button className="interview-question-toggle" onClick={() => setOpened((current) => isOpen ? current.filter((id) => id !== q.id) : [...current, q.id])} aria-expanded={isOpen}>
-            <span className="interview-question-number">{String(index + 1).padStart(2, '0')}</span>
-            <span className="interview-question-title"><span className="interview-tags"><span>{q.topic}</span><span>{q.level}</span></span><strong>{q.title}</strong><small>{q.prompt}</small></span>
-            <span className="interview-toggle-icon">{isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</span>
-          </button>
-          {isOpen && <div className="interview-answer">
-            <div className="interview-explanation"><h3><Check size={16} /> Interview-ready answer</h3><p>{q.answer}</p></div>
-            <div className="interview-code-heading"><span><Code2 size={15} /> Syntax and example</span><button onClick={() => navigator.clipboard?.writeText(q.syntax)} type="button">Copy code</button></div>
-            <pre><code>{q.syntax}</code></pre>
-            <div className="interview-output"><strong>Expected output / behavior</strong><p>{q.output}</p></div>
-            <div className="interview-tip"><Sparkles size={15} /><p><strong>Interview tip:</strong> {q.tip}</p></div>
-          </div>}
-        </article>
-      })}
-      {!filtered.length && <div className="interview-empty"><Search size={25} /><h3>No matching questions</h3><p>Try another keyword, subject or difficulty.</p><button onClick={() => { setTopic('All topics'); setLevel('All levels'); setQuery('') }}>Clear filters</button></div>}
-    </div>
-    <div className="interview-footer-note"><Code2 size={17} /><p><strong>Study method:</strong> Read the question, answer it in your own words, write the syntax from memory, then compare your response with the explanation.</p></div>
+    {!topic ? <>
+      <div className="interview-track-heading"><div><h3>Choose your preparation track</h3><p>Python, SQL and REST APIs open as separate learning paths.</p></div></div>
+      <div className="interview-track-grid">
+        {topics.map((item) => <button className={`interview-track-card track-${item.color}`} key={item.name} onClick={() => chooseTopic(item.name)}>
+          <span className="interview-track-icon">{item.icon === 'code' ? <Code2 size={25} /> : item.icon === 'database' ? <BookOpen size={25} /> : <Sparkles size={25} />}</span>
+          <span className="interview-track-copy"><strong>{item.name}</strong><small>{item.subtitle}</small></span>
+          <span className="interview-track-count">{questions.filter((q) => q.topic === item.name).length} lessons</span>
+          <span className="interview-track-levels">{['Basic','Intermediate','Advanced'].map((difficulty) => <span key={difficulty}><i />{difficulty} <b>{topicCounts(item.name,difficulty)}</b></span>)}</span>
+          <span className="interview-track-open">Start learning <ChevronDown size={15} /></span>
+        </button>)}
+      </div>
+      <div className="interview-footer-note"><Code2 size={17} /><p><strong>Suggested order:</strong> Complete Basic first, then Intermediate, and finish with Advanced questions. Open each lesson to read the explanation, study syntax and compare the expected output.</p></div>
+    </> : <>
+      <div className="interview-track-toolbar"><button className="interview-back-button" onClick={() => { setTopic(null); setQuery(''); setLevel('All levels'); setOpened([]) }}>← All subjects</button><div className="interview-level-roadmap">{['Basic','Intermediate','Advanced'].map((difficulty,index)=><button key={difficulty} className={level === difficulty ? 'roadmap-active' : ''} onClick={() => setLevel(level === difficulty ? 'All levels' : difficulty)}><span>{index + 1}</span>{difficulty}<b>{topicQuestions.filter((q)=>q.level===difficulty).length}</b></button>)}</div></div>
+      <div className="interview-controls">
+        <label className="interview-search"><Search size={17} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={`Search ${topic} lessons...`} aria-label={`Search ${topic} interview questions`} /></label>
+        <label className="interview-level-select"><span>Difficulty level</span><select value={level} onChange={(e) => setLevel(e.target.value)}>{levels.map((item) => <option key={item}>{item}</option>)}</select></label>
+      </div>
+      <div className="interview-results"><span>{filtered.length} lessons</span><span>Lessons are ordered Basic → Intermediate → Advanced.</span></div>
+      <div className="interview-question-list">
+        {filtered.map((q, index) => {
+          const isOpen = opened.includes(q.id)
+          return <article className="interview-question-card" key={q.id}>
+            <button className="interview-question-toggle" onClick={() => setOpened((current) => isOpen ? current.filter((id) => id !== q.id) : [...current, q.id])} aria-expanded={isOpen}>
+              <span className="interview-question-number">{String(index + 1).padStart(2, '0')}</span>
+              <span className="interview-question-title"><span className="interview-tags"><span>{q.level}</span></span><strong>{q.title}</strong><small>{q.prompt}</small></span>
+              <span className="interview-toggle-icon">{isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</span>
+            </button>
+            {isOpen && <div className="interview-answer">
+              <div className="interview-explanation"><h3><Check size={16} /> Interview-ready answer</h3><p>{q.answer}</p></div>
+              <div className="interview-code-heading"><span><Code2 size={15} /> Syntax and example</span><button onClick={() => navigator.clipboard?.writeText(q.syntax)} type="button">Copy code</button></div>
+              <pre><code>{q.syntax}</code></pre>
+              <div className="interview-output"><strong>Expected output / behavior</strong><p>{q.output}</p></div>
+              <div className="interview-tip"><Sparkles size={15} /><p><strong>Interview tip:</strong> {q.tip}</p></div>
+            </div>}
+          </article>
+        })}
+        {!filtered.length && <div className="interview-empty"><Search size={25} /><h3>No matching lessons</h3><p>Try another keyword or difficulty level.</p><button onClick={() => { setLevel('All levels'); setQuery('') }}>Clear filters</button></div>}
+      </div>
+    </>}
   </section>
 }
