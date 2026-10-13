@@ -8,12 +8,19 @@ export const initialTasks = [
   { id: 2, title: 'Practice Indian Geography quiz', detail: 'Geography · 15 min', done: false },
   { id: 3, title: 'Read today’s current affairs', detail: 'Current affairs · 20 min', done: false },
   { id: 4, title: 'Review Python decorators', detail: 'IT course · 20 min', done: false },
+  { id: 5, title: 'Solve 5 SQL query problems', detail: 'IT course · 30 min', done: false },
+  { id: 6, title: 'Review Parliament and lawmaking', detail: 'Polity · 20 min', done: false },
 ]
 
 export const courses = [
   { id: 1, title: 'Indian Polity', category: 'UPSC · GS Paper 2', progress: 68, lessons: '17 of 25 lessons', color: 'blue', icon: 'landmark' },
   { id: 2, title: 'Modern Indian History', category: 'UPSC · GS Paper 1', progress: 42, lessons: '8 of 19 lessons', color: 'orange', icon: 'book-open' },
   { id: 3, title: 'Python Foundations', category: 'IT · Programming', progress: 76, lessons: '19 of 25 lessons', color: 'teal', icon: 'code' },
+  { id: 4, title: 'Indian Geography', category: 'UPSC · GS Paper 1', progress: 34, lessons: '9 of 26 lessons', color: 'blue', icon: 'landmark' },
+  { id: 5, title: 'Database & SQL Essentials', category: 'IT · Data skills', progress: 51, lessons: '12 of 24 lessons', color: 'teal', icon: 'code' },
+  { id: 6, title: 'Environment & Ecology', category: 'UPSC · GS Paper 3', progress: 23, lessons: '6 of 22 lessons', color: 'orange', icon: 'book-open' },
+  { id: 7, title: 'REST API Development', category: 'IT · Backend', progress: 60, lessons: '15 of 25 lessons', color: 'teal', icon: 'code' },
+  { id: 8, title: 'Economy Fundamentals', category: 'UPSC · GS Paper 3', progress: 18, lessons: '4 of 22 lessons', color: 'blue', icon: 'landmark' },
 ]
 
 export const activities = [
