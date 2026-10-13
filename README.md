@@ -150,6 +150,11 @@ Firebase Hosting configuration exists in firebase.json, but the current GitHub A
 - [ ] Add monitoring, accessibility checks and user testing.
 - [ ] Test Firebase security rules with the Firebase Emulator Suite.
 
+### Python frameworks & libraries explorer
+- Interactive nested category buttons inside the Learning Center; expand a category and select a tool to open its purpose, install/setup command, starter code sample, and official documentation link.
+- Covers web/API frameworks (Django, Django REST Framework, FastAPI, Flask, Starlette, Pyramid, Litestar); data/science (NumPy, pandas, Polars, SciPy, Matplotlib, Seaborn); ML/AI (scikit-learn, PyTorch, TensorFlow/Keras, XGBoost, LightGBM, Hugging Face Transformers, LangChain, LlamaIndex); database/ORM/cache (SQLAlchemy, Alembic, Psycopg, PyMongo, redis-py); testing/quality (pytest, unittest, Pydantic, Ruff, mypy); async/tasks/networking (asyncio, Celery, RQ, HTTPX, Requests); and files/scraping/productivity (Pillow, Beautiful Soup, Scrapy, OpenPyXL, python-dotenv).
+- Includes copy buttons for install commands and code examples. The catalog is a curated set of commonly used tools, not an exhaustive list of every Python package on PyPI.
+
 ## Keeping this README current
 
 **Update this README whenever an application change affects features, navigation, setup, data persistence, project structure, testing or deployment.** Keep the feature list and project structure aligned with the actual code, and clearly label demo behavior versus implemented functionality.
