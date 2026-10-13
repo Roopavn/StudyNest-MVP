@@ -48,7 +48,7 @@ Interview preparation is split into **three separate subject tracks**—not one 
 | Generative AI | LLM fundamentals, prompt engineering, embeddings, RAG, structured outputs, evaluation and production design |
 | Agentic AI | Agent loops, tools, planning, memory, multi-agent patterns, approvals, recovery and security |
 
-The newer tracks include introductory, Basic, Intermediate and Advanced content; course depth will continue to expand as more examples and practice questions are added. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
+**Course catalog lesson totals:** Python (15), SQL (12), REST APIs (12), Generative AI (8), Agentic AI (8), plus eight lessons each for Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub and Kubernetes. This gives **135 lessons across 15 learning tracks**. Lesson examples are educational; cloud, container and provider examples may need environment-specific configuration before use. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
 
 Each subject contains **Basic → Intermediate → Advanced** lessons. Choose a subject card to open its own learning track, then use the difficulty roadmap or selector and search to find lessons. Expand a question to read an interview-ready answer, example syntax, expected output/behavior, and an interview tip. Code examples include a copy action.
 
