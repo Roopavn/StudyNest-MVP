@@ -13,7 +13,7 @@ StudyNest helps learners explore structured lessons, practice technical question
 - Responsive dashboard with overview cards, study-plan tasks, course progress and learning-track cards.
 - Dedicated **My learning**, **Learning path**, **Practice & quizzes**, **Interview preparation**, and **Bookmarks** sections.
 - Course catalog covering Python, SQL, REST APIs, Java, JavaScript, C, HTML & CSS, DevOps, cloud fundamentals, Linux and shell, Docker, Git & GitHub, Kubernetes basics, Generative AI, and Agentic AI.
-- Course cards open a matching structured learning track with beginner and intermediate starter lessons for the newer subjects.
+- Course cards open their matching learning track. The Generative AI and Agentic AI courses include eight detailed lessons each, ordered from Basic through Intermediate to Advanced.
 - Search and IT-track filtering for courses.
 - Course bookmarks and study tasks saved in browser localStorage.
 - Mobile-friendly navigation and expandable lesson content.
@@ -21,7 +21,10 @@ StudyNest helps learners explore structured lessons, practice technical question
 ### Learning paths and practice
 - Structured learning tracks for Python, SQL, REST APIs, Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub, Kubernetes, Generative AI, and Agentic AI.
 - Every course track starts with a course introduction explaining what the technology is, why it is used, where it is used, and the recommended learning roadmap.
-- Course lessons are ordered Basic → Intermediate → Advanced. The newer language, web and infrastructure tracks now have a lesson at each level, with explanations, code/configuration examples, small tasks and video explainers.
+- Course lessons are ordered Basic → Intermediate → Advanced, with plain-language explanations, code/configuration examples, small tasks and topic-specific video search links.
+- **Generative AI (8 lessons):** model fundamentals, prompt engineering, safe API integration, embeddings and semantic search, RAG, structured output, evaluation and safety, and production architecture/cost/observability.
+- **Agentic AI (8 lessons):** agent fundamentals, tool contracts, bounded agent loops, planning and memory, RAG-powered agents, multi-agent coordination, human approval and durable workflows, and production evaluation/security.
+- Both AI courses include practical tasks, line-by-line code walkthroughs, key terms, beginner pitfalls and MCQ checks. Code examples are educational and provider-neutral; the app does not connect to a live AI provider.
 - Lessons include a plain-language analogy, real-world usage, common beginner pitfalls, key terms, and a line-by-line walkthrough of the example code or commands.
 - Sample multiple-choice quiz with answer feedback and an explanation for supported tracks.
 
