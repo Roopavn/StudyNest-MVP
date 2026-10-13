@@ -163,3 +163,7 @@ Firebase Hosting configuration exists in firebase.json, but the current GitHub A
 ## License
 
 No license has been added yet. Add a license file before accepting external contributions or reuse.
+
+
+### Data Engineering / Big Data
+- Added a dedicated, visible course card for **Data Engineering / Big Data (PySpark)** in the dashboard and course catalog. Opening the card takes learners directly to the eight PySpark & Apache Spark lessons.
