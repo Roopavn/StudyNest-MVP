@@ -22,6 +22,7 @@ StudyNest helps learners explore structured lessons, practice technical question
 - Structured learning tracks for Python, SQL, REST APIs, Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub, and Kubernetes.
 - Every course track starts with a course introduction explaining what the technology is, why it is used, where it is used, and the recommended learning roadmap.
 - Course lessons are ordered Basic → Intermediate → Advanced. The newer language, web and infrastructure tracks now have a lesson at each level, with explanations, code/configuration examples, small tasks and video explainers.
+- Lessons include a plain-language analogy, real-world usage, common beginner pitfalls, key terms, and a line-by-line walkthrough of the example code or commands.
 - Sample multiple-choice quiz with answer feedback and an explanation for supported tracks.
 
 ### Interview preparation
