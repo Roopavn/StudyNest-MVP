@@ -24,6 +24,7 @@ export const courses = [
   { id: 13, title: 'Kubernetes Basics', category: 'IT · Cloud native', progress: 0, lessons: '8 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&w=900&q=85', imageAlt: 'Cloud native infrastructure' },
   { id: 14, title: 'Generative AI Foundations to Production', category: 'AI · Generative AI', progress: 0, lessons: '8 detailed lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=85', imageAlt: 'Abstract artificial intelligence neural network visualization' },
   { id: 15, title: 'Agentic AI: Beginner to Advanced', category: 'AI · Agentic AI', progress: 0, lessons: '8 detailed lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=900&q=85', imageAlt: 'Artificial intelligence system visualization' }
+  { id: 16, title: 'Data Engineering / Big Data (PySpark)', category: 'IT · Data Engineering', progress: 0, lessons: '8 lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85', imageAlt: 'Data analytics dashboard representing data engineering' },
 ]
 
 export const activities = [
