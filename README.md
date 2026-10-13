@@ -12,14 +12,14 @@ StudyNest helps learners explore structured lessons, practice technical question
 ### Learning workspace
 - Responsive dashboard with overview cards, study-plan tasks, course progress and learning-track cards.
 - Dedicated **My learning**, **Learning path**, **Practice & quizzes**, **Interview preparation**, and **Bookmarks** sections.
-- Course catalog covering Python, SQL, REST APIs, Java, JavaScript, C, HTML & CSS, DevOps, cloud fundamentals, Linux and shell, Docker, Git & GitHub, and Kubernetes basics.
+- Course catalog covering Python, SQL, REST APIs, Java, JavaScript, C, HTML & CSS, DevOps, cloud fundamentals, Linux and shell, Docker, Git & GitHub, Kubernetes basics, Generative AI, and Agentic AI.
 - Course cards open a matching structured learning track with beginner and intermediate starter lessons for the newer subjects.
 - Search and IT-track filtering for courses.
 - Course bookmarks and study tasks saved in browser localStorage.
 - Mobile-friendly navigation and expandable lesson content.
 
 ### Learning paths and practice
-- Structured learning tracks for Python, SQL, REST APIs, Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub, and Kubernetes.
+- Structured learning tracks for Python, SQL, REST APIs, Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub, Kubernetes, Generative AI, and Agentic AI.
 - Every course track starts with a course introduction explaining what the technology is, why it is used, where it is used, and the recommended learning roadmap.
 - Course lessons are ordered Basic → Intermediate → Advanced. The newer language, web and infrastructure tracks now have a lesson at each level, with explanations, code/configuration examples, small tasks and video explainers.
 - Lessons include a plain-language analogy, real-world usage, common beginner pitfalls, key terms, and a line-by-line walkthrough of the example code or commands.
@@ -42,6 +42,8 @@ Interview preparation is split into **three separate subject tracks**—not one 
 | Web development | HTML & CSS |
 | DevOps & cloud | DevOps Foundations, Cloud Fundamentals, Linux & Shell, Docker & Containers, Kubernetes Basics |
 | Developer tools | Git & GitHub |
+| Generative AI | LLM fundamentals, prompt engineering, embeddings, RAG, structured outputs, evaluation and production design |
+| Agentic AI | Agent loops, tools, planning, memory, multi-agent patterns, approvals, recovery and security |
 
 The newer tracks include introductory, Basic, Intermediate and Advanced content; course depth will continue to expand as more examples and practice questions are added. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
 
