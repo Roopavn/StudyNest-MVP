@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { BookOpen, CheckCircle2, ChevronDown, CirclePlay, Clock3, Code2, Database, Layers3, Play, Route, Search, Sparkles, Terminal, Trophy } from 'lucide-react'
 import './LearningCenter.css'
-import { extraLessons, extraMcqBank } from './extraLessons.js'
 
 const baseLessons = [
   { id:'py-1', track:'Python', level:'Basic', title:'Variables, data types & input', duration:'8 min', kind:'flow', summary:'Store information in names and choose the right type for each value.', explain:'A variable is a name that refers to a value. Common Python types include str (text), int (whole numbers), float (decimal numbers), and bool (True/False). Use type() to inspect a value.', code:'name = "Asha"\nage = 24\nscore = 82.5\nis_ready = True\nprint(type(age))  # <class \'int\'>', task:'Create variables for your name, years of experience, and whether you are job-ready. Print each value and its type.', video:'_uQrJ0TkZlc', videoTitle:'Python basics for beginners' },
@@ -52,7 +51,7 @@ const baseLessons = [
 
 ]
 
-const lessons = [...baseLessons, ...extraLessons]
+const lessons = baseLessons
 const levels = ['All levels', 'Basic', 'Intermediate', 'Advanced']
 const tracks = ['All topics', ...new Set(lessons.map((lesson) => lesson.track))]
 
@@ -102,7 +101,7 @@ export default function LearningCenter({ initialTrack = 'All topics' }) {
   useEffect(() => { if (visible.length && !visible.some((lesson) => lesson.id === openLesson)) setOpenLesson(visible[0].id) }, [visible, openLesson])
   const visible = useMemo(() => lessons.filter((lesson) => (track === 'All topics' || lesson.track === track) && (level === 'All levels' || lesson.level === level) && (lesson.title + ' ' + lesson.summary + ' ' + lesson.track).toLowerCase().includes(query.toLowerCase())), [track, level, query])
   const active = lessons.find((lesson) => lesson.id === openLesson)
-  const questionSet = active ? (mcqBank[active.track] || extraMcqBank[active.track]) : null
+  const questionSet = active ? mcqBank[active.track] : null
   const activeQuestion = active && questionSet?.length ? questionSet[(Number(active.id.split('-')[1]) - 1) % questionSet.length] : null
   const markDone = (id) => setCompleted((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
   return <section className="learning-center">
