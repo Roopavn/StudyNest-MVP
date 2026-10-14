@@ -110,3 +110,11 @@
   .lesson-mindmap-figure svg{min-width:500px}
   .lesson-mindmap-figure{overflow-x:auto;padding-bottom:5px}
 }
+
+/* Collapsible expected-output previews for lesson snippets */
+.lesson-code-output{margin:9px 0 13px;border:1px solid #dbe4f2;border-radius:9px;background:#f8faff;overflow:hidden}
+.lesson-code-output summary{padding:10px 12px;cursor:pointer;color:#3159a5;font-size:11px;font-weight:800;list-style-position:inside}
+.lesson-code-output summary:hover{background:#eef3ff}
+.lesson-code-output[open] summary{border-bottom:1px solid #dbe4f2}
+.lesson-code-output pre{margin:0;padding:12px;background:#172238;color:#d8f5e7;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;line-height:1.7}
+.lesson-code-output p{margin:0;padding:8px 12px;color:#6b7890;font-size:9px;line-height:1.6}
