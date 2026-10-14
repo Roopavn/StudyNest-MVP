@@ -448,6 +448,57 @@ function lessonExample(lesson) {
       [/branch|pull request|merge|conflict|commit/, 'Review a feature before release', 'Keep a focused branch, inspect the diff, run checks, request review and merge only after required validations pass.', 'git switch -c feature/course-search\ngit add src/\ngit commit -m "Add course search"\ngit push -u origin feature/course-search'],
       [/workflow|actions|ci|cd|deploy|release/, 'Automate quality checks', 'A repository workflow can run lint and tests for each proposed change before publishing a verified build.', 'Push -> Lint -> Test -> Build -> Deploy'],
     ],
+    'Generative AI & LLMs': [
+      [/rag|retriev|embedding|vector|search/, 'Ground a learning assistant in trusted notes', 'Retrieve relevant approved course passages first, pass them to the model as context, and verify that the answer is supported by those passages.', 'Question -> Retrieve notes -> Build context\n         -> Generate answer -> Validate evidence'],
+      [/prompt|token|model|evaluation|hallucination/, 'Generate and validate quiz content', 'Ask a model for structured quiz items, validate the JSON shape and review the answer key before learners see the questions.', 'Prompt -> Model output -> Schema validation -> Human review'],
+    ],
+    'Django & FastAPI': [
+      [/auth|permission|security|token/, 'Protect a course API endpoint', 'Authenticate the caller and check object-level permissions before returning private learner data.', 'HTTP request -> Auth -> Permission check -> Serializer -> Response'],
+      [/database|orm|model|migration/, 'Save course enrollment', 'Validate request data, persist it through the ORM inside a transaction where appropriate, and return a stable API response.', 'Request -> Validate -> ORM/transaction -> JSON response'],
+      [/test|validation|error|exception/, 'Test an API contract', 'Test a successful request, invalid payload, unauthenticated request and missing resource so clients receive predictable status codes.', 'Valid payload -> 201\nInvalid payload -> 400\nNo permission -> 403'],
+    ],
+    'Node.js & Express': [
+      [/route|middleware|request|response|api/, 'Create a course API route', 'Middleware can authenticate a request, validate inputs, call a service layer and map expected errors to HTTP responses.', 'Request -> Middleware -> Route -> Service -> Response'],
+      [/async|promise|error|concurrency/, 'Handle a failed downstream API call', 'Await the network operation, set a timeout and forward a useful error response instead of leaving a request hanging.', 'await downstream call -> check result -> handle failure'],
+    ],
+    React: [
+      [/state|effect|hook|component|props/, 'Keep a course list in sync with user actions', 'Store UI state in the component that owns it, pass values through props, and use effects only for synchronization with external systems.', 'User action -> State update -> Re-render -> Updated UI'],
+      [/form|event|input|validation/, 'Validate a course search form', 'Keep the input value controlled, validate the query, and show loading, empty and error states rather than only a blank screen.', 'Input -> Validate -> Search -> Loading/results/error'],
+    ],
+    TypeScript: [
+      [/type|interface|generic|union/, 'Catch invalid API data earlier', 'Define a type for the expected response and narrow optional values before using them in the UI.', 'Unknown response -> Runtime validation -> Typed model -> UI'],
+      [/function|array|object|class/, 'Make a reusable typed utility', 'Use explicit parameter and return types so incorrect calls can be caught by the compiler before runtime.', 'Typed input -> Function -> Typed result'],
+    ],
+    'Data Structures & Algorithms': [
+      [/search|binary|linear/, 'Find a learner record', 'Choose a search strategy based on whether data is sorted and how large it is; binary search requires sorted input.', 'Sorted records -> Compare middle -> Keep half -> Match'],
+      [/sort|complexity|big o|algorithm/, 'Rank quiz scores', 'Compare algorithms using correctness and growth rate, then measure on realistic input sizes instead of relying only on tiny examples.', 'Input data -> Algorithm -> Ordered output -> Measure cost'],
+      [/stack|queue|linked|tree|graph|heap|hash/, 'Choose a structure for a task queue', 'A queue is useful when jobs should be handled in arrival order; a heap is useful when priority should determine the next job.', 'New jobs -> Queue/priority heap -> Worker'],
+    ],
+    'DBMS & Database Design': [
+      [/normal|schema|relationship|design/, 'Design a course enrollment schema', 'Separate learners, courses and enrollments so the same learner can join multiple courses without duplicating course details.', 'Learner 1..* Enrollment *..1 Course'],
+      [/transaction|acid|lock|concurr/, 'Prevent conflicting updates', 'Use a transaction and suitable isolation/locking strategy when multiple users may update the same record concurrently.', 'Begin -> Read/check -> Update -> Commit or rollback'],
+      [/index|query|performance/, 'Investigate a slow report', 'Inspect the execution plan and index selectivity, and check whether joins or filters are causing excessive work.', 'Query -> Execution plan -> Find bottleneck -> Measure change'],
+    ],
+    'NoSQL & MongoDB': [
+      [/document|collection|mongodb|schema/, 'Store a course document', 'Use a document when related fields are naturally retrieved together, and validate document shape at the application boundary.', '{ courseId, title, lessons: [...], published: true }'],
+      [/index|query|aggregation|pipeline/, 'Build a course analytics aggregation', 'Filter early, use an appropriate index, and inspect the aggregation pipeline with representative data.', 'match -> group -> project -> result'],
+    ],
+    'Computer Networks': [
+      [/http|dns|tcp|udp|tls|protocol/, 'Trace a browser request', 'A browser resolves the host, establishes a transport connection, negotiates TLS for HTTPS, then sends an HTTP request.', 'DNS lookup -> TCP/TLS -> HTTP request -> Response'],
+      [/subnet|ip|routing|firewall|port/, 'Diagnose an unreachable API', 'Check DNS, destination address, route, port reachability and firewall rules one layer at a time.', 'Name -> IP -> Route -> Port/firewall -> Service'],
+    ],
+    'Cybersecurity Fundamentals': [
+      [/auth|identity|permission|least privilege/, 'Limit access to learner records', 'Verify identity, authorize each requested resource and grant only the permissions required for the user’s task.', 'Identity -> Authorization -> Least privilege -> Audit'],
+      [/secret|injection|xss|csrf|input|threat/, 'Protect a web form', 'Validate untrusted input, use parameterized queries and output encoding, and keep secrets outside client-side code.', 'Untrusted input -> Validate/encode -> Safe operation'],
+    ],
+    'Operating Systems': [
+      [/process|thread|scheduler|concurr/, 'Investigate a high-CPU service', 'Inspect process and thread behavior, resource usage and logs before changing service limits or restarting it.', 'Process -> Scheduler -> CPU/memory -> Logs'],
+      [/memory|virtual memory|paging|file system/, 'Understand memory pressure', 'The operating system maps virtual memory to physical resources; sustained pressure can cause paging and slow applications.', 'Process memory -> Virtual memory -> Physical RAM/storage'],
+    ],
+    'Software Testing': [
+      [/unit|mock|fixture|test case/, 'Test a score-calculation function', 'Cover normal values, empty input and invalid values; isolate external dependencies when testing a small unit.', 'Arrange input -> Act -> Assert result'],
+      [/integration|api|end-to-end|regression|ci/, 'Verify an API before release', 'Combine unit tests with API integration checks and a regression suite in CI so defects are caught before deployment.', 'Unit tests -> API integration -> Regression -> Release gate'],
+    ],
     Kubernetes: [
       [/pod|deployment|service|probe|rollout/, 'Keep a web API available', 'A Deployment maintains the desired replica count, a Service routes traffic to healthy Pods, and readiness probes prevent premature traffic.', 'Deployment -> Pods -> Readiness probe\nService ----------------> Ready Pods'],
     ],
@@ -471,6 +522,18 @@ function lessonExample(lesson) {
     'Linux & Shell': ['Server troubleshooting', 'Inspect the process, service state and logs before changing a running server.', 'Check status -> Read logs -> Find cause -> Verify fix'],
     'Docker & Containers': ['Repeatable application runtime', 'Package dependencies into an image and keep configuration and persistent data outside the image.', 'Source + dependencies -> Image -> Container'],
     'Git & GitHub': ['Collaborative release workflow', 'Use commits and pull requests to review a change and let automated checks catch defects before release.', 'Branch -> Commit -> Review -> Checks -> Merge'],
+    'Generative AI & LLMs': ['Evidence-grounded AI answer', 'Retrieve trusted context, validate output structure and evaluate whether the generated answer is supported.', 'Question -> Retrieve context -> Generate -> Validate'],
+    'Django & FastAPI': ['Backend API request', 'Validate input, check permissions, call business logic and return a consistent response with an appropriate status code.', 'Request -> Validate -> Authorize -> Service -> Response'],
+    'Node.js & Express': ['Reliable API handler', 'Validate the request, handle asynchronous failures and return a clear response instead of leaving the request unresolved.', 'Request -> Middleware -> Handler -> Response'],
+    React: ['Interactive course UI', 'Represent loading, success, empty and error states explicitly so learners know what the application is doing.', 'Action -> State -> Render -> Feedback'],
+    TypeScript: ['Typed application boundary', 'Check incoming data and use explicit types to reduce accidental misuse inside application code.', 'Input -> Validate -> Typed function -> Result'],
+    'Data Structures & Algorithms': ['Efficient record lookup', 'Choose the right data structure and algorithm for the operation, then verify correctness and growth as input increases.', 'Problem -> Structure/algorithm -> Result -> Complexity'],
+    'DBMS & Database Design': ['Consistent relational data', 'Model entities and relationships, enforce constraints and use transactions for changes that must stay consistent.', 'Schema -> Constraints -> Transaction -> Consistent state'],
+    'NoSQL & MongoDB': ['Document-backed course catalogue', 'Model documents around common access patterns, validate records and add indexes for frequent queries.', 'Document -> Query/index -> Result'],
+    'Computer Networks': ['Trace a client connection', 'Check name resolution, routing, transport connectivity, encryption and application response in sequence.', 'DNS -> Network -> TLS -> HTTP -> Response'],
+    'Cybersecurity Fundamentals': ['Defend a user-facing endpoint', 'Validate input, enforce server-side authorization, protect secrets and log security-relevant events without sensitive values.', 'Input -> Validate -> Authorize -> Safe operation -> Audit'],
+    'Operating Systems': ['Diagnose a resource bottleneck', 'Use process, memory and log information to identify whether a slowdown comes from CPU, memory, I/O or scheduling.', 'Process -> Resources -> Observations -> Diagnosis'],
+    'Software Testing': ['Catch regressions before release', 'Test expected behavior and edge cases at unit and integration levels, then make checks part of CI.', 'Arrange -> Act -> Assert -> CI gate'],
     Kubernetes: ['Service reliability', 'Declare the desired workload state and monitor whether the running service meets its health checks.', 'Desired state -> Controller -> Workload -> Health'],
     DevOps: ['Safe software delivery', 'Automated checks catch common defects before a deployment reaches users.', 'Commit -> Test -> Release -> Observe'],
   }
