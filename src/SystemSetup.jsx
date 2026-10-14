@@ -39,19 +39,30 @@ const courseVisuals = {
   'Agentic AI': ['https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=900&q=85', 'Agentic AI systems visualization'],
   'Data Engineering / Big Data': ['https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85', 'Data analytics dashboard'],
 };
-
 const terminalExamples = {
-  Python: { title: 'VS Code · PowerShell', prompt: 'PS C:\\Projects\\my-app>', command: 'python --version', output: 'Python 3.x.x', command2: 'python -c "print(\'Hello AR CodeLab\')"', output2: 'Hello AR CodeLab', caption: 'Python: check the installed version, then run a tiny program.' },
-  SQL: { title: 'SQL query window · pgAdmin / Workbench', prompt: 'SQL>', command: 'SELECT 1;', output: '1', command2: 'SELECT current_date;', output2: 'Current date returned', caption: 'SQL is normally typed into a database query editor; command-line clients are optional.' },
-  'REST APIs': { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\api>', command: 'curl --version', output: 'curl version information', command2: 'curl http://localhost:8000/health', output2: '{ "status": "ok" }', caption: 'REST APIs: start your local server first, then request its health endpoint.' },
-  Java: { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\java>', command: 'java --version', output: 'openjdk version "21..."', command2: 'javac HelloWorld.java && java HelloWorld', output2: 'Hello AR CodeLab', caption: 'Java: create HelloWorld.java with a main method before compiling and running it.' },
-  JavaScript: { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\js>', command: 'node --version', output: 'v22.x.x', command2: 'node -e "console.log(\'Hello AR CodeLab\')"', output2: 'Hello AR CodeLab', caption: 'JavaScript: Node.js runs JavaScript directly from the terminal.' },
-  'C Programming': { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\c>', command: 'gcc --version', output: 'gcc version information', command2: 'gcc hello.c -o hello', output2: 'Build succeeded (if no errors are printed)', caption: 'C: create hello.c first, compile it, then run .\\hello.exe on Windows or ./hello on Linux.' },
-  'HTML & CSS': { title: 'Browser · Local HTML preview', prompt: 'File / browser preview', command: 'Open index.html in your browser', output: 'A page with “Hello AR CodeLab” appears', command2: 'Edit styles.css and refresh the page', output2: 'The page styling changes', caption: 'HTML and CSS do not need a compiler for basic lessons. Use a browser preview.' },
-  'Data Engineering / Big Data': { title: 'VS Code · Python terminal', prompt: '(.venv) PS C:\\Projects\\spark>', command: 'python -c "import pyspark; print(pyspark.__version__)"', output: 'Installed PySpark version', command2: 'python spark_test.py', output2: '3', caption: 'PySpark: use the same virtual environment where PySpark and a compatible Java runtime are installed.' },
-  DevOps: { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\demo>', command: 'git --version', output: 'git version 2.x.x', command2: 'docker run --rm hello-world', output2: 'Hello from Docker!', caption: 'DevOps: verify each CLI separately; Docker also needs its engine running.' },
-  'Cloud Fundamentals': { title: 'PowerShell · Cloud CLI', prompt: 'PS C:\\Projects\\cloud>', command: 'az --version', output: 'Azure CLI version information', command2: 'az account show --output table', output2: 'Signed-in subscription details', caption: 'Cloud CLI: authenticate first; never paste passwords, tokens or keys into screenshots.' },
-  'Linux & Shell': { title: 'Ubuntu · Terminal', prompt: 'learner@ubuntu:~
+  Python: ['VS Code · PowerShell', 'python --version', 'Python 3.x.x', 'python -c "print(\'Hello AR CodeLab\')"', 'Hello AR CodeLab', 'Run a version check and a tiny Python program.'],
+  SQL: ['SQL query editor · pgAdmin / Workbench', 'SELECT 1;', '1', 'SELECT current_date;', 'Current date returned', 'Type SQL in a database query editor.'],
+  'REST APIs': ['VS Code · Terminal', 'curl --version', 'curl version information', 'curl http://localhost:8000/health', '{ "status": "ok" }', 'Start your API server before requesting its health endpoint.'],
+  Java: ['VS Code · Terminal', 'java --version', 'OpenJDK version information', 'javac HelloWorld.java && java HelloWorld', 'Hello AR CodeLab', 'Create HelloWorld.java before compiling and running it.'],
+  JavaScript: ['VS Code · Terminal', 'node --version', 'v22.x.x', 'node -e "console.log(\'Hello AR CodeLab\')"', 'Hello AR CodeLab', 'Node.js can execute JavaScript directly in the terminal.'],
+  'C Programming': ['VS Code · Terminal', 'gcc --version', 'GCC version information', 'gcc hello.c -o hello', 'Build succeeds if no errors appear', 'Create hello.c first; then run .\\hello.exe on Windows or ./hello on Linux.'],
+  'HTML & CSS': ['Browser · Local preview', 'Open index.html in your browser', 'A page appears', 'Edit styles.css and refresh', 'The page styling changes', 'Basic HTML and CSS can be previewed in a browser without a compiler.'],
+  'Data Engineering / Big Data': ['VS Code · Python terminal', 'python -c "import pyspark; print(pyspark.__version__)"', 'Installed PySpark version', 'python spark_test.py', '3', 'Use the same Python environment where PySpark and compatible Java are installed.'],
+  DevOps: ['VS Code · Terminal', 'git --version', 'Git version information', 'docker run --rm hello-world', 'Hello from Docker!', 'Docker tests also require the Docker engine to be running.'],
+  'Cloud Fundamentals': ['PowerShell · Cloud CLI', 'az --version', 'Azure CLI version information', 'az account show --output table', 'Signed-in subscription details', 'Authenticate first; never expose credentials in screenshots.'],
+  'Linux & Shell': ['Ubuntu · Terminal', 'pwd', '/home/learner', 'echo "Hello AR CodeLab"', 'Hello AR CodeLab', 'On Windows, use the WSL distribution terminal for Linux commands.'],
+  'Docker & Containers': ['VS Code · Terminal', 'docker --version', 'Docker version information', 'docker run --rm hello-world', 'Hello from Docker!', 'If the test fails, start Docker Desktop or the Docker service.'],
+  'Git & GitHub': ['VS Code · Terminal', 'git --version', 'Git version information', 'git status', 'Repository status (inside a Git repository)', 'Run git status inside a repository folder.'],
+  Kubernetes: ['VS Code · Terminal', 'kubectl version --client', 'Kubernetes client version', 'kubectl get nodes', 'Node list (requires a configured cluster)', 'The client can be installed even when no cluster is configured.'],
+  'Generative AI': ['VS Code · Python terminal', 'python --version', 'Python 3.x.x', 'python -m pip show openai', 'Package details if installed', 'Install the provider SDK in the active environment and protect API keys.'],
+  'Agentic AI': ['VS Code · Python terminal', 'python --version', 'Python 3.x.x', 'python -m pip show langgraph', 'Package details if installed', 'Validate the environment first, then test tools with safe read-only actions.'],
+}
+
+function CourseTerminalScreenshot({ track }) {
+  const example = terminalExamples[track]
+  if (!example) return null
+  const [title, command1, output1, command2, output2, caption] = example
+  const prompt = title.startsWith('Ubuntu') ? 'learner@ubuntu:~
   Python: 'Windows: enable “Add Python to PATH” in the installer. Common folders are the Python install directory and its Scripts subfolder. Verify with: py --version, python --version, where python, and py -m pip --version. Linux package installs usually add python3 automatically; verify with which python3.',
   Java: 'Set JAVA_HOME to the JDK root folder (the folder containing bin), not to bin itself. Add %JAVA_HOME%\\bin to User Path if java/javac are not found. Verify with: echo %JAVA_HOME%, where java, java --version, javac --version. Linux: echo $JAVA_HOME; which java; readlink -f "$(which java)".',
   JavaScript: 'Node.js installers usually add Node and npm to PATH. On Windows, a common folder is C:\\Program Files\\nodejs\\; verify with where node, where npm, node --version and npm --version. Linux version managers configure PATH for the active shell; verify with which node.',
@@ -132,28 +143,15 @@ export default function SystemSetup({ track }) {
     {selected ? <><SetupCard track={selected} />{selected === 'Python' && <PythonEcosystem />}</> : <><h3 className="setup-course-list-title">Course setup guides</h3><p className="setup-course-list-intro">Select a course in the lesson navigator to see its focused instructions, or browse the guides below.</p><div className="setup-all-grid">{allTracks.map((name) => <SetupCard key={name} track={name} />)}</div><PythonEcosystem /></>}
   </section>
 }
-, command: 'pwd', output: '/home/learner', command2: 'echo "Hello AR CodeLab"', output2: 'Hello AR CodeLab', caption: 'Linux: type commands at the shell prompt; use the WSL terminal for Linux commands on Windows.' },
-  'Docker & Containers': { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\containers>', command: 'docker --version', output: 'Docker version information', command2: 'docker run --rm hello-world', output2: 'Hello from Docker!', caption: 'Docker: if the version works but the test fails, start Docker Desktop or the Docker service.' },
-  'Git & GitHub': { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\demo>', command: 'git --version', output: 'git version 2.x.x', command2: 'git status', output2: 'On branch main (inside a Git repository)', caption: 'Git: run git status inside a folder that has been initialized or cloned as a repository.' },
-  Kubernetes: { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\k8s>', command: 'kubectl version --client', output: 'Client Version: v1.x.x', command2: 'kubectl get nodes', output2: 'Node list (requires a reachable cluster)', caption: 'Kubernetes: the client version can work without a cluster; get nodes requires a configured cluster.' },
-  'Generative AI': { title: 'VS Code · Python terminal', prompt: '(.venv) PS C:\\Projects\\gen-ai>', command: 'python --version', output: 'Python 3.x.x', command2: 'python -m pip show openai', output2: 'Package details (if installed in this environment)', caption: 'Generative AI: install the SDK in your active environment and keep API keys out of source code.' },
-  'Agentic AI': { title: 'VS Code · Python terminal', prompt: '(.venv) PS C:\\Projects\\agent>', command: 'python --version', output: 'Python 3.x.x', command2: 'python -m pip show langgraph', output2: 'Package details (if installed in this environment)', caption: 'Agentic AI: test the Python environment first, then validate tools with safe, read-only actions.' },
-}
-function CourseTerminalScreenshot({ track }) {
-  const ex = terminalExamples[track]
-  if (!ex) return null
+ : 'PS C:\\Projects\\my-app>'
   return <figure className="setup-visual course-terminal-visual">
     <div className="mock-window">
-      <div className="mock-titlebar"><span className="mock-dots"><i/><i/><i/></span><b>{ex.title}</b><span>— □ ×</span></div>
-      <div className="mock-terminal">
-        <p><span>{ex.prompt}</span> {ex.command}</p><p className="mock-output">{ex.output}</p>
-        <p><span>{ex.prompt}</span> {ex.command2}</p><p className="mock-output">{ex.output2}</p>
-      </div>
+      <div className="mock-titlebar"><span className="mock-dots"><i/><i/><i/></span><b>{title}</b><span>— □ ×</span></div>
+      <div className="mock-terminal"><p><span>{prompt}</span> {command1}</p><p className="mock-output">{output1}</p><p><span>{prompt}</span> {command2}</p><p className="mock-output">{output2}</p></div>
     </div>
-    <figcaption>{ex.caption} These are illustrative examples; version numbers and output vary by installation.</figcaption>
+    <figcaption>{caption} Illustration only; output and version numbers vary by installation.</figcaption>
   </figure>
 }
-
 const pathNotes = {
   Python: 'Windows: enable “Add Python to PATH” in the installer. Common folders are the Python install directory and its Scripts subfolder. Verify with: py --version, python --version, where python, and py -m pip --version. Linux package installs usually add python3 automatically; verify with which python3.',
   Java: 'Set JAVA_HOME to the JDK root folder (the folder containing bin), not to bin itself. Add %JAVA_HOME%\\bin to User Path if java/javac are not found. Verify with: echo %JAVA_HOME%, where java, java --version, javac --version. Linux: echo $JAVA_HOME; which java; readlink -f "$(which java)".',
