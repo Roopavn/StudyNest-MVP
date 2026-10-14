@@ -6,6 +6,8 @@ on:
       - '.github/workflows/integrate-system-setup.yml'
       - 'src/SystemSetup.jsx'
       - 'src/SystemSetup.css'
+      - 'src/PythonEcosystem.jsx'
+      - 'src/PythonEcosystem.css'
   workflow_dispatch:
 
 permissions:
@@ -18,13 +20,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Integrate setup component
+      - name: Integrate setup and Python ecosystem
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          p = Path('src/LearningCenter.jsx')
-          text = p.read_text()
+
+          learning = Path('src/LearningCenter.jsx')
+          text = learning.read_text()
           old_import = "import './LearningCenter.css'"
           new_import = "import './LearningCenter.css'\nimport SystemSetup from './SystemSetup'"
           if "import SystemSetup from './SystemSetup'" not in text:
@@ -35,23 +38,41 @@ jobs:
           insertion = "    <SystemSetup track={track} />\n" + marker
           if '<SystemSetup track={track} />' not in text:
               if marker not in text:
-                  raise SystemExit('Python library render marker not found')
+                  raise SystemExit('Python lesson render marker not found')
               text = text.replace(marker, insertion, 1)
-          p.write_text(text)
+          learning.write_text(text)
+
+          setup = Path('src/SystemSetup.jsx')
+          setup_text = setup.read_text()
+          if "import PythonEcosystem from './PythonEcosystem.jsx'" not in setup_text:
+              setup_text = setup_text.replace("import './SystemSetup.css'", "import './SystemSetup.css'\nimport PythonEcosystem from './PythonEcosystem.jsx'", 1)
+          if "<PythonEcosystem />" not in setup_text:
+              selected_return = "return <section className=\"system-setup\"><SetupCard track={selected} /></section>"
+              selected_replacement = "return <><section className=\"system-setup\"><SetupCard track={selected} /></section>{selected === 'Python' && <PythonEcosystem />}</>"
+              if selected_return not in setup_text:
+                  raise SystemExit('Selected setup return marker not found')
+              setup_text = setup_text.replace(selected_return, selected_replacement, 1)
+              all_return_start = "if (!track || track === 'All topics') return <section className=\"system-setup\">"
+              if all_return_start in setup_text:
+                  setup_text = setup_text.replace("</div></section>\n  const selected", "</div></section><PythonEcosystem />\n  const selected", 1)
+          setup.write_text(setup_text)
           PY
       - name: Validate integration
         run: |
           grep -n "SystemSetup" src/LearningCenter.jsx
+          grep -n "PythonEcosystem" src/SystemSetup.jsx
           test -f src/SystemSetup.jsx
           test -f src/SystemSetup.css
+          test -f src/PythonEcosystem.jsx
+          test -f src/PythonEcosystem.css
       - name: Commit integration
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/LearningCenter.jsx
+          git add src/LearningCenter.jsx src/SystemSetup.jsx
           if git diff --cached --quiet; then
             echo "No integration changes needed"
           else
-            git commit -m "Integrate Windows and Linux setup into course flow"
+            git commit -m "Add Python frameworks and libraries learning path"
             git push
           fi
