@@ -1,8 +1,8 @@
-# StudyNest
+# AR-CodeLab
 
-**A focused, IT-skills learning workspace built with React and Vite.**
+**Learn. Build. Get Hired.** A practical IT learning workspace built with React and Vite.
 
-StudyNest helps learners explore structured lessons, practice technical questions, organize study tasks, and save courses. This repository contains the web MVP and a GitHub Actions workflow for publishing it to GitHub Pages.
+AR-CodeLab is an all-in-one IT learning lab for structured courses, practical coding lessons, Windows and Linux setup guidance, projects, and technical interview preparation. The name represents a hands-on place to learn, experiment, and build. This repository contains the web MVP and a GitHub Actions workflow for publishing it to GitHub Pages.
 
 - **Live app:** https://roopavn.github.io/StudyNest-MVP/
 - **Repository:** https://github.com/Roopavn/StudyNest-MVP
@@ -112,13 +112,13 @@ The workflow is located at .github/workflows/deploy.yml. It runs on pushes to ma
 4. Push changes to main, or manually run the workflow from the Actions tab.
 5. Check the workflow run and its deploy job for the published URL.
 
-The Vite base path is configured for the StudyNest-MVP repository when the workflow sets GITHUB_PAGES=true. If the repository is renamed, update vite.config.js and the deployment configuration as needed.
+The Vite base path is configured for the current `StudyNest-MVP` GitHub repository when the workflow sets `GITHUB_PAGES=true`; the public-facing product brand is AR-CodeLab. If the repository is renamed, update vite.config.js and the deployment configuration as needed.
 
 Firebase Hosting configuration exists in firebase.json, but the current GitHub Actions workflow publishes to GitHub Pages; Firebase Hosting deployment is not configured in that workflow.
 
 ## Project structure
 
-    StudyNest-MVP/
+    AR-CodeLab app (repository: StudyNest-MVP)/
     ├── .github/workflows/
     │   └── deploy.yml           # Lint/build and GitHub Pages deployment
     ├── public/                  # Static assets
