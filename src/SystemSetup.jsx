@@ -34,7 +34,7 @@ const courseVisuals = {
   'Linux & Shell': ['https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=900&q=85', 'Linux shell terminal'],
   'Docker & Containers': ['https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&w=900&q=85', 'Container technology'],
   'Git & GitHub': ['https://images.unsplash.com/photo-1556075798-4825dfaaf498?auto=format&fit=crop&w=900&q=85', 'Source control collaboration'],
-  Kubernetes: ['https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&w=900&q=85', 'Kubernetes and cloud native infrastructure'],
+  Kubernetes: ['https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png', 'Kubernetes official project logo'],
   'Generative AI': ['https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=85', 'Generative AI neural network visualization'],
   'Agentic AI': ['https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=900&q=85', 'Agentic AI systems visualization'],
   'Data Engineering / Big Data': ['https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85', 'Data analytics dashboard'],
