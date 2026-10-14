@@ -21,17 +21,49 @@ const common = {
 
 const allTracks = Object.keys(common)
 
+function TerminalGuide() {
+  return <section className="terminal-guide">
+    <div className="terminal-guide-title"><span>START HERE</span><h3>Where do I type the commands?</h3><p>Choose one terminal. You do not need to use all of them. Commands are usually the same across terminals, but some activation and path commands differ by operating system.</p></div>
+    <div className="terminal-choice-grid">
+      <article><h4>Windows Command Prompt</h4><p>Press <kbd>Win</kbd> + <kbd>R</kbd>, type <code>cmd</code>, then press Enter. Use this for basic version checks and Windows commands.</p></article>
+      <article><h4>Windows PowerShell</h4><p>Open Start and search for <b>PowerShell</b>. Use it for Windows setup commands and environment checks.</p></article>
+      <article><h4>VS Code terminal</h4><p>Open your project folder in VS Code, then choose <b>Terminal → New Terminal</b> (shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>`</kbd>). This is the recommended option while working on a project.</p></article>
+      <article><h4>PyCharm terminal</h4><p>Open your project in PyCharm and choose <b>View → Tool Windows → Terminal</b>. Check that the project interpreter is the one you installed packages into.</p></article>
+      <article><h4>Linux terminal</h4><p>Open Terminal from the applications menu, or press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> on many desktop distributions. On Windows, WSL users should open their Linux distribution.</p></article>
+    </div>
+    <div className="terminal-guide-note"><b>Important:</b> VS Code and PyCharm terminals are terminals too. For project work, open the terminal inside the project folder so commands run in the right place. If you install software or change PATH, close and reopen the terminal before testing again.</div>
+  </section>
+}
+
+function PathGuide() {
+  return <section className="path-guide">
+    <div><span className="path-guide-kicker">WINDOWS PATH WALKTHROUGH</span><h3>When and where do I add PATH?</h3><p>Only add PATH if the installer did not do it, or the verification command says the command cannot be found. Add the folder containing the executable—not the executable file itself.</p></div>
+    <ol>
+      <li>Find the actual installation folder. Examples: a Python install folder containing <code>python.exe</code>, a JDK folder containing <code>bin\javac.exe</code>, or a tool folder containing <code>git.exe</code>.</li>
+      <li>Open Start and search <b>Edit environment variables for your account</b>. Open it, select <b>Path</b> under User variables, then choose <b>Edit → New</b>.</li>
+      <li>Add the correct folder path, save every dialog, and reopen Command Prompt, PowerShell, VS Code or PyCharm terminal.</li>
+      <li>Check with the course's version command. Use <code>where python</code> / <code>where git</code> on Windows or <code>which python3</code> / <code>which git</code> on Linux to see which executable is found.</li>
+    </ol>
+    <div className="path-guide-note"><b>Prefer User Path</b> for a personal computer. System Path changes affect all users and may require administrator access. Do not overwrite the existing PATH list or copy a sample folder path blindly—use the real folder on your computer. For Python, enable “Add Python to PATH” in the installer if offered; the Windows <code>py</code> launcher may work even when <code>python</code> does not.</div>
+  </section>
+}
+
 function SetupCard({ track }) {
   const s = common[track]
   return <article className="setup-card">
     <div className="setup-card-head"><span>STEP 02 · SYSTEM SETUP</span><h3>{track}</h3><p>{s.intro}</p></div>
     <div className="setup-os-grid"><div><h4>🪟 Windows</h4><ol>{s.win.map((x) => <li key={x}>{x}</li>)}</ol></div><div><h4>🐧 Linux</h4><ol>{s.linux.map((x) => <li key={x}>{x}</li>)}</ol></div></div>
-    <div className="setup-verify"><div><strong>Verify installation</strong><pre>{s.verify}</pre></div><div><strong>First practice</strong><pre>{s.first}</pre></div></div>
+    <div className="setup-verify"><div><strong>1. Verify the installation</strong><p>Open one of the terminals above and run these commands one at a time. If a version is printed, the command is available.</p><pre>{s.verify}</pre><small>Expected: a version number or a successful tool response. Exact version text depends on your installed release.</small></div><div><strong>2. Run a first test</strong><p>Run this from the relevant project folder or tool environment. For source-file examples, create the named file first.</p><pre>{s.first}</pre><small>If this step uses a server, database, cluster or cloud account, start/configure that service first. A CLI version check alone does not prove the service is running.</small></div></div>
+    <details className="setup-troubleshoot"><summary>Command not found or test failed?</summary><ul><li><b>Command not recognized / not found:</b> confirm the tool is installed, check PATH, then open a fresh terminal.</li><li><b>Wrong version or wrong Python:</b> use <code>py --version</code> on Windows or <code>python3 --version</code> on Linux; compare the executable location.</li><li><b>VS Code/PyCharm cannot find packages:</b> select the correct interpreter/environment for this project and install dependencies in that same environment.</li><li><b>Permission or service error:</b> check service status and required permissions; do not run everything as administrator/root by default.</li></ul></details>
   </article>
 }
 
 export default function SystemSetup({ track }) {
-  if (!track || track === 'All topics') return <section className="system-setup"><div className="system-setup-heading"><span className="system-setup-kicker">STEP 02 · SYSTEM SETUP</span><h2>Windows & Linux System Setup</h2><p>Setup comes immediately after the course introduction. Select a course to focus its setup, or review every course setup below.</p></div><div className="setup-all-grid">{allTracks.map((name) => <SetupCard key={name} track={name} />)}</div></section>
-  const selected = common[track] ? track : 'Python'
-  return <><section className="system-setup"><SetupCard track={selected} /></section></>
+  const selected = common[track] ? track : null
+  return <section className="system-setup">
+    <div className="system-setup-heading"><span className="system-setup-kicker">STEP 02 · SYSTEM SETUP</span><h2>Install it, verify it, run your first test</h2><p>Every setup guide now explains where commands go, how PATH works, how to verify the installation, and what to check when a command fails.</p></div>
+    <TerminalGuide />
+    <PathGuide />
+    {selected ? <SetupCard track={selected} /> : <><h3 className="setup-course-list-title">Course setup guides</h3><p className="setup-course-list-intro">Select a course in the lesson navigator to see its focused instructions, or browse the guides below.</p><div className="setup-all-grid">{allTracks.map((name) => <SetupCard key={name} track={name} />)}</div></>}
+  </section>
 }
