@@ -9,7 +9,7 @@ export const initialTasks = [
 ]
 
 export const courses = [
-  { id: 1, title: 'Python Foundations', category: 'IT · Programming', progress: 0, lessons: '15 lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop showing a programming workspace' },
+  { id: 1, title: 'Python Foundations', category: 'IT · Programming', progress: 0, lessons: '51 detailed lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop showing a programming workspace' },
   { id: 2, title: 'Database & SQL Essentials', category: 'IT · Data skills', progress: 0, lessons: '12 lessons', color: 'orange', icon: 'code', image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=900&q=85', imageAlt: 'Abstract data and database visualization' },
   { id: 3, title: 'REST API Development', category: 'IT · Backend', progress: 0, lessons: '12 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=85', imageAlt: 'Server infrastructure representing backend APIs' },
   { id: 4, title: 'Java Foundations', category: 'IT · Programming', progress: 0, lessons: '10 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop with a code editor open' },
