@@ -1,4 +1,5 @@
 import './SystemSetup.css'
+import PythonEcosystem from './PythonEcosystem.jsx'
 
 const common = {
   Python: { intro: 'Python is used for backend services, automation, data and AI.', win: ['Install Python 3 and enable Add Python to PATH.', 'Create: py -m venv .venv', 'Activate: .venv\\Scripts\\activate', 'Install: py -m pip install --upgrade pip'], linux: ['Install Python 3 and python3-venv.', 'Create: python3 -m venv .venv', 'Activate: source .venv/bin/activate', 'Upgrade pip: python -m pip install --upgrade pip'], verify: 'python --version\npython -m pip --version', first: 'python -c "print(\'Hello StudyNest\')"' },
@@ -83,6 +84,6 @@ export default function SystemSetup({ track }) {
     <div className="system-setup-heading"><span className="system-setup-kicker">STEP 02 · SYSTEM SETUP</span><h2>Install it, verify it, run your first test</h2><p>Every setup guide now explains where commands go, how PATH works, how to verify the installation, and what to check when a command fails.</p></div>
     <TerminalGuide />
     <PathGuide />
-    {selected ? <SetupCard track={selected} /> : <><h3 className="setup-course-list-title">Course setup guides</h3><p className="setup-course-list-intro">Select a course in the lesson navigator to see its focused instructions, or browse the guides below.</p><div className="setup-all-grid">{allTracks.map((name) => <SetupCard key={name} track={name} />)}</div></>}
+    {selected ? <><SetupCard track={selected} />{selected === 'Python' && <PythonEcosystem />}</> : <><h3 className="setup-course-list-title">Course setup guides</h3><p className="setup-course-list-intro">Select a course in the lesson navigator to see its focused instructions, or browse the guides below.</p><div className="setup-all-grid">{allTracks.map((name) => <SetupCard key={name} track={name} />)}</div><PythonEcosystem /></>}
   </section>
 }
