@@ -584,35 +584,24 @@ function LessonVisual({ lesson }) {
 
 function LessonMindMap({ lesson }) {
   const example = lessonExample(lesson)
-  const short = (value, limit=31) => {
-    const text = String(value || '').replace(/\s+/g, ' ').trim()
-    return text.length > limit ? text.slice(0, limit - 1) + '…' : text
-  }
+  const firstCodeLine = example.code.split('\\n').find(line => line.trim() && !line.trim().startsWith('#')) || example.code
   const branches = [
-    { x:18, y:38, color:'#3159c9', label:'CORE IDEA', detail:short(lesson.summary,30) },
-    { x:18, y:146, color:'#0d9488', label:'CODE / FLOW', detail:short(example.code.split('\n').find(line=>line.trim()&&!line.trim().startsWith('#')) || example.code,30) },
-    { x:502, y:38, color:'#c47725', label:'REAL-WORLD USE', detail:short(example.name,30) },
-    { x:502, y:146, color:'#7c55c7', label:'PRACTICE', detail:short(lesson.task,30) },
+    { label: 'CORE IDEA', detail: lesson.summary, color: 'blue' },
+    { label: 'CODE / FLOW', detail: firstCodeLine, color: 'teal' },
+    { label: 'REAL-WORLD USE', detail: example.name + ': ' + example.description, color: 'orange' },
+    { label: 'PRACTICE', detail: lesson.task, color: 'purple' },
   ]
   return <section className="lesson-mindmap" aria-labelledby="lesson-mindmap-title">
-    <div className="lesson-mindmap-heading"><span>VISUAL REVISION</span><h4 id="lesson-mindmap-title">Lesson mind map</h4><p>Use this map to connect the main idea, example, code and practice task.</p></div>
-    <figure className="lesson-mindmap-figure">
-      <svg viewBox="0 0 720 238" role="img" aria-label={`Mind map for ${lesson.title}, with branches for core idea, code or flow, real-world use, and practice.`} preserveAspectRatio="xMidYMid meet">
-        <rect x="1" y="1" width="718" height="236" rx="15" fill="#fbfcff" stroke="#e0e7f3"/>
-        {branches.map((branch,index)=><g key={branch.label}>
-          <path d={index<2 ? `M260 112 C225 112 235 ${branch.y+31} 218 ${branch.y+31}` : `M460 112 C495 112 485 ${branch.y+31} 502 ${branch.y+31}`} fill="none" stroke={branch.color} strokeWidth="2.2" strokeLinecap="round" opacity=".8"/>
-          <rect x={branch.x} y={branch.y} width="200" height="62" rx="10" fill="#ffffff" stroke={branch.color} strokeWidth="1.5"/>
-          <circle cx={branch.x+15} cy={branch.y+16} r="4" fill={branch.color}/>
-          <text x={branch.x+26} y={branch.y+19} fontSize="9" fontWeight="800" letterSpacing=".6" fill={branch.color}>{branch.label}</text>
-          <text x={branch.x+12} y={branch.y+40} fontSize="10.5" fontWeight="600" fill="#334155">{branch.detail}</text>
-        </g>)}
-        <rect x="260" y="77" width="200" height="70" rx="14" fill="#e9efff" stroke="#8da8f3" strokeWidth="1.8"/>
-        <text x="360" y="101" textAnchor="middle" fontSize="9" fontWeight="800" letterSpacing="1" fill="#3159c9">{lesson.track.toUpperCase()}</text>
-        <text x="360" y="121" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#1e2e53">{short(lesson.title,27)}</text>
-        <text x="360" y="136" textAnchor="middle" fontSize="9" fill="#526078">lesson topic</text>
-      </svg>
-      <figcaption>Mind map for {lesson.title}. Review the four branches, then explain how they connect without looking at the lesson.</figcaption>
-    </figure>
+    <div className="lesson-mindmap-heading"><span>VISUAL REVISION</span><h4 id="lesson-mindmap-title">Lesson mind map</h4><p>Full explanations are shown for every branch. Nothing is shortened or hidden behind ellipses.</p></div>
+    <div className="lesson-mindmap-full" role="group" aria-label={`Complete mind map for ${lesson.title}`}>
+      <div className="lesson-mindmap-center"><span>{lesson.track}</span><h5>{lesson.title}</h5><p>Lesson topic</p></div>
+      <div className="lesson-mindmap-branches">
+        {branches.map(branch => <article className={`lesson-mindmap-branch lesson-mindmap-branch-${branch.color}`} key={branch.label}>
+          <h5>{branch.label}</h5><p>{branch.detail}</p>
+        </article>)}
+      </div>
+    </div>
+    <p className="lesson-mindmap-caption">Review the core idea, code example, real-world use, and practice task. Each section displays its complete text.</p>
   </section>
 }
 
