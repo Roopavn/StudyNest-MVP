@@ -22,3 +22,12 @@
 .mock-result{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #c7d2fe;border-radius:8px;background:#eef2ff}.mock-result div{display:grid;gap:4px;flex:1}.mock-result small{color:#64748b}.mock-settings-icon{font-size:20px}.mock-highlight{border:1px solid #818cf8;border-radius:5px;padding:5px 9px;color:#3730a3;background:#e0e7ff;font-size:11px;font-weight:800;white-space:nowrap}
 .mock-hint{color:#64748b;margin:12px 0 0}.mock-path-row{display:grid;grid-template-columns:1fr 1.5fr;padding:8px;border-bottom:1px solid #e2e8f0}.mock-path-row:first-of-type{margin-top:10px;background:#e2e8f0;font-weight:700}.mock-selected{background:#dbeafe;outline:1px solid #60a5fa}.mock-action-row{display:flex;justify-content:flex-end;gap:8px;padding:12px 0}.mock-action-row span:not(.mock-highlight){border:1px solid #cbd5e1;border-radius:5px;padding:5px 9px;background:#fff}.mock-path-note{padding:10px;border-left:3px solid #6366f1;background:#eef2ff;color:#3730a3;line-height:1.5}
 @media(max-width:600px){.mock-settings-body{padding:10px}.mock-result{align-items:flex-start;flex-wrap:wrap}.mock-terminal{padding:12px;font-size:11px}.setup-visual figcaption{font-size:11px}}
+
+
+/* More explicit PATH editor and named environment-variable examples */
+.mock-path-entry{padding:10px 12px;margin-top:7px;border:1px solid #cbd5e1;border-radius:5px;background:#fff;color:#334155;font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+.mock-entry-selected{background:#dbeafe;border-color:#60a5fa;box-shadow:inset 3px 0 #2563eb}
+.mock-field-label{display:block;margin:10px 0 5px;color:#475569;font-weight:750}
+.mock-field{padding:10px 12px;border:1px solid #94a3b8;border-radius:5px;background:#fff;color:#334155;font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+.mock-field-emphasis{border-color:#818cf8;background:#eef2ff;color:#3730a3;font-weight:800}
+.setup-subheading{margin:18px 0 6px;color:#26345f;font-size:16px}
