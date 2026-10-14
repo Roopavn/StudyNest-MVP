@@ -118,3 +118,20 @@
 .lesson-code-output[open] summary{border-bottom:1px solid #dbe4f2}
 .lesson-code-output pre{margin:0;padding:12px;background:#172238;color:#d8f5e7;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;line-height:1.7}
 .lesson-code-output p{margin:0;padding:8px 12px;color:#6b7890;font-size:9px;line-height:1.6}
+
+/* Mind map: show complete branch text without ellipses or fixed SVG clipping. */
+.lesson-mindmap-full{display:grid;gap:14px;margin-top:12px}
+.lesson-mindmap-center{max-width:560px;width:100%;justify-self:center;box-sizing:border-box;padding:16px 18px;text-align:center;border:1.5px solid #8da8f3;border-radius:13px;background:#e9efff;overflow-wrap:anywhere}
+.lesson-mindmap-center>span{display:block;color:#3159c9;font-size:10px;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
+.lesson-mindmap-center h5{margin:7px 0;color:#1e2e53;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.lesson-mindmap-center p{margin:0;color:#526078;font-size:10px}
+.lesson-mindmap-branches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.lesson-mindmap-branch{min-width:0;padding:14px;border:1.5px solid #dbe4f2;border-left:4px solid var(--mindmap-color);border-radius:10px;background:#fff}
+.lesson-mindmap-branch h5{margin:0 0 8px;color:var(--mindmap-color);font-size:10px;font-weight:800;letter-spacing:.5px}
+.lesson-mindmap-branch p{margin:0;color:#334155;font-size:11px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal}
+.lesson-mindmap-branch-blue{--mindmap-color:#3159c9}
+.lesson-mindmap-branch-teal{--mindmap-color:#0d9488}
+.lesson-mindmap-branch-orange{--mindmap-color:#c47725}
+.lesson-mindmap-branch-purple{--mindmap-color:#7c55c7}
+.lesson-mindmap-caption{margin:10px 0 0;color:#64748b;font-size:10px;line-height:1.7}
+@media(max-width:520px){.lesson-mindmap-branches{grid-template-columns:minmax(0,1fr)}.lesson-mindmap-center{padding:13px}}
