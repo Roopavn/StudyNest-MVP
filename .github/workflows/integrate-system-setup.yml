@@ -1,0 +1,57 @@
+name: Integrate course system setup
+
+on:
+  push:
+    paths:
+      - '.github/workflows/integrate-system-setup.yml'
+      - 'src/SystemSetup.jsx'
+      - 'src/SystemSetup.css'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Integrate setup component
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/LearningCenter.jsx')
+          text = p.read_text()
+          old_import = "import './LearningCenter.css'"
+          new_import = "import './LearningCenter.css'\nimport SystemSetup from './SystemSetup'"
+          if "import SystemSetup from './SystemSetup'" not in text:
+              if old_import not in text:
+                  raise SystemExit('LearningCenter.css import marker not found')
+              text = text.replace(old_import, new_import, 1)
+          marker = "    {track === 'Python' && ("
+          insertion = "    <SystemSetup track={track} />\n" + marker
+          if '<SystemSetup track={track} />' not in text:
+              if marker not in text:
+                  raise SystemExit('Python library render marker not found')
+              text = text.replace(marker, insertion, 1)
+          p.write_text(text)
+          PY
+      - name: Validate integration
+        run: |
+          grep -n "SystemSetup" src/LearningCenter.jsx
+          test -f src/SystemSetup.jsx
+          test -f src/SystemSetup.css
+      - name: Commit integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/LearningCenter.jsx
+          if git diff --cached --quiet; then
+            echo "No integration changes needed"
+          else
+            git commit -m "Integrate Windows and Linux setup into course flow"
+            git push
+          fi
