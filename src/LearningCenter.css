@@ -79,3 +79,15 @@
 .python-library-practice{margin-top:10px;padding:10px 11px;border-left:3px solid #3159c9;border-radius:0 7px 7px 0;background:#f2f5ff}
 .python-library-practice strong{color:#34435d;font-size:10px}
 .python-library-practice p{margin-bottom:0}
+
+
+/* Per-lesson visual diagrams and practical scenarios */
+.lesson-visual{height:auto;display:block;margin:17px 0 12px;padding:8px;background:#f4f7ff;border:1px solid #e1e8f5}
+.lesson-visual svg{display:block;width:100%;height:auto;max-height:230px}
+.lesson-visual figcaption{padding:5px 8px 3px;color:#6b7890;font-size:9px;line-height:1.6}
+.lesson-real-world{margin-top:14px;padding:15px;border:1px solid #cfe9e1;border-radius:11px;background:linear-gradient(140deg,#f2fbf7,#f8fbff)}
+.lesson-real-world-heading>span{font-size:8px;font-weight:900;letter-spacing:1px;color:#0d8876}
+.lesson-real-world-heading h4{margin:6px 0 8px;font-size:13px;color:#24334d}
+.lesson-real-world>p{margin:0;color:#596981;font-size:10px;line-height:1.8}
+.lesson-real-world pre{margin:11px 0 8px;padding:12px;border-radius:8px;background:#18243b;color:#dce7ff;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px;line-height:1.7}
+.lesson-real-world .lesson-real-world-tip{padding-top:8px;border-top:1px solid #dcece7;color:#0f766e;font-size:9px}
