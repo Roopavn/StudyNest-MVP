@@ -61,3 +61,21 @@
 .python-library-docs{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:11px 12px;border-radius:9px;background:#3159c9;color:#fff;text-decoration:none;font-size:11px;font-weight:800}
 .python-library-note{margin:12px 0 0!important;font-size:10px!important}
 @media(max-width:760px){.python-library-layout{grid-template-columns:1fr}.python-library-detail{padding:15px}}
+
+
+.python-library-curriculum{display:grid;gap:12px;margin-top:22px}
+.python-library-curriculum-heading{padding-bottom:4px}
+.python-library-curriculum-heading h5{margin:7px 0;color:#17243b;font-size:18px;line-height:1.35}
+.python-library-curriculum-heading p{margin:0;color:#64728a;font-size:12px;line-height:1.7}
+.python-library-lesson{padding:15px;border:1px solid #e0e7f2;border-radius:12px;background:#fff}
+.python-library-lesson-top{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px}
+.python-library-lesson-top>span{flex-shrink:0;padding:5px 7px;border-radius:6px;background:#eef2ff;color:#3159c9;font-size:9px;font-weight:900}
+.python-library-lesson-top h6{margin:2px 0;color:#24324a;font-size:13px;line-height:1.5}
+.python-library-lesson>p,.python-library-practice p{margin:7px 0;color:#64728a;font-size:11px;line-height:1.75}
+.python-library-lesson ul{display:grid;gap:6px;margin:10px 0;padding-left:18px;color:#43516a;font-size:11px;line-height:1.7}
+.python-library-lesson-code{margin-top:11px;border:1px solid #e3eaf4;border-radius:9px;background:#f8faff}
+.python-library-lesson-code summary{padding:9px 11px;color:#34435d;font-size:10px;font-weight:800;cursor:pointer}
+.python-library-lesson-code pre{overflow:auto;margin:0;padding:11px;border-top:1px solid #e3eaf4;color:#2549a5;font-size:10px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.python-library-practice{margin-top:10px;padding:10px 11px;border-left:3px solid #3159c9;border-radius:0 7px 7px 0;background:#f2f5ff}
+.python-library-practice strong{color:#34435d;font-size:10px}
+.python-library-practice p{margin-bottom:0}
