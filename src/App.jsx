@@ -28,7 +28,7 @@ const pageTitles = {
 }
 
 function Brand() {
-  return <div className="brand"><span className="brand-mark"><BookOpen size={21} strokeWidth={2.4} /></span><span>StudyNest<span className="brand-dot">.</span></span></div>
+  return <div className="brand"><span className="brand-mark"><BookOpen size={21} strokeWidth={2.4} /></span><span>AR-CodeLab<span className="brand-dot">.</span></span></div>
 }
 function ProgressBar({ value, color = 'blue' }) {
   return <div className="progress-track"><div className={`progress-fill ${color}`} style={{ width: `${value}%` }} /></div>
@@ -174,7 +174,7 @@ export default function App() {
 
           {activePage === 'Bookmarks' && <section className="panel bookmarks-panel"><div className="section-heading"><h2>Your saved courses</h2><span className="course-category">{bookmarks.length} SAVED</span></div>{bookmarks.length ? <div className="course-grid">{courses.filter((course) => bookmarks.includes(course.id)).map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><img className="course-art-image" src={course.image} alt={course.imageAlt} loading="lazy" /><div className="course-art-shade" /><div className="course-art-icon"><Icon size={25} /></div></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} /><button className="course-open" onClick={() => openCourse(course)}>Continue course <ArrowRight size={14} /></button><button className="panel-footer-link" onClick={() => toggleBookmark(course.id)}><X size={14} /> Remove bookmark</button></div></article>})}</div> : <div className="empty-state"><Bookmark size={28} /><h2>Your learning library is empty</h2><p>Use the bookmark icon on any course to save it here. Your saved courses stay on this device.</p><button className="primary-button" onClick={() => navigate('My learning')}>Explore courses <ArrowRight size={16} /></button></div>}</section>}
 
-          <footer className="page-footer"><span>© 2026 StudyNest</span><span><span className="footer-status" /> Your learning journey, one step at a time</span><button onClick={() => setNotice('StudyNest MVP · Firebase integration is optional and not yet configured.')}><CircleHelp size={14} /> Help & feedback</button></footer>
+          <footer className="page-footer"><span>© 2026 AR-CodeLab</span><span><span className="footer-status" /> Your learning journey, one step at a time</span><button onClick={() => setNotice('AR-CodeLab MVP · Firebase integration is optional and not yet configured.')}><CircleHelp size={14} /> Help & feedback</button></footer>
         </div>
       </main>
 
