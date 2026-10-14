@@ -414,6 +414,40 @@ function lessonExample(lesson) {
     'Agentic AI': [
       [/tool|agent|planning|workflow|permission/, 'Bounded learning-plan assistant', 'An agent can select approved tools to inspect course progress and propose a study plan, but the application must validate every tool call and enforce limits.', 'Goal -> Plan -> Validate tool call -> Execute\n       ^                         |\n       +------ Observe result ---+'],
     ],
+    Java: [
+      [/class|object|inheritance|interface|oop/, 'Model an order in an enterprise service', 'Represent order state and behavior in a class, and use interfaces or composition to keep components testable.', 'class Order {\n    private final int id;\n    Order(int id) { this.id = id; }\n    int getId() { return id; }\n}'],
+      [/collection|list|map|stream|filter/, 'Process customer records', 'Use collections and stream operations to filter or transform records before generating a report.', 'List<Integer> scores = List.of(70, 85, 92);\nvar passed = scores.stream().filter(score -> score >= 80).toList();\nSystem.out.println(passed);'],
+      [/exception|error|test|debug/, 'Handle a failed payment safely', 'Catch expected failures at a boundary, preserve useful diagnostics, and test both success and failure behavior.', 'try {\n    processPayment(order);\n} catch (PaymentException ex) {\n    logger.warn("Payment could not be completed", ex);\n}'],
+    ],
+    JavaScript: [
+      [/promise|async|await|concurrency|fetch/, 'Load dashboard data from an API', 'Wait for a network request, handle a failed response, and update the UI only after the asynchronous operation finishes.', 'async function loadCourses() {\n  const response = await fetch("/api/courses");\n  if (!response.ok) throw new Error("Request failed");\n  return response.json();\n}'],
+      [/array|object|map|filter|collection/, 'Filter a course catalogue', 'Transform a list of course records to show only active courses without mutating the original array.', 'const active = courses.filter(course => course.active);\nconst titles = active.map(course => course.title);'],
+      [/function|closure|event|dom/, 'Respond to a user action', 'Attach behavior to a button or event handler and keep the UI response predictable.', 'button.addEventListener("click", () => {\n  status.textContent = "Saved";\n});'],
+    ],
+    'C Programming': [
+      [/pointer|memory|allocation|array/, 'Process a bounded input buffer', 'C programs must check array bounds and pointer validity because an invalid memory access can corrupt data or crash the process.', 'int scores[] = {70, 85, 92};\nsize_t count = sizeof scores / sizeof scores[0];\nfor (size_t i = 0; i < count; i++) {\n    printf("%d\\n", scores[i]);\n}'],
+      [/function|struct|type|variable/, 'Represent a sensor reading', 'Use a struct to group related fields and functions to keep operations clear and reusable.', 'struct Reading {\n    int sensor_id;\n    double temperature;\n};'],
+    ],
+    'HTML & CSS': [
+      [/responsive|grid|flex|layout|css|style/, 'Make a course page work on mobile', 'Use responsive layout rules so course cards wrap on narrow screens while retaining readable spacing and focus states.', '.course-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));\n  gap: 1rem;\n}'],
+      [/semantic|form|accessib|html|element/, 'Build an accessible enrollment form', 'Use labels, semantic elements and clear validation messages so the form works with keyboards and assistive technology.', '<label for="email">Email address</label>\n<input id="email" name="email" type="email" required />'],
+    ],
+    'Cloud Fundamentals': [
+      [/identity|iam|permission|security|access/, 'Allow an app to read storage securely', 'Grant the app identity only the permissions it needs instead of embedding a long-lived account key in source code.', 'App identity -> Token -> Role assignment -> Storage API'],
+      [/network|region|availability|resilien|recovery/, 'Design for a service outage', 'Choose network boundaries, health monitoring, backups and recovery targets based on the service’s impact and availability needs.', 'Client -> Load balancing -> App instances -> Managed data'],
+    ],
+    'Linux & Shell': [
+      [/log|process|service|troubleshoot|monitor/, 'Investigate a failed service', 'Check service status and recent logs before restarting a production service; preserve diagnostic context for the incident.', 'systemctl status myapp\njournalctl -u myapp --since "15 minutes ago"'],
+      [/permission|file|directory|shell|command/, 'Find files safely on a server', 'Use clear paths and narrow search criteria when investigating files, and inspect commands before running destructive operations.', 'find ./logs -type f -name "*.log"\ngrep -n "ERROR" ./logs/app.log'],
+    ],
+    'Docker & Containers': [
+      [/image|container|dockerfile|build/, 'Package an API consistently', 'Build an image from a versioned Dockerfile so tests and deployments use the same runtime and dependencies.', 'docker build -t course-api:1.0 .\ndocker run --rm -p 8000:8000 course-api:1.0'],
+      [/volume|network|compose|secret|security/, 'Keep state outside a replaceable container', 'Use a managed data store or an appropriately configured volume for persistent data, and pass secrets securely at runtime.', 'Application container -> private network -> database\nPersistent data is managed separately'],
+    ],
+    'Git & GitHub': [
+      [/branch|pull request|merge|conflict|commit/, 'Review a feature before release', 'Keep a focused branch, inspect the diff, run checks, request review and merge only after required validations pass.', 'git switch -c feature/course-search\ngit add src/\ngit commit -m "Add course search"\ngit push -u origin feature/course-search'],
+      [/workflow|actions|ci|cd|deploy|release/, 'Automate quality checks', 'A repository workflow can run lint and tests for each proposed change before publishing a verified build.', 'Push -> Lint -> Test -> Build -> Deploy'],
+    ],
     Kubernetes: [
       [/pod|deployment|service|probe|rollout/, 'Keep a web API available', 'A Deployment maintains the desired replica count, a Service routes traffic to healthy Pods, and readiness probes prevent premature traffic.', 'Deployment -> Pods -> Readiness probe\nService ----------------> Ready Pods'],
     ],
@@ -429,6 +463,14 @@ function lessonExample(lesson) {
     'Data Engineering / Big Data': ['Batch analytics pipeline', 'A data pipeline reads raw records, applies quality checks, transforms the data and writes a curated dataset for reporting.', 'Read -> Validate -> Transform -> Aggregate -> Write'],
     'Generative AI': ['AI-assisted learning', 'Provide trusted context, validate the response format, and evaluate the answer before relying on it.', 'Context -> Model -> Validate -> Evaluate'],
     'Agentic AI': ['Tool-assisted workflow', 'A bounded agent proposes a tool action; application code checks permissions and arguments before execution.', 'Plan -> Validate -> Tool -> Observe -> Stop'],
+    Java: ['Enterprise service logic', 'Use types and small classes to represent business rules, then test success paths and expected failures.', 'Input -> Typed model -> Business rule -> Result'],
+    JavaScript: ['Interactive web feature', 'Handle browser events and API responses without assuming asynchronous work completes immediately.', 'User action -> Handler -> API -> Render state'],
+    'C Programming': ['Safe systems utility', 'Validate input lengths and memory access before processing external data.', 'Input -> Bounds check -> Process -> Output'],
+    'HTML & CSS': ['Accessible responsive interface', 'Use semantic markup and responsive CSS, and verify that the interface remains usable on small screens and with a keyboard.', 'Semantic HTML -> Responsive layout -> Accessible interaction'],
+    'Cloud Fundamentals': ['Secure cloud application', 'Combine managed compute, identity, network boundaries and monitoring rather than relying on hard-coded credentials.', 'Identity -> Network -> Managed service -> Monitoring'],
+    'Linux & Shell': ['Server troubleshooting', 'Inspect the process, service state and logs before changing a running server.', 'Check status -> Read logs -> Find cause -> Verify fix'],
+    'Docker & Containers': ['Repeatable application runtime', 'Package dependencies into an image and keep configuration and persistent data outside the image.', 'Source + dependencies -> Image -> Container'],
+    'Git & GitHub': ['Collaborative release workflow', 'Use commits and pull requests to review a change and let automated checks catch defects before release.', 'Branch -> Commit -> Review -> Checks -> Merge'],
     Kubernetes: ['Service reliability', 'Declare the desired workload state and monitor whether the running service meets its health checks.', 'Desired state -> Controller -> Workload -> Health'],
     DevOps: ['Safe software delivery', 'Automated checks catch common defects before a deployment reaches users.', 'Commit -> Test -> Release -> Observe'],
   }
