@@ -70,7 +70,7 @@ function SetupScreenshot({ type }) {
 function TerminalGuide() {
   return <section className="terminal-guide">
     <div className="terminal-guide-title"><span>START HERE</span><h3>Where do I type the commands?</h3><p>Choose one terminal. You do not need to use all of them. Commands are usually the same across terminals, but some activation and path commands differ by operating system.</p></div>
-    <SetupScreenshot type="terminal" />\n    <div className="terminal-choice-grid">
+    <div className="terminal-choice-grid">
       <article><h4>Windows Command Prompt</h4><p>Press <kbd>Win</kbd> + <kbd>R</kbd>, type <code>cmd</code>, then press Enter. Use this for basic version checks and Windows commands.</p></article>
       <article><h4>Windows PowerShell</h4><p>Open Start and search for <b>PowerShell</b>. Use it for Windows setup commands and environment checks.</p></article>
       <article><h4>VS Code terminal</h4><p>Open your project folder in VS Code, then choose <b>Terminal → New Terminal</b> (shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>`</kbd>). This is the recommended option while working on a project.</p></article>
