@@ -1,4 +1,5 @@
 import './SystemSetup.css'
+import PythonEcosystem from './PythonEcosystem.jsx'
 
 const common = {
   Python: { intro: 'Python is used for backend services, automation, data and AI.', win: ['Install Python 3 and enable Add Python to PATH.', 'Create: py -m venv .venv', 'Activate: .venv\\Scripts\\activate', 'Install: py -m pip install --upgrade pip'], linux: ['Install Python 3 and python3-venv.', 'Create: python3 -m venv .venv', 'Activate: source .venv/bin/activate', 'Upgrade pip: python -m pip install --upgrade pip'], verify: 'python --version\npython -m pip --version', first: 'python -c "print(\'Hello StudyNest\')"' },
@@ -31,7 +32,7 @@ function SetupCard({ track }) {
 }
 
 export default function SystemSetup({ track }) {
-  if (!track || track === 'All topics') return <section className="system-setup"><div className="system-setup-heading"><span className="system-setup-kicker">STEP 02 · SYSTEM SETUP</span><h2>Windows & Linux System Setup</h2><p>Setup comes immediately after the course introduction. Select a course to focus its setup, or review every course setup below.</p></div><div className="setup-all-grid">{allTracks.map((name) => <SetupCard key={name} track={name} />)}</div></section>
+  if (!track || track === 'All topics') return <section className="system-setup"><div className="system-setup-heading"><span className="system-setup-kicker">STEP 02 · SYSTEM SETUP</span><h2>Windows & Linux System Setup</h2><p>Setup comes immediately after the course introduction. Select a course to focus its setup, or review every course setup below.</p></div><div className="setup-all-grid">{allTracks.map((name) => <SetupCard key={name} track={name} />)}</div></section><PythonEcosystem />
   const selected = common[track] ? track : 'Python'
-  return <section className="system-setup"><SetupCard track={selected} /></section>
+  return <><section className="system-setup"><SetupCard track={selected} /></section>{selected === 'Python' && <PythonEcosystem />}</>
 }
