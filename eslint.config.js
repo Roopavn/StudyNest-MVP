@@ -12,6 +12,6 @@ export default [
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
     plugins: { js },
-    rules: { ...js.configs.recommended.rules, 'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }] },
+    rules: { ...js.configs.recommended.rules, 'no-unused-vars': ['warn', { argsIgnorePattern: '^(?:_|Icon$)', varsIgnorePattern: '^[A-Z]' }] },
   },
 ]
