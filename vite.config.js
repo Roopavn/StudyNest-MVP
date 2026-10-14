@@ -9,8 +9,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'StudyNest — IT Learning Lab',
-        short_name: 'StudyNest',
+        name: 'AR Codelab — IT Learning Lab',
+        short_name: 'AR Codelab',
         description: 'Learn IT courses, practise code, prepare for interviews, and follow system setup guides.',
         theme_color: '#1e3a8a',
         background_color: '#f7f8fc',
