@@ -39,6 +39,121 @@ const courseVisuals = {
   'Agentic AI': ['https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=900&q=85', 'Agentic AI systems visualization'],
   'Data Engineering / Big Data': ['https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85', 'Data analytics dashboard'],
 };
+
+const terminalExamples = {
+  Python: { title: 'VS Code · PowerShell', prompt: 'PS C:\\Projects\\my-app>', command: 'python --version', output: 'Python 3.x.x', command2: 'python -c "print(\'Hello AR CodeLab\')"', output2: 'Hello AR CodeLab', caption: 'Python: check the installed version, then run a tiny program.' },
+  SQL: { title: 'SQL query window · pgAdmin / Workbench', prompt: 'SQL>', command: 'SELECT 1;', output: '1', command2: 'SELECT current_date;', output2: 'Current date returned', caption: 'SQL is normally typed into a database query editor; command-line clients are optional.' },
+  'REST APIs': { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\api>', command: 'curl --version', output: 'curl version information', command2: 'curl http://localhost:8000/health', output2: '{ "status": "ok" }', caption: 'REST APIs: start your local server first, then request its health endpoint.' },
+  Java: { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\java>', command: 'java --version', output: 'openjdk version "21..."', command2: 'javac HelloWorld.java && java HelloWorld', output2: 'Hello AR CodeLab', caption: 'Java: create HelloWorld.java with a main method before compiling and running it.' },
+  JavaScript: { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\js>', command: 'node --version', output: 'v22.x.x', command2: 'node -e "console.log(\'Hello AR CodeLab\')"', output2: 'Hello AR CodeLab', caption: 'JavaScript: Node.js runs JavaScript directly from the terminal.' },
+  'C Programming': { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\c>', command: 'gcc --version', output: 'gcc version information', command2: 'gcc hello.c -o hello', output2: 'Build succeeded (if no errors are printed)', caption: 'C: create hello.c first, compile it, then run .\\hello.exe on Windows or ./hello on Linux.' },
+  'HTML & CSS': { title: 'Browser · Local HTML preview', prompt: 'File / browser preview', command: 'Open index.html in your browser', output: 'A page with “Hello AR CodeLab” appears', command2: 'Edit styles.css and refresh the page', output2: 'The page styling changes', caption: 'HTML and CSS do not need a compiler for basic lessons. Use a browser preview.' },
+  'Data Engineering / Big Data': { title: 'VS Code · Python terminal', prompt: '(.venv) PS C:\\Projects\\spark>', command: 'python -c "import pyspark; print(pyspark.__version__)"', output: 'Installed PySpark version', command2: 'python spark_test.py', output2: '3', caption: 'PySpark: use the same virtual environment where PySpark and a compatible Java runtime are installed.' },
+  DevOps: { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\demo>', command: 'git --version', output: 'git version 2.x.x', command2: 'docker run --rm hello-world', output2: 'Hello from Docker!', caption: 'DevOps: verify each CLI separately; Docker also needs its engine running.' },
+  'Cloud Fundamentals': { title: 'PowerShell · Cloud CLI', prompt: 'PS C:\\Projects\\cloud>', command: 'az --version', output: 'Azure CLI version information', command2: 'az account show --output table', output2: 'Signed-in subscription details', caption: 'Cloud CLI: authenticate first; never paste passwords, tokens or keys into screenshots.' },
+  'Linux & Shell': { title: 'Ubuntu · Terminal', prompt: 'learner@ubuntu:~
+  Python: 'Windows: enable “Add Python to PATH” in the installer. Common folders are the Python install directory and its Scripts subfolder. Verify with: py --version, python --version, where python, and py -m pip --version. Linux package installs usually add python3 automatically; verify with which python3.',
+  Java: 'Set JAVA_HOME to the JDK root folder (the folder containing bin), not to bin itself. Add %JAVA_HOME%\\bin to User Path if java/javac are not found. Verify with: echo %JAVA_HOME%, where java, java --version, javac --version. Linux: echo $JAVA_HOME; which java; readlink -f "$(which java)".',
+  JavaScript: 'Node.js installers usually add Node and npm to PATH. On Windows, a common folder is C:\\Program Files\\nodejs\\; verify with where node, where npm, node --version and npm --version. Linux version managers configure PATH for the active shell; verify with which node.',
+  'C Programming': 'For MSYS2, add the selected toolchain bin folder (for example C:\\msys64\\ucrt64\\bin) to User Path, if the installer did not configure it. Verify with where gcc and gcc --version. Linux package managers normally configure gcc automatically; verify with which gcc.',
+  'Git & GitHub': 'Git for Windows normally configures command-line Git. If needed, check the Git cmd folder (often C:\\Program Files\\Git\\cmd). Verify with where git and git --version. Linux: which git.',
+  'Docker & Containers': 'Install Docker Desktop/Engine and start it; PATH alone is not enough. Verify CLI with docker --version, then service/daemon access with docker info and a test container. If docker info fails, check that Docker Desktop or the daemon is running.',
+  Kubernetes: 'Place kubectl in a dedicated tools folder and add that folder to User Path, or use the official installer/package manager. Verify with where kubectl and kubectl version --client. A working CLI does not mean a cluster is configured; kubectl get nodes checks cluster access.',
+  'Cloud Fundamentals': 'Install the specific provider CLI using its official installer. Restart the terminal, then verify az --version, aws --version or gcloud --version. Authentication and subscription/project access are separate checks from PATH.',
+  'Linux & Shell': 'On Linux, package managers usually install commands into standard PATH folders. Check with command -v bash, command -v git and echo "$PATH". For Windows, run Linux commands inside the WSL distribution terminal, not ordinary CMD.',
+  'Data Engineering / Big Data': 'Verify Python and Java independently first. Spark needs a compatible Java runtime and Python environment. Use where python / where java on Windows or which python3 / which java on Linux, then run python -c "import pyspark; print(pyspark.__version__)". Do not set SPARK_HOME unless your chosen setup requires it.',
+  SQL: 'Database GUI tools do not always add command-line clients to PATH. Verify the client you installed: where sqlcmd, where psql or where mysql on Windows; command -v sqlcmd/psql/mysql on Linux. A client version check is different from checking that the database service is running.',
+  'REST APIs': 'The API uses the PATH of its chosen runtime (Python or Node.js). Verify the runtime and curl separately. The API health URL only works after you start the server and should be tested in a browser or with curl.',
+  'HTML & CSS': 'No compiler PATH is required for basic HTML/CSS. Install an editor and browser; if using Node-based build tools, verify node --version and npm --version. Open index.html in the browser or start the configured dev server.',
+  DevOps: 'Add only the CLI tools you installed, such as Git, Docker or a cloud CLI. Verify each separately; docker --version does not prove the daemon is running, and az --version does not prove cloud login works.',
+  'Generative AI': 'Usually no separate PATH change is needed beyond Python. Verify the selected Python interpreter and pip, then install SDKs inside that environment. Store provider keys as environment variables or in a secret manager; never paste keys into source code.',
+  'Agentic AI': 'Usually no special PATH change beyond Python and any required runtime. Verify Python and pip in the same virtual environment used by the project; credentials, model access and tool permissions must be tested separately.'
+}
+
+
+function SetupScreenshot({ type }) {
+  if (type === 'terminal') return <figure className="setup-visual"><div className="mock-window"><div className="mock-titlebar"><span className="mock-dots"><i/><i/><i/></span><b>VS Code · Terminal</b><span>— □ ×</span></div><div className="mock-terminal"><p><span>PS C:\\Projects\\my-app&gt;</span> python --version</p><p className="mock-output">Python 3.13.2</p><p><span>PS C:\\Projects\\my-app&gt;</span> python -c "print('Hello AR CodeLab')"</p><p className="mock-output">Hello AR CodeLab</p><p><span>PS C:\\Projects\\my-app&gt;</span><i className="mock-cursor"/></p></div></div><figcaption>Illustration: enter a command after the prompt, press Enter, then read the output on the next line.</figcaption></figure>
+  if (type === 'environment') return <figure className="setup-visual"><div className="mock-window mock-settings"><div className="mock-titlebar"><b>Find a setting</b><span>— □ ×</span></div><div className="mock-settings-body"><div className="mock-search">⌕ Edit environment variables for your account</div><div className="mock-result"><span className="mock-settings-icon">⚙</span><div><b>Edit environment variables for your account</b><small>Control Panel · System settings</small></div><span className="mock-highlight">OPEN</span></div><p className="mock-hint">Select this result from the Windows Start search.</p></div></div><figcaption>Illustration: search for this exact phrase in the Windows Start menu.</figcaption></figure>
+  if (type === 'path') return <figure className="setup-visual"><div className="mock-window mock-settings"><div className="mock-titlebar"><b>Edit environment variable — Path</b><span>— □ ×</span></div><div className="mock-settings-body"><p className="mock-hint">Example entries in the User Path list — the folder depends on the course</p><div className="mock-path-entry">C:\\Tools\\YourCourseTool\\bin\\</div><div className="mock-path-entry mock-entry-selected">Add the actual tool folder here</div><div className="mock-action-row"><span className="mock-highlight">New</span><span>Edit</span><span>Delete</span><span>Move Up</span></div><div className="mock-path-note">Click New and add one folder per entry. The first example contains python.exe; Scripts commonly contains pip.exe. Your installed version and folders may differ.</div></div></div><figcaption>Illustration: add the folder path, not a filename like python.exe, and keep existing Path entries.</figcaption></figure>
+  if (type === 'variable') return <figure className="setup-visual"><div className="mock-window mock-settings"><div className="mock-titlebar"><b>New User Variable</b><span>— □ ×</span></div><div className="mock-settings-body"><label className="mock-field-label">Variable name</label><div className="mock-field mock-field-emphasis">TOOL_HOME (example)</div><label className="mock-field-label">Variable value</label><div className="mock-field">C:\\Tools\\YourInstalledTool</div><div className="mock-path-note">Generic example only. Use the variable name and installation folder required by the specific tool; not every course needs a named variable.</div></div></div><figcaption>Illustration: some tools need a named environment variable. Use the variable name and actual install folder required by the tool; this is not a universal path.</figcaption></figure>
+
+  return <figure className="setup-visual"><div className="mock-window mock-settings"><div className="mock-titlebar"><b>Environment Variables</b><span>— □ ×</span></div><div className="mock-settings-body"><b>User variables for [your account]</b><div className="mock-path-row"><span>Name</span><span>Value</span></div><div className="mock-path-row mock-selected"><span>Path</span><span>C:\\Users\\you\\... </span></div><div className="mock-action-row"><span className="mock-highlight">Edit...</span><span>New...</span><span>Delete</span></div><div className="mock-path-note">Select Path under User variables, then choose Edit.</div></div></div><figcaption>Illustration: choose User variables for your account for a personal setup. System variables affect all users and may require administrator access.</figcaption></figure>
+}
+
+function TerminalGuide() {
+  return <section className="terminal-guide">
+    <div className="terminal-guide-title"><span>START HERE</span><h3>Where do I type the commands?</h3><p>Choose one terminal. You do not need to use all of them. Commands are usually the same across terminals, but some activation and path commands differ by operating system.</p></div>
+    <div className="terminal-choice-grid">
+      <article><h4>Windows Command Prompt</h4><p>Press <kbd>Win</kbd> + <kbd>R</kbd>, type <code>cmd</code>, then press Enter. Use this for basic version checks and Windows commands.</p></article>
+      <article><h4>Windows PowerShell</h4><p>Open Start and search for <b>PowerShell</b>. Use it for Windows setup commands and environment checks.</p></article>
+      <article><h4>VS Code terminal</h4><p>Open your project folder in VS Code, then choose <b>Terminal → New Terminal</b> (shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>`</kbd>). This is the recommended option while working on a project.</p></article>
+      <article><h4>PyCharm terminal</h4><p>Open your project in PyCharm and choose <b>View → Tool Windows → Terminal</b>. Check that the project interpreter is the one you installed packages into.</p></article>
+      <article><h4>Linux terminal</h4><p>Open Terminal from the applications menu, or press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> on many desktop distributions. On Windows, WSL users should open their Linux distribution.</p></article>
+    </div>
+    <div className="terminal-guide-note"><b>Important:</b> VS Code and PyCharm terminals are terminals too. For project work, open the terminal inside the project folder so commands run in the right place. If you install software or change PATH, close and reopen the terminal before testing again.</div>
+  </section>
+}
+
+function PathGuide() {
+  return <section className="path-guide">
+    <div><span className="path-guide-kicker">WINDOWS PATH WALKTHROUGH</span><h3>When and where do I add PATH?</h3><p>Only add PATH if the installer did not do it, or the verification command says the command cannot be found. Add the folder containing the executable—not the executable file itself.</p></div>
+    <SetupScreenshot type="environment" />
+    <ol>
+      <li>Find the actual installation folder. Examples include a JDK folder containing <code>bin\\javac.exe</code>, a Git folder containing <code>git.exe</code>, or a folder containing the Docker CLI.</li>
+      <li>Open Start and search <b>Edit environment variables for your account</b>. Open it, select <b>Path</b> under User variables, then choose <b>Edit → New</b>.</li>
+      <li>In the Path editor, choose <b>New</b> and paste the folder path as a separate entry. Add the folder containing the command, not the executable filename itself. Some tools need more than one folder.</li>
+      <li>Save every dialog, close and reopen your terminal, then verify with the course's version command. Use a location check such as <code>where git</code> on Windows or <code>which git</code> on Linux when appropriate.</li>
+    </ol>
+    <h4 className="setup-subheading">Do I need a separate environment variable?</h4>
+    <p>Usually, PATH is enough to make a command discoverable. Some tools also need a named variable, for example <code>JAVA_HOME</code> for Java. Create it under User variables using <b>New</b> and set its value to the tool's root installation folder. Follow that tool's instructions for whether its <code>bin</code> folder also belongs in Path.</p>
+    <div className="path-guide-note"><b>Prefer User Path</b> for a personal computer. System Path changes affect all users and may require administrator access. Do not overwrite the existing PATH list or copy a sample folder path blindly—use the real folder on your computer. For Python specifically, enable “Add Python to PATH” in the installer if offered; the Windows <code>py</code> launcher may work even when <code>python</code> does not.</div>
+  </section>
+}
+
+function SetupCard({ track }) {
+  const s = common[track]
+  const visual = courseVisuals[track] || ['https://images.unsplash.com/photo-1516321314072-5c6b7b5f3f4f?auto=format&fit=crop&w=900&q=85', 'Technology learning workspace']
+  return <article className="setup-card">
+    <img className="setup-course-image" src={visual[0]} alt={visual[1]} loading="lazy" />
+    <div className="setup-card-head"><span>STEP 02 · SYSTEM SETUP</span><h3>{track}</h3><p>{s.intro}</p></div>
+    <CourseTerminalScreenshot track={track} />
+    <div className="setup-os-grid"><div><h4>🪟 Windows</h4><ol>{s.win.map((x) => <li key={x}>{x}</li>)}</ol></div><div><h4>🐧 Linux</h4><ol>{s.linux.map((x) => <li key={x}>{x}</li>)}</ol></div></div>
+    <div className="setup-path-specific"><strong>PATH and verification for {track}</strong><p>{pathNotes[track] || "Use the official installer or package manager first. Add only the directory containing the executable if the command is not found, reopen the terminal, and use the verification command below."}</p></div><div className="setup-verify"><div><strong>1. Verify the installation</strong><p>Open one of the terminals above and run these commands one at a time. If a version is printed, the command is available.</p><pre>{s.verify}</pre><small>Expected: a version number or a successful tool response. Exact version text depends on your installed release.</small></div><div><strong>2. Run a first test</strong><p>Run this from the relevant project folder or tool environment. For source-file examples, create the named file first.</p><pre>{s.first}</pre><small>If this step uses a server, database, cluster or cloud account, start/configure that service first. A CLI version check alone does not prove the service is running.</small></div></div>
+    <details className="setup-troubleshoot"><summary>Command not found or test failed?</summary><ul><li><b>Command not recognized / not found:</b> confirm the tool is installed, check PATH, then open a fresh terminal.</li><li><b>Wrong version or wrong Python:</b> use <code>py --version</code> on Windows or <code>python3 --version</code> on Linux; compare the executable location.</li><li><b>VS Code/PyCharm cannot find packages:</b> select the correct interpreter/environment for this project and install dependencies in that same environment.</li><li><b>Permission or service error:</b> check service status and required permissions; do not run everything as administrator/root by default.</li></ul></details>
+  </article>
+}
+
+export default function SystemSetup({ track }) {
+  const selected = common[track] ? track : null
+  return <section className="system-setup">
+    <div className="system-setup-heading"><span className="system-setup-kicker">STEP 02 · SYSTEM SETUP</span><h2>Install it, verify it, run your first test</h2><p>Every setup guide now explains where commands go, how PATH works, how to verify the installation, and what to check when a command fails.</p></div>
+    <TerminalGuide />
+    <PathGuide />
+    {selected ? <><SetupCard track={selected} />{selected === 'Python' && <PythonEcosystem />}</> : <><h3 className="setup-course-list-title">Course setup guides</h3><p className="setup-course-list-intro">Select a course in the lesson navigator to see its focused instructions, or browse the guides below.</p><div className="setup-all-grid">{allTracks.map((name) => <SetupCard key={name} track={name} />)}</div><PythonEcosystem /></>}
+  </section>
+}
+, command: 'pwd', output: '/home/learner', command2: 'echo "Hello AR CodeLab"', output2: 'Hello AR CodeLab', caption: 'Linux: type commands at the shell prompt; use the WSL terminal for Linux commands on Windows.' },
+  'Docker & Containers': { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\containers>', command: 'docker --version', output: 'Docker version information', command2: 'docker run --rm hello-world', output2: 'Hello from Docker!', caption: 'Docker: if the version works but the test fails, start Docker Desktop or the Docker service.' },
+  'Git & GitHub': { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\demo>', command: 'git --version', output: 'git version 2.x.x', command2: 'git status', output2: 'On branch main (inside a Git repository)', caption: 'Git: run git status inside a folder that has been initialized or cloned as a repository.' },
+  Kubernetes: { title: 'VS Code · Terminal', prompt: 'PS C:\\Projects\\k8s>', command: 'kubectl version --client', output: 'Client Version: v1.x.x', command2: 'kubectl get nodes', output2: 'Node list (requires a reachable cluster)', caption: 'Kubernetes: the client version can work without a cluster; get nodes requires a configured cluster.' },
+  'Generative AI': { title: 'VS Code · Python terminal', prompt: '(.venv) PS C:\\Projects\\gen-ai>', command: 'python --version', output: 'Python 3.x.x', command2: 'python -m pip show openai', output2: 'Package details (if installed in this environment)', caption: 'Generative AI: install the SDK in your active environment and keep API keys out of source code.' },
+  'Agentic AI': { title: 'VS Code · Python terminal', prompt: '(.venv) PS C:\\Projects\\agent>', command: 'python --version', output: 'Python 3.x.x', command2: 'python -m pip show langgraph', output2: 'Package details (if installed in this environment)', caption: 'Agentic AI: test the Python environment first, then validate tools with safe, read-only actions.' },
+}
+function CourseTerminalScreenshot({ track }) {
+  const ex = terminalExamples[track]
+  if (!ex) return null
+  return <figure className="setup-visual course-terminal-visual">
+    <div className="mock-window">
+      <div className="mock-titlebar"><span className="mock-dots"><i/><i/><i/></span><b>{ex.title}</b><span>— □ ×</span></div>
+      <div className="mock-terminal">
+        <p><span>{ex.prompt}</span> {ex.command}</p><p className="mock-output">{ex.output}</p>
+        <p><span>{ex.prompt}</span> {ex.command2}</p><p className="mock-output">{ex.output2}</p>
+      </div>
+    </div>
+    <figcaption>{ex.caption} These are illustrative examples; version numbers and output vary by installation.</figcaption>
+  </figure>
+}
+
 const pathNotes = {
   Python: 'Windows: enable “Add Python to PATH” in the installer. Common folders are the Python install directory and its Scripts subfolder. Verify with: py --version, python --version, where python, and py -m pip --version. Linux package installs usually add python3 automatically; verify with which python3.',
   Java: 'Set JAVA_HOME to the JDK root folder (the folder containing bin), not to bin itself. Add %JAVA_HOME%\\bin to User Path if java/javac are not found. Verify with: echo %JAVA_HOME%, where java, java --version, javac --version. Linux: echo $JAVA_HOME; which java; readlink -f "$(which java)".',
