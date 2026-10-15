@@ -28,3 +28,82 @@ button.top-avatar:focus-visible,.profile-row:focus-visible{outline:3px solid #8b
 .catalog-live-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 13px;padding:10px 12px;border-radius:8px;background:#f7f8fc;color:#53617a;font-size:11px}
 .catalog-live-summary strong{color:#293750;font-size:12px}
 @media(max-width:680px){.overview-category-buttons button{flex:1 1 calc(50% - 8px);min-width:0}.catalog-live-summary{align-items:flex-start;flex-direction:column;gap:4px}.overview-catalog>.section-heading{flex-direction:column}}
+
+
+/* Responsive polish: phone, tablet, laptop and wide desktop layouts */
+:root { color-scheme: light; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 76px; }
+body { min-width: 320px; }
+img, svg, video, canvas { max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+button { min-height: 36px; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #8ba4ff;
+  outline-offset: 2px;
+}
+.main-area, .page-content, .panel, .course-card, .lesson-content, .interview-prep, .system-setup {
+  min-width: 0;
+}
+.page-content { width: 100%; max-width: 1760px; margin-inline: auto; }
+.topbar { position: sticky; top: 0; z-index: 12; background: rgba(255,255,255,.96); backdrop-filter: blur(12px); }
+.course-card, .stat-card, .panel, .daily-banner { min-width: 0; }
+.course-info h3, .panel p, .page-subtitle { overflow-wrap: anywhere; }
+pre, .lesson-code-output, .lesson-code-output pre, .lesson-content pre, .lesson-code pre, .code-block {
+  max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+table { max-width: 100%; }
+@media (min-width: 1600px) {
+  .page-content { padding-inline: clamp(32px, 3vw, 64px); }
+  .course-grid, .learning-view .course-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 901px) and (max-width: 1199px) {
+  .content-grid { grid-template-columns: minmax(0, 1.35fr) minmax(250px, .9fr); }
+  .course-grid, .learning-view .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .sidebar { z-index: 30; }
+  .mobile-scrim { z-index: 25; }
+  .topbar { z-index: 20; }
+  .page-content { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  .content-grid { grid-template-columns: minmax(0, 1fr); }
+  .course-grid, .learning-view .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 14px; }
+  .topbar { min-height: 60px; height: auto; padding: 10px 12px; }
+  .breadcrumbs { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar-actions { min-width: 0; }
+  .search-box { min-width: 0; flex: 1 1 auto; width: auto; max-width: 48vw; }
+  .search-box input { min-width: 0; width: 100%; font-size: 16px; }
+  .page-content { padding: 20px 12px calc(28px + env(safe-area-inset-bottom)); }
+  .welcome-row h1 { line-height: 1.2; overflow-wrap: anywhere; }
+  .page-subtitle { line-height: 1.65; }
+  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-card { min-width: 0; }
+  .stat-value { line-height: 1.2; overflow-wrap: anywhere; }
+  .course-grid, .learning-view .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .course-info h3 { line-height: 1.45; min-height: 2.8em; }
+  .course-open { min-height: 40px; }
+  .filter-row, .section-heading { min-width: 0; }
+  .filter-buttons { flex-wrap: wrap; }
+  .filter-buttons button { min-height: 40px; }
+  .quiz-option, .quiz-preview-option { min-height: 44px; }
+  .modal-backdrop { align-items: end; padding: 8px; }
+  .modal-card { width: 100%; max-height: min(88dvh, 760px); overflow-y: auto; border-radius: 16px 16px 10px 10px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+  .modal-actions { flex-wrap: wrap; }
+  .modal-actions button { flex: 1 1 auto; min-height: 44px; }
+  .task-row { min-height: 54px; }
+  .page-footer { padding-bottom: env(safe-area-inset-bottom); }
+}
+@media (max-width: 380px) {
+  .page-content { padding-inline: 10px; }
+  .topbar { padding-inline: 9px; gap: 6px; }
+  .search-box { max-width: 42vw; }
+  .stats-grid { grid-template-columns: minmax(0, 1fr); }
+  .course-grid, .learning-view .course-grid { grid-template-columns: minmax(0, 1fr); }
+  .course-art { height: 100px; }
+  .course-info h3 { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
