@@ -181,11 +181,13 @@
 
 
 /* Embed the course assessment hub inside the Practice & quizzes page. */
-.learning-center.practice-only > :not(.course-practice-hub):not(.learning-controls){display:none!important}
-.learning-center.practice-only{width:100%;min-width:0;margin:0}
-.learning-center.practice-only .learning-controls{display:flex;justify-content:flex-start;margin:0 0 18px;padding:0;border:0;background:transparent;box-shadow:none}
+.learning-center.practice-only{display:flex;flex-direction:column;width:100%;min-width:0;margin:0}
+.learning-center.practice-only > :not(.course-practice-hub):not(.learning-controls):not(.level-guide){display:none!important}
+.learning-center.practice-only .learning-controls{order:0;display:flex;justify-content:flex-start;flex-wrap:wrap;gap:12px;margin:0 0 10px;padding:0;border:0;background:transparent;box-shadow:none}
 .learning-center.practice-only .learning-search{display:none}
-.learning-center.practice-only .learning-select-label:not(:has(select option:checked)){display:none}
 .learning-center.practice-only .learning-select-label{flex:0 1 280px;min-width:180px}
 .learning-center.practice-only .learning-select-label select{width:100%}
+.learning-center.practice-only .level-guide{order:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.learning-center.practice-only .course-practice-hub{order:2;margin:0 0 24px}
 .practice-panel>.learning-center{margin-top:18px}
+@media(max-width:600px){.learning-center.practice-only .level-guide{grid-template-columns:minmax(0,1fr)}}
