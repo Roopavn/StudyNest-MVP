@@ -7,6 +7,7 @@ import { fastapiCourseLessons } from './fastapiCourseLessons'
 import { drfCourseLessons } from './drfCourseLessons'
 import { machineLearningCourseLessons } from './machineLearningCourseLessons'
 import { dataScienceCourseLessons } from './dataScienceCourseLessons'
+import { dataAnalystCourseLessons } from './dataAnalystCourseLessons'
 
 export const courseDeepLessons = [
   ...baseCourseDeepLessons,
@@ -17,4 +18,5 @@ export const courseDeepLessons = [
   ...drfCourseLessons,
   ...machineLearningCourseLessons,
   ...dataScienceCourseLessons,
+  ...dataAnalystCourseLessons,
 ]
