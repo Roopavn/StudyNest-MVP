@@ -1,0 +1,147 @@
+// Advanced, scenario-driven data engineering lessons inspired by the referenced LinkedIn study themes.
+export const dataEngineeringAdvancedLessons = [
+  {
+    id: 'de-scenario-1', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'Advanced SQL interview patterns: ranking, duplicates and running totals', duration: '22 min', kind: 'table',
+    summary: 'Solve common business questions with window functions, aggregation and date sequences.',
+    explain: 'Strong data engineers can translate business questions into SQL and explain why the query is correct. Use ROW_NUMBER or DENSE_RANK for ranking, GROUP BY/HAVING for duplicate detection, and windowed SUM for running totals. Define tie behavior explicitly: ROW_NUMBER assigns unique sequence numbers, RANK leaves gaps after ties, and DENSE_RANK does not. For missing dates, compare a calendar table with observed dates instead of assuming every source contains every date.',
+    code: "WITH ranked AS (\n  SELECT department, employee, salary,\n         DENSE_RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS salary_rank\n  FROM employees\n)\nSELECT department, employee, salary\nFROM ranked\nWHERE salary_rank <= 3;\n\n-- Running total by transaction time\nSELECT customer_id, transaction_date, amount,\n       SUM(amount) OVER (PARTITION BY customer_id ORDER BY transaction_date\n         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total\nFROM transactions;",
+    output: 'Returns the top three distinct salary levels per department and a cumulative total per customer.',
+    task: 'Write SQL to find the second-highest distinct salary, identify duplicate emails, and calculate daily running revenue.',
+    solutionHint: 'Use DENSE_RANK for the second distinct salary, GROUP BY email HAVING COUNT(*) > 1 for duplicates, and SUM(revenue) OVER (ORDER BY date ROWS UNBOUNDED PRECEDING) for cumulative revenue.',
+    interviewQuestion: 'When would you choose ROW_NUMBER, RANK, or DENSE_RANK?',
+    videoTitle: 'Advanced SQL interview scenarios'
+  },
+  {
+    id: 'de-scenario-2', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'Pipeline says success but records are missing', duration: '20 min', kind: 'flow',
+    summary: 'Investigate silent data loss using reconciliation and stage-by-stage counts.',
+    explain: 'A successful orchestration status does not prove business completeness. Compare source counts, extracted counts, accepted and rejected rows, transformed counts, and destination counts for the same batch window. Check filters, join cardinality, null handling, watermarks, late-arriving records, pagination limits, schema casts and destination merge conditions. Use a batch ID and persist audit metrics so the investigation can be repeated.',
+    code: "audit = {\n    'batch_id': batch_id,\n    'source_count': source_df.count(),\n    'valid_count': valid_df.count(),\n    'rejected_count': rejected_df.count(),\n    'output_count': output_df.count(),\n}\nassert audit['source_count'] == audit['valid_count'] + audit['rejected_count']\nprint(audit)",
+    output: 'A stage-level reconciliation identifies where counts diverge; rejected records are visible rather than silently discarded.',
+    task: 'A source has 1,000,000 rows and the target has 700,000. Create a prioritized investigation checklist before rerunning the pipeline.',
+    solutionHint: 'Check time filters and watermarks first, then joins, deduplication rules, invalid casts, pagination and merge predicates. Compare by batch and key, not only total count.',
+    interviewQuestion: 'What would you investigate first if the pipeline is green but 300,000 records are missing?',
+    videoTitle: 'Troubleshoot data pipeline completeness'
+  },
+  {
+    id: 'de-scenario-3', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'Incremental loads, watermarks, CDC and idempotency', duration: '22 min', kind: 'layers',
+    summary: 'Design repeatable incremental ingestion that handles retries and late updates.',
+    explain: 'A full load rereads the entire dataset; an incremental load reads changes since a checkpoint. A watermark can be a timestamp or monotonic source key, but timestamps alone can miss late updates or rows with equal timestamps. CDC provides inserts, updates and deletes when supported. Idempotency means replaying the same batch does not create duplicate or inconsistent output. Advance the checkpoint only after data and audit records commit successfully, and use overlap windows or source change tracking when needed.',
+    code: "from datetime import timedelta\n\n# Conceptual watermark window; persist the successful checkpoint externally.\nwindow_start = last_successful_watermark - timedelta(hours=2)\nwindow_end = current_run_time\nchanges = source.read_changes(start=window_start, end=window_end)\nvalidated = validate_and_deduplicate(changes, key='record_id')\nwrite_with_merge(validated, key='record_id')\n# Update checkpoint only after the target write and reconciliation succeed.",
+    output: 'A retry reprocesses an overlapping window safely and does not advance the checkpoint past uncommitted data.',
+    task: 'Design incremental loading for a source without a reliable updated_at timestamp.',
+    solutionHint: 'Prefer CDC, change tracking, log sequence numbers, a monotonic key, or source snapshots with reconciliation. Explain deletes and late updates, not only inserts.',
+    interviewQuestion: 'How do you make a pipeline idempotent when retries can replay the same input?',
+    videoTitle: 'Incremental ingestion and CDC'
+  },
+  {
+    id: 'de-scenario-4', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'Data quality framework and quarantine patterns', duration: '20 min', kind: 'table',
+    summary: 'Validate schemas and business rules while preserving rejected records for analysis.',
+    explain: 'Data quality should be explicit and measurable. Validate required fields, types, uniqueness, referential integrity, ranges, freshness and cross-field rules. Do not silently drop invalid records: route them to a quarantine dataset with batch ID, reason code and safe source metadata. Define thresholds for warnings versus failures, publish quality metrics, and make the choice to continue or fail depend on business criticality.',
+    code: "from pyspark.sql import functions as F\n\nvalid = source.filter(\n    F.col('customer_id').isNotNull() &\n    F.col('amount').cast('decimal(12,2)').isNotNull() &\n    (F.col('amount').cast('decimal(12,2)') >= 0)\n)\ninvalid = source.join(valid.select('source_row_id'), 'source_row_id', 'left_anti')\nquarantine = invalid.withColumn('batch_id', F.lit(batch_id))\nquarantine.write.mode('append').parquet('quality/quarantine')",
+    output: 'Valid rows continue through the pipeline; invalid rows are traceable and can be corrected or replayed.',
+    task: 'Define five quality checks for an orders dataset and decide which failures should stop publication.',
+    solutionHint: 'Include unique order ID, non-null customer ID, non-negative amount, valid order date, and valid customer reference. Block publication for critical financial integrity failures.',
+    interviewQuestion: 'How do you distinguish a data quality warning from a pipeline-failing error?',
+    videoTitle: 'Data quality and quarantine design'
+  },
+  {
+    id: 'de-scenario-5', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'PySpark optimization: skew, shuffle and join strategy', duration: '24 min', kind: 'layers',
+    summary: 'Diagnose slow Spark stages using execution plans and Spark UI evidence.',
+    explain: 'A slow Spark job often spends time moving data or waiting for a few oversized tasks. Inspect the Spark UI for skewed task durations, shuffle read/write, spill, executor memory and failed tasks. Filter early, select only needed columns, broadcast genuinely small dimensions, and verify join keys and cardinality. Adaptive Query Execution can help with skew and shuffle partitions, but it is not a substitute for examining the plan. Salting may help severe key skew but adds complexity.',
+    code: "from pyspark.sql import functions as F\nfrom pyspark.sql.functions import broadcast\n\norders_small = orders.select('customer_id', 'amount', 'event_date').filter(F.col('event_date') >= '2026-01-01')\nresult = orders_small.join(broadcast(customer_dim), 'customer_id', 'left')\nresult.explain('formatted')",
+    output: 'The optimized plan scans fewer columns and rows and uses a broadcast join only when the dimension safely fits executor memory.',
+    task: 'A join stage has one task running 20 minutes while most tasks finish in 40 seconds. Explain what evidence you would inspect and possible fixes.',
+    solutionHint: 'Check key distribution and shuffle metrics for skew, verify join cardinality, filter/select early, consider AQE skew handling, broadcast if one side is small, or salt a hot key if justified.',
+    interviewQuestion: 'How do you tell data skew apart from insufficient cluster resources?',
+    videoTitle: 'PySpark performance troubleshooting'
+  },
+  {
+    id: 'de-scenario-6', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Partitioning versus bucketing and file-size management', duration: '20 min', kind: 'table',
+    summary: 'Choose physical data layout based on query patterns and data volume.',
+    explain: 'Partitioning physically separates data by column values and can enable partition pruning when filters use those columns. It works best for moderate-cardinality fields such as event date; partitioning by a unique user ID can create too many tiny directories. Bucketing hashes rows into a fixed number of buckets and can help selected join patterns in engines that use the metadata. File size matters: many tiny files increase listing and scheduling overhead, while huge files can reduce parallelism.',
+    code: "events.write\n    .mode('overwrite')\n    .partitionBy('event_date')\n    .parquet('/lake/curated/events')\n\n# Query with a partition filter to enable pruning\nspark.read.parquet('/lake/curated/events')\\\n    .where("event_date >= '2026-10-01'")\\\n    .select('customer_id', 'event_type').explain('formatted')",
+    output: 'Queries limited to a date range can skip unrelated date partitions when the storage layout and predicate support pruning.',
+    task: 'Choose a layout for 5 TB of clickstream events queried mostly by date and sometimes joined by customer_id.',
+    solutionHint: 'Date partitioning is a likely starting point; evaluate file sizes and customer-key join patterns before adding bucketing. Avoid excessive partition cardinality.',
+    interviewQuestion: 'What is the difference between partitioning and bucketing, and what problem does each solve?',
+    videoTitle: 'Spark storage layout fundamentals'
+  },
+  {
+    id: 'de-scenario-7', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Delta Lake MERGE and SCD Type 1 versus Type 2', duration: '24 min', kind: 'layers',
+    summary: 'Maintain current records or preserve full history when dimensions change.',
+    explain: 'SCD Type 1 overwrites an attribute and does not preserve its previous value. SCD Type 2 creates a new version row with effective start/end timestamps and a current flag, preserving history. Delta MERGE can apply inserts and updates, but deduplicate the source to one intended change per target key first. For Type 2, expire the current row and insert a new version; do not assume one simple update captures both actions without designing the source and merge logic carefully.',
+    code: "-- Conceptual Type 2 dimension columns:\n-- customer_key, address, effective_from, effective_to, is_current\n-- On address change:\n-- 1. Close current version: effective_to = change_time, is_current = false\n-- 2. Insert new version: new address, effective_from = change_time,\n--    effective_to = far_future, is_current = true\n-- Ensure only one ordered source change per business key per merge batch.",
+    output: 'Historical reports can resolve the customer address that was valid at the event time, while current reports select is_current = true.',
+    task: 'A customer changes address three times in a year. Explain how Type 1 and Type 2 answer different reporting needs.',
+    solutionHint: 'Type 1 keeps only the latest address. Type 2 preserves each dated version and requires a defined effective interval and current-row rule.',
+    interviewQuestion: 'What is the grain of a Type 2 dimension row, and how do you prevent duplicate current records?',
+    videoTitle: 'Delta Lake MERGE and SCD Type 2'
+  },
+  {
+    id: 'de-scenario-8', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Schema drift, enforcement and safe schema evolution', duration: '20 min', kind: 'layers',
+    summary: 'Handle source columns and types changing without silently corrupting downstream tables.',
+    explain: 'Schema enforcement rejects data that does not conform to a table schema; schema evolution intentionally changes the schema under controlled rules. A new optional field may be compatible, while a renamed or retyped field can break consumers. Detect drift at ingestion, compare with an approved contract, alert on breaking changes, version schemas where useful, and test downstream transformations before promotion. Avoid automatically accepting every unexpected field or type.',
+    code: "expected = {'order_id', 'customer_id', 'amount', 'event_date'}\nactual = set(source_df.columns)\nmissing = expected - actual\nnew_columns = actual - expected\nif missing:\n    raise ValueError(f'Missing required columns: {sorted(missing)}')\nif new_columns:\n    print('Review schema additions:', sorted(new_columns))",
+    output: 'Breaking changes fail visibly or enter an approved compatibility path instead of producing misleading curated data.',
+    task: 'The source changes amount from decimal to string and adds a nullable promo_code. Define the validation and rollout steps.',
+    solutionHint: 'Check whether string values can be parsed losslessly, quarantine invalid values, approve the optional column, update contracts and downstream tests, then deploy with monitoring.',
+    interviewQuestion: 'When is schema evolution safe, and when should a pipeline fail fast?',
+    videoTitle: 'Schema enforcement and evolution'
+  },
+  {
+    id: 'de-scenario-9', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'Azure data platform: ADF, ADLS, Databricks and Delta', duration: '22 min', kind: 'flow',
+    summary: 'Explain an end-to-end Azure pipeline and the responsibility of each layer.',
+    explain: 'A common Azure data flow uses Azure Data Factory for orchestration and movement, ADLS Gen2 for lake storage, Azure Databricks with Spark for distributed transformation, Delta tables for reliable lakehouse storage, and Synapse or Power BI for serving and analysis. Separate orchestration from transformation, use managed identities and least-privilege access, parameterize environments, and monitor pipeline and data quality metrics. Choose services based on latency, scale, governance and cost rather than copying a diagram blindly.',
+    code: 'Source system -> ADF ingestion -> ADLS raw zone\nADLS raw -> Databricks/PySpark validation and transforms\nCurated Delta tables -> SQL serving layer / Power BI\nCross-cutting: managed identity, Key Vault where needed, logging, alerts, lineage and quality gates',
+    output: 'Each component has a defined responsibility, secure access path and observable handoff.',
+    task: 'Design a daily orders pipeline from an on-premises SQL Server source to a curated reporting table in Azure.',
+    solutionHint: 'Describe connectivity, incremental extraction, raw retention, validation, transformation, target merge, reconciliation, monitoring, retry behavior and access controls.',
+    interviewQuestion: 'Why should orchestration and transformation logic be separated in a data platform?',
+    videoTitle: 'Azure data engineering architecture'
+  },
+  {
+    id: 'de-scenario-10', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Troubleshoot Azure Data Factory and Databricks failures', duration: '22 min', kind: 'flow',
+    summary: 'Use run IDs, activity output and logs to isolate production failures.',
+    explain: 'Start with the failed pipeline run and activity error, then classify the failure: authentication/authorization, connectivity, source availability, schema mismatch, data conversion, resource limits or downstream write conflict. Inspect linked-service and integration-runtime status, parameters, input/output metrics and Databricks job logs. Check whether retries are safe before enabling them; a retry of a non-idempotent append can duplicate data. Capture correlation IDs and avoid logging secrets or full sensitive payloads.',
+    code: 'Incident checklist:\n1. Record pipeline run ID, batch ID, start time and failed activity.\n2. Read the exact error and inspect parameters and input/output counts.\n3. Check identity permissions, network path and source availability.\n4. Inspect Spark driver/executor logs and the failing stage if applicable.\n5. Verify target state before retrying.\n6. Reconcile records and document the root cause.',
+    output: 'The failure is classified and evidence is collected before a controlled retry or rollback.',
+    task: 'A Copy Activity fails after 80% of a large load. What would you check before rerunning it?',
+    solutionHint: 'Inspect the exact error, sink write semantics, partial files/rows, checkpoint state and idempotency. Resume or clean up according to the connector and target guarantees.',
+    interviewQuestion: 'How do you safely retry a pipeline that may have partially written data?',
+    videoTitle: 'ADF and Databricks troubleshooting'
+  },
+  {
+    id: 'de-scenario-11', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Batch versus streaming and late-arriving events', duration: '22 min', kind: 'layers',
+    summary: 'Choose processing latency and define behavior for delayed or duplicated events.',
+    explain: 'Batch processing handles bounded data on a schedule; streaming continuously processes incoming events with lower latency and additional operational complexity. Decide based on business freshness needs, cost, event volume and recovery expectations. Streaming systems must account for event time versus processing time, duplicate delivery, late events, watermarks and state retention. A watermark bounds how long the engine waits for late events; it is not a guarantee that no later event will arrive.',
+    code: "from pyspark.sql import functions as F\n\n# Conceptual Structured Streaming aggregation by event time\nresult = (events\n    .withWatermark('event_time', '20 minutes')\n    .groupBy(F.window('event_time', '10 minutes'), 'event_type')\n    .count())",
+    output: 'Events are aggregated by event time within a defined lateness policy, with a documented strategy for events arriving later than the watermark.',
+    task: 'A business dashboard needs data within five minutes, but events can arrive 30 minutes late. Propose a design and explain the trade-offs.',
+    solutionHint: 'Consider streaming for freshness, an explicit late-data correction/reprocessing strategy, deduplication keys, checkpointing, monitoring and a documented completeness SLA.',
+    interviewQuestion: 'What happens to an event that arrives after the configured watermark threshold?',
+    videoTitle: 'Streaming and late-arriving data'
+  },
+  {
+    id: 'de-scenario-12', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Production readiness: observability, lineage, cost and recovery', duration: '22 min', kind: 'table',
+    summary: 'Make pipelines diagnosable, auditable, recoverable and cost-aware.',
+    explain: 'Production pipelines need more than a successful status. Track run and batch IDs, row counts, rejected records, freshness, duration, retries, resource use and data lineage. Alert on meaningful symptoms such as stale outputs, quality thresholds and repeated failures. Use least privilege, secrets management, retention policies and cost budgets. Document recovery procedures, replay boundaries, backfills and rollback plans, and run periodic recovery exercises.',
+    code: 'Useful per-run metrics:\n- run_id, batch_id, source_window, target_version\n- source_rows, accepted_rows, rejected_rows, target_rows\n- duration_seconds, retry_count, status, error_category\n- freshness_lag, quality_failures, estimated_cost\n\nAlert examples: freshness SLA breached; rejection rate above threshold; target count mismatch.',
+    output: 'A failed or degraded pipeline leaves enough evidence for an engineer to diagnose impact, replay safely and explain the recovery.',
+    task: 'Create an operations checklist for a daily finance pipeline with a one-hour SLA.',
+    solutionHint: 'Include ownership, alerts, quality gates, reconciliation, retry limits, idempotent backfill, access controls, retention, runbook and escalation path.',
+    interviewQuestion: 'What metrics would you monitor to detect a pipeline that succeeds technically but delivers stale or incorrect data?',
+    videoTitle: 'Reliable production data pipelines'
+  }
+]
