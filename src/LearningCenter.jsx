@@ -747,6 +747,12 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const [selectedLibrary, setSelectedLibrary] = useState(pythonEcosystem[0].items[0])
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [quizSubmitted, setQuizSubmitted] = useState(false)
+  const [courseQuizAnswers, setCourseQuizAnswers] = useState({})
+  const [courseQuizSubmitted, setCourseQuizSubmitted] = useState(false)
+  const [codingIndex, setCodingIndex] = useState(0)
+  const [codingDraft, setCodingDraft] = useState('')
+  const [showCodingReference, setShowCodingReference] = useState(false)
+  const [practicedCoding, setPracticedCoding] = useState(() => { try { return JSON.parse(localStorage.getItem('studynest.coding.practiced') || '[]') } catch { return [] } })
   const [openLesson, setOpenLesson] = useState(() => lessons.find((lesson) => initialTrack === 'All topics' || lesson.track === initialTrack)?.id || 'py-1')
   const [localCompleted, setLocalCompleted] = useState(() => {
     try { return JSON.parse(localStorage.getItem('studynest.lessons.done') || '[]') } catch { return [] }
@@ -764,12 +770,43 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const activeIntro = trackIntros[track]
   const questionSet = active ? mcqBank[active.track] : null
   const activeQuestion = active && questionSet?.length ? questionSet[(Number(active.id.split('-').pop()) - 1) % questionSet.length] : null
+  const courseQuizQuestions = useMemo(() => {
+    if (track === 'All topics' || !trackLessons.length) return []
+    if (mcqBank[track]?.length) return mcqBank[track].slice(0, 10)
+    return trackLessons.slice(0, Math.min(10, trackLessons.length)).map((lesson, index) => {
+      const choices = [0, 1, 2, 3].map((offset) => trackLessons[(index + offset) % trackLessons.length])
+      const uniqueChoices = choices.filter((item, choiceIndex) => choices.findIndex((candidate) => candidate.title === item.title) === choiceIndex)
+      const rotated = uniqueChoices.slice(index % Math.max(1, uniqueChoices.length)).concat(uniqueChoices.slice(0, index % Math.max(1, uniqueChoices.length)))
+      const options = rotated.map((item) => item.title)
+      const answer = Math.max(0, options.indexOf(lesson.title))
+      return { q: `Which lesson covers this objective: “${lesson.summary}”?`, options, answer, why: lesson.explain || lesson.summary }
+    })
+  }, [track, trackLessons])
+  const codingChallenges = useMemo(() => track === 'All topics' ? [] : trackLessons.filter((lesson) => lesson.task && lesson.code), [track, trackLessons])
+  const currentCoding = codingChallenges.length ? codingChallenges[codingIndex % codingChallenges.length] : null
+  const courseQuizScore = courseQuizQuestions.reduce((score, question, index) => score + (courseQuizAnswers[index] === question.answer ? 1 : 0), 0)
+  useEffect(() => {
+    setCourseQuizAnswers({})
+    setCourseQuizSubmitted(false)
+    setCodingIndex(0)
+    setCodingDraft('')
+    setShowCodingReference(false)
+  }, [track])
+  useEffect(() => { localStorage.setItem('studynest.coding.practiced', JSON.stringify(practicedCoding)) }, [practicedCoding])
+  const markCodingPracticed = (id) => setPracticedCoding((old) => old.includes(id) ? old : [...old, id])
   const markDone = (id) => setCompleted((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
   return <section className="learning-center">
     <div className="learning-hero"><div className="learning-hero-copy"><span className="learning-eyebrow"><Sparkles size={14}/> STRUCTURED LEARNING PATH</span><h2>Start with the basics.<br/><span>Build advanced skills.</span></h2><p>Short lessons, visual explanations, code examples and video explainers—designed for interview preparation.</p><div className="learning-hero-stats"><span><BookOpen size={15}/> {trackLessons.length} lessons</span><span><Clock3 size={15}/> 2–25 min each</span><span><Trophy size={15}/> {trackCompletedCount} completed</span></div></div><div className="learning-hero-art" aria-hidden="true"><div className="hero-orbit hero-orbit-one"/><div className="hero-orbit hero-orbit-two"/><div className="hero-book"><BookOpen size={48}/></div><span className="hero-star">✦</span><span className="hero-spark">✳</span></div></div>
     {activeIntro && <section className="track-intro" aria-labelledby="track-intro-title"><div className="track-intro-heading"><span className="track-intro-kicker">START HERE · COURSE INTRODUCTION</span><h3 id="track-intro-title">What is {track}?</h3><p>{activeIntro.what}</p></div><div className="track-intro-grid"><div><strong>Why do we use it?</strong><p>{activeIntro.why}</p></div><div><strong>Where is it used?</strong><p>{activeIntro.where}</p></div></div><div className="track-intro-path"><strong>Your learning roadmap</strong><p>{activeIntro.path}</p><div className="track-intro-levels"><span>01 · Basic</span><span>02 · Intermediate</span><span>03 · Advanced</span></div></div></section>}
     <SystemSetup track={track} />
 
+    {track !== 'All topics' && <section className="course-practice-hub" aria-label={`${track} quizzes and coding practice`}>
+      <div className="course-practice-heading"><div><span className="course-practice-kicker"><Trophy size={14}/> COURSE ASSESSMENT</span><h3>{track} · MCQ quiz</h3><p>Test your understanding, submit answers, and review explanations for each question.</p></div><span className="course-practice-count">{courseQuizQuestions.length} questions</span></div>
+      {courseQuizQuestions.length ? <><div className="course-quiz-grid">{courseQuizQuestions.map((question, index) => <fieldset className="course-quiz-question" key={`${track}-quiz-${index}`}><legend><span>Q{index + 1}</span> {question.q}</legend><div className="course-quiz-options">{question.options.map((option, optionIndex) => <label className={courseQuizSubmitted && optionIndex === question.answer ? 'course-quiz-option is-correct' : courseQuizSubmitted && courseQuizAnswers[index] === optionIndex && optionIndex !== question.answer ? 'course-quiz-option is-wrong' : 'course-quiz-option'} key={option}><input type="radio" name={`course-quiz-${index}`} checked={courseQuizAnswers[index] === optionIndex} disabled={courseQuizSubmitted} onChange={() => setCourseQuizAnswers((old) => ({ ...old, [index]: optionIndex }))}/><span>{String.fromCharCode(65 + optionIndex)}.</span>{option}</label>)}</div>{courseQuizSubmitted && <p className="course-quiz-explanation"><strong>{courseQuizAnswers[index] === question.answer ? 'Correct.' : `Answer: ${question.options[question.answer] || 'Review the lesson'}.`}</strong> {question.why}</p>}</fieldset>)}</div><div className="course-quiz-footer">{courseQuizSubmitted ? <><strong>Your score: {courseQuizScore}/{courseQuizQuestions.length} ({Math.round(courseQuizScore / courseQuizQuestions.length * 100)}%)</strong><button type="button" className="course-practice-button" onClick={() => { setCourseQuizAnswers({}); setCourseQuizSubmitted(false) }}>Try quiz again</button></> : <><span>{Object.keys(courseQuizAnswers).length} of {courseQuizQuestions.length} answered</span><button type="button" className="course-practice-button" disabled={Object.keys(courseQuizAnswers).length !== courseQuizQuestions.length} onClick={() => setCourseQuizSubmitted(true)}>Submit quiz</button></>}</div></> : <p className="course-practice-empty">No quiz questions are available for this course yet.</p>}
+
+      <div className="course-coding-heading"><div><span className="course-practice-kicker"><Code2 size={14}/> HANDS-ON PRACTICE</span><h3>{track} · Coding challenges</h3><p>Write your own solution, then compare it with the lesson example and mark the challenge as practiced.</p></div><span className="course-practice-count">{codingChallenges.filter((item) => practicedCoding.includes(item.id)).length}/{codingChallenges.length} practiced</span></div>
+      {currentCoding ? <article className="course-coding-card"><div className="course-coding-meta"><span>{currentCoding.level || 'Practice'}</span><span>Challenge {codingIndex + 1} of {codingChallenges.length}</span></div><h4>{currentCoding.title}</h4><p className="course-coding-task">{currentCoding.task}</p><label className="course-coding-label" htmlFor="course-coding-answer">Your solution</label><textarea id="course-coding-answer" value={codingDraft} onChange={(event) => setCodingDraft(event.target.value)} placeholder="Write your code or SQL query here…" rows={8} spellCheck="false"/><div className="course-coding-actions"><button type="button" className="course-practice-button secondary" onClick={() => setShowCodingReference((shown) => !shown)}>{showCodingReference ? 'Hide lesson example' : 'Show lesson example'}</button><button type="button" className="course-practice-button" onClick={() => markCodingPracticed(currentCoding.id)}>{practicedCoding.includes(currentCoding.id) ? 'Practiced ✓' : 'Mark as practiced'}</button><button type="button" className="course-practice-button secondary" onClick={() => { setCodingIndex((index) => (index + 1) % codingChallenges.length); setCodingDraft(''); setShowCodingReference(false) }}>Next challenge →</button></div>{showCodingReference && <div className="course-coding-reference"><strong>Related lesson example (reference only)</strong><pre><code>{currentCoding.code}</code></pre><p>Use this to compare the approach. The app does not execute submitted code; run it in the course's recommended environment to verify the output.</p></div>}</article> : <p className="course-practice-empty">No coding challenges are available for this course yet.</p>}
+    </section>}
 
     <div className="learning-controls"><label className="learning-search"><Search size={17}/><input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search lessons and concepts…" aria-label="Search learning topics"/></label><label className="learning-select-label">Topic<select value={track} onChange={(e)=>setTrack(e.target.value)}>{tracks.map((item)=><option key={item}>{item}</option>)}</select></label><label className="learning-select-label">Level<select value={level} onChange={(e)=>setLevel(e.target.value)}>{levels.map((item)=><option key={item}>{item}</option>)}</select></label></div>
     <div className="level-guide">{[{name:'Basic',sub:'Build the foundation',n:'01'},{name:'Intermediate',sub:'Apply and connect ideas',n:'02'},{name:'Advanced',sub:'Design for real-world scale',n:'03'}].map((item)=><button key={item.name} className={'level-step '+(level===item.name?'level-step-active':'')} onClick={()=>setLevel(level===item.name?'All levels':item.name)}><span>{item.n}</span><div><strong>{item.name}</strong><small>{item.sub}</small></div><ChevronDown size={15}/></button>)}</div>
