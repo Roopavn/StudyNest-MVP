@@ -69,6 +69,7 @@ export default function App() {
   const [mobileNav, setMobileNav] = useState(false)
   const [notice, setNotice] = useState('')
   const [selectedTrack, setSelectedTrack] = useState('all')
+  const [selectedCourseGroup, setSelectedCourseGroup] = useState('languages')
   const [learningTopic, setLearningTopic] = useState('All topics')
   const [showAddTask, setShowAddTask] = useState(false)
   const [newTask, setNewTask] = useState('')
@@ -123,9 +124,33 @@ export default function App() {
       : [...current, courseId])
     setNotice(bookmarks.includes(courseId) ? 'Course removed from bookmarks.' : 'Course saved to your bookmarks.')
   }
+  const courseGroupFor = (course) => {
+    const title = course.title.toLowerCase()
+    if (/python foundations|java foundations|javascript essentials|c programming|c\+\+|c#|typescript/.test(title)) return 'languages'
+    if (/django|flask|fastapi|frameworks & libraries|react/.test(title)) return 'frameworks'
+    if (/sql|database/.test(title)) return 'databases'
+    if (/machine learning|data science|data analyst|data analytics|data engineering|big data|pyspark|generative ai|agentic ai/.test(title)) return 'data-ai'
+    if (/devops|cloud|linux|docker|kubernetes/.test(title)) return 'devops'
+    if (/html|css|frontend|web design/.test(title)) return 'web'
+    if (/testing|quality assurance|pytest/.test(title)) return 'testing'
+    if (/git|github|rest api|api development|developer tools/.test(title)) return 'tools'
+    return 'tools'
+  }
+  const courseGroups = [
+    ['languages', 'Programming languages'],
+    ['frameworks', 'Frameworks & libraries'],
+    ['databases', 'Databases & SQL'],
+    ['data-ai', 'Data & AI'],
+    ['devops', 'DevOps & cloud'],
+    ['web', 'Web & frontend'],
+    ['testing', 'Testing & QA'],
+    ['tools', 'APIs & developer tools'],
+    ['all', 'All courses'],
+  ]
   const filteredCourses = useMemo(() => courses.filter((course) =>
     (selectedTrack === 'all' || course.category.includes('IT'))
-    && `${course.title} ${course.category}`.toLowerCase().includes(search.toLowerCase())), [search, selectedTrack])
+    && (selectedCourseGroup === 'all' || courseGroupFor(course) === selectedCourseGroup)
+    && `${course.title} ${course.category}`.toLowerCase().includes(search.toLowerCase())), [search, selectedTrack, selectedCourseGroup])
   const page = pageTitles[activePage] || pageTitles.Overview
 
   function openCourse(course) {
@@ -210,7 +235,7 @@ export default function App() {
 
           {activePage === 'Learning path' && <LearningCenter key={learningTopic} initialTrack={learningTopic} completedLessons={completedLessons} onCompletedLessonsChange={setCompletedLessons} />}
 
-          {activePage === 'My learning' && <section className="learning-view"><div className="filter-row"><div><h2>All courses</h2><p>Choose a course to continue your journey.</p></div><div className="filter-buttons">{[['all','All courses'],['it','IT skills']].map(([id,label]) => <button key={id} className={selectedTrack === id ? 'filter-active' : ''} onClick={() => setSelectedTrack(id)}>{label}</button>)}</div></div>{filteredCourses.length ? <div className="course-grid">{filteredCourses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><img className="course-art-image" src={course.image} alt={course.imageAlt} loading="lazy" /><div className="course-art-shade" /><button className="course-bookmark" onClick={() => toggleBookmark(course.id)} aria-label={bookmarks.includes(course.id) ? `Remove ${course.title} from bookmarks` : `Bookmark ${course.title}`} title={bookmarks.includes(course.id) ? "Remove bookmark" : "Save course"}><Bookmark size={16} fill={bookmarks.includes(course.id) ? "currentColor" : "none"} /></button><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={() => openCourse(course)}>Open course <ArrowRight size={14} /></button></div></article>})}</div> : <div className="empty-state"><Search size={25} /><h3>No courses found</h3><p>Try a different search or track filter.</p></div>}</section>}
+          {activePage === 'My learning' && <section className="learning-view"><div className="filter-row"><div><h2>{courseGroups.find(([id]) => id === selectedCourseGroup)?.[1] || 'Programming languages'}</h2><p>Browse courses by language, framework, or learning area. Each course stays in its own category.</p></div><div className="filter-buttons">{courseGroups.map(([id, label]) => <button key={id} className={selectedCourseGroup === id ? 'filter-active' : ''} onClick={() => setSelectedCourseGroup(id)}>{label}</button>)}</div></div>{filteredCourses.length ? <div className="course-grid">{filteredCourses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><img className="course-art-image" src={course.image} alt={course.imageAlt} loading="lazy" /><div className="course-art-shade" /><button className="course-bookmark" onClick={() => toggleBookmark(course.id)} aria-label={bookmarks.includes(course.id) ? `Remove ${course.title} from bookmarks` : `Bookmark ${course.title}`} title={bookmarks.includes(course.id) ? "Remove bookmark" : "Save course"}><Bookmark size={16} fill={bookmarks.includes(course.id) ? "currentColor" : "none"} /></button><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={() => openCourse(course)}>Open course <ArrowRight size={14} /></button></div></article>})}</div> : <div className="empty-state"><Search size={25} /><h3>No courses found</h3><p>Try a different search or track filter.</p></div>}</section>}
 
           {activePage === 'Practice & quizzes' && <section className="panel practice-panel"><div className="practice-intro"><span className="practice-icon"><Brain size={25} /></span><div><h2>Ready for a quick challenge?</h2><p>Try a sample question and get an instant explanation.</p></div></div><div className="quiz-preview"><div className="quiz-preview-top"><span className="tag tag-blue">BACKEND · SAMPLE</span><span className="muted-meta"><Clock3 size={14} /> 2 min</span></div><h3>{quizQuestion.question}</h3><div className="quiz-options-preview">{quizQuestion.options.map((option, index) => <div className="quiz-preview-option" key={option}><span>{String.fromCharCode(65 + index)}</span>{option}</div>)}</div><button className="primary-button" onClick={openQuiz}>Start sample quiz <ArrowRight size={16} /></button></div><div className="practice-subjects"><h3>Practice by subject</h3><p>Open a subject to study lessons and answer its MCQs.</p><div className="practice-subject-grid">{[["Python","Code & backend"],["SQL","Databases"],["REST APIs","Web services"]].map(([topic,subtitle])=><button key={topic} onClick={()=>{setLearningTopic(topic);setActivePage("Learning path");setMobileNav(false)}}><span>{topic}</span><small>{subtitle}</small><ArrowRight size={14}/></button>)}</div></div></section>}
 
