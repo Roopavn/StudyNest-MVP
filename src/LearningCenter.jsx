@@ -908,7 +908,6 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const [track, setTrack] = useState(initialTrack)
   const [level, setLevel] = useState('All levels')
   const [query, setQuery] = useState('')
-  const [lessonExpanded, setLessonExpanded] = useState(true)
   const [expandedLessonIds, setExpandedLessonIds] = useState([])
   const [openLibraryGroups, setOpenLibraryGroups] = useState(() => pythonEcosystem.map((group) => group.group))
   const [openJavaScriptGroups, setOpenJavaScriptGroups] = useState(() => javascriptEcosystem.map((group) => group.group))
@@ -943,7 +942,6 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const setCompleted = onCompletedLessonsChange ?? setLocalCompleted
   function selectLesson(lessonId) {
     setOpenLesson(lessonId)
-    setLessonExpanded(true)
     const lesson = lessons.find((item) => item.id === lessonId)
     if (!lesson) return
     try {
@@ -974,10 +972,7 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const trackCompletedCount = trackLessons.filter((lesson) => completed.includes(lesson.id)).length
   const visible = useMemo(() => trackLessons.filter((lesson) => (level === 'All levels' || lesson.level === level) && (lesson.title + ' ' + lesson.summary + ' ' + lesson.track).toLowerCase().includes(query.toLowerCase())), [trackLessons, level, query])
   useEffect(() => { if (visible.length && !visible.some((lesson) => lesson.id === openLesson)) setOpenLesson(visible[0].id) }, [visible, openLesson])
-  const active = lessons.find((lesson) => lesson.id === openLesson)
   const activeIntro = trackIntros[track]
-  const questionSet = active ? mcqBank[active.track] : null
-  const activeQuestion = active && questionSet?.length ? questionSet[(Number(active.id.split('-').pop()) - 1) % questionSet.length] : null
   const courseQuizQuestions = useMemo(() => {
     if (track === 'All topics' || !trackLessons.length) return []
     const levelLessons = trackLessons.filter((lesson) => (lesson.level || 'Basic').toLowerCase() === quizLevel.toLowerCase())
