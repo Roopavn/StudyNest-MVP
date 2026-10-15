@@ -1,5 +1,6 @@
 import './SystemSetup.css'
 import PythonEcosystem from './PythonEcosystem.jsx'
+import { ecosystemCourseSpecs } from './ecosystemCourseLessons.js'
 
 const common = {
   Flask: { intro: 'Flask is a lightweight Python web framework for web applications and REST APIs.', win: ['Install Python 3 and enable Add Python to PATH.', 'Create and activate a virtual environment: py -m venv .venv then .venv\\Scripts\\Activate.ps1.', 'Install Flask: python -m pip install flask.', 'Create app.py with app = Flask(__name__) and a /health route.', 'Run the development server with python -m flask --app app run --debug (local development only).'], linux: ['Install Python 3, pip and python3-venv.', 'Create and activate a virtual environment: python3 -m venv .venv then source .venv/bin/activate.', 'Install Flask: python -m pip install flask.', 'Create app.py with app = Flask(__name__) and a /health route.', 'Run python -m flask --app app run --debug for local development only.'], verify: 'python -m flask --version\\npython -m pip show flask', first: 'python -m flask --app app routes' },
@@ -26,6 +27,18 @@ const common = {
   'Generative AI': { intro: 'Generative AI creates text, code, images and other content from learned patterns.', win: ['Install Python and VS Code.', 'Create a virtual environment.', 'Install the selected model-provider SDK.', 'Store API keys in environment variables, never source code.'], linux: ['Install Python and create a virtual environment.', 'Install the selected provider SDK.', 'Export credentials securely.', 'Learn tokens, cost, limits and evaluation.'], verify: 'python --version\npython -m pip --version', first: 'Run a small provider authentication test without printing the API key.' },
   'Agentic AI': { intro: 'Agentic AI combines models with goals, state, tools and bounded workflows.', win: ['Install Python and VS Code.', 'Create a virtual environment.', 'Install the selected LLM/tool SDKs.', 'Start with read-only tools and strict permissions.'], linux: ['Install Python and a virtual environment.', 'Install the required SDKs.', 'Configure credentials securely.', 'Practice tool schemas, validation, timeouts and bounded loops.'], verify: 'python --version\npython -m pip --version', first: 'Run a read-only tool call with validated input.' },
 }
+
+
+// Add course-specific Windows/Linux setup steps for the additional language,
+// framework and Python library tracks without duplicating existing guides.
+Object.assign(common, Object.fromEntries(ecosystemCourseSpecs.map((course) => [course.track, {
+  intro: course.intro,
+  win: [course.install, 'Open PowerShell or the IDE terminal in your project folder.', 'Create the smallest starter file or project for this course.', 'Run the verification command below and confirm the expected version or status.', 'Run the first test command below; install project dependencies in the same environment.'],
+  linux: [course.install, 'Open a Linux terminal in your project folder.', 'Create the smallest starter file or project for this course.', 'Run the verification command below and confirm the expected version or status.', 'Run the first test command below; install project dependencies in the same environment.'],
+  verify: course.verify,
+  first: course.first,
+}])));
+
 
 const allTracks = Object.keys(common)
 const courseVisuals = {
