@@ -3,6 +3,8 @@ import { BookOpen, CheckCircle2, ChevronDown, CirclePlay, Clock3, Code2, Databas
 import './LearningCenter.css'
 import SystemSetup from './SystemSetup'
 import { courseDeepLessons } from './courseDeepLessons'
+import { javascriptEcosystem } from './javascriptEcosystem'
+import { javascriptEcosystemLessons } from './javascriptEcosystemLessons'
 
 const baseLessons = [
   { id:'py-1', track:'Python', level:'Basic', title:'Variables, data types & input', duration:'8 min', kind:'flow', summary:'Store information in names and choose the right type for each value.', explain:'A variable is a name that refers to a value. Common Python types include str (text), int (whole numbers), float (decimal numbers), and bool (True/False). Use type() to inspect a value.', code:'name = "Asha"\nage = 24\nscore = 82.5\nis_ready = True\nprint(type(age))  # <class \'int\'>', task:'Create variables for your name, years of experience, and whether you are job-ready. Print each value and its type.', video:'_uQrJ0TkZlc', videoTitle:'Python basics for beginners' },
@@ -740,6 +742,8 @@ export default function LearningCenter({ initialTrack = 'All topics' }) {
   const [level, setLevel] = useState('All levels')
   const [query, setQuery] = useState('')
   const [openLibraryGroups, setOpenLibraryGroups] = useState(() => pythonEcosystem.map((group) => group.group))
+  const [openJavaScriptGroups, setOpenJavaScriptGroups] = useState(() => javascriptEcosystem.map((group) => group.group))
+  const [selectedJavaScriptTool, setSelectedJavaScriptTool] = useState(() => javascriptEcosystem[0].items[0])
   const [selectedLibrary, setSelectedLibrary] = useState(pythonEcosystem[0].items[0])
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [quizSubmitted, setQuizSubmitted] = useState(false)
