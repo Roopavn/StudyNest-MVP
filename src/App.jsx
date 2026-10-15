@@ -215,12 +215,6 @@ export default function App() {
     setShowAddTask(false)
     setNotice('Your study task has been added.')
   }
-  function openQuiz() {
-    setAnswer(null)
-    setQuizSubmitted(false)
-    setShowQuiz(true)
-  }
-
   return (
     <div className="app-shell">
       <aside className={`sidebar ${mobileNav ? 'sidebar-open' : ''}`}>
