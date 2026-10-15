@@ -47,7 +47,7 @@ AR-CodeLab is an all-in-one IT learning lab for structured courses, practical co
 | Generative AI | LLM fundamentals, prompt engineering, embeddings, RAG, structured outputs, evaluation and production design |
 | Agentic AI | Agent loops, tools, planning, memory, multi-agent patterns, approvals, recovery and security |
 
-**Course catalog lesson totals:** Python (15), SQL (12), REST APIs (12), Data Engineering / Big Data (PySpark & Apache Spark) (8), Generative AI (8), Agentic AI (8), plus ten lessons each for Java, JavaScript, C Programming, HTML & CSS, DevOps, Cloud Fundamentals, Linux & Shell, Docker & Containers, Git & GitHub and Kubernetes. This gives **163 lessons across 16 learning tracks**. Lesson examples are educational; cloud, container and provider examples may need environment-specific configuration before use. Course progress shown for newly added tracks starts at 0; lesson completion is stored locally in the browser.
+**Course catalog lesson totals:** Most course-card counts are generated from their lesson data. The catalog is actively being expanded, so use the live course cards and in-course lesson totals as the current source of truth rather than a fixed total in this README. Lesson examples are educational; cloud, container and provider examples may need environment-specific configuration before use. Lesson completion is stored locally for demo users and syncs to Firestore for signed-in users after Firebase is configured.
 
 Each subject contains **Basic → Intermediate → Advanced** lessons. Choose a subject card to open its own learning track, then use the difficulty roadmap or selector and search to find lessons. Expand a question to read an interview-ready answer, example syntax, expected output/behavior, and an interview tip. Code examples include a copy action.
 
@@ -83,24 +83,29 @@ Run these before submitting application changes:
 - npm run build creates the production build in dist/.
 - npm run preview serves the production build locally.
 
-## Data persistence and MVP limitations
+## Account, cloud progress and current limitations
 
-- Study tasks and course bookmarks are stored in the current browser's localStorage; they are not synced between devices or accounts.
-- Dashboard statistics and course progress include demo/sample values and should not be treated as a complete analytics backend.
-- The sample quiz and learning content are for demonstration and practice.
-- Firebase initialization is optional. Authentication and cloud-synced user progress are not fully wired into the current experience.
-- There is no production admin/content-management backend yet.
+- Without Firebase configuration, the app remains usable in demo mode and stores study tasks, bookmarks and completed lessons in the current browser's localStorage.
+- The account dialog includes email/password sign-up, sign-in, password reset and sign-out flows.
+- When Firebase is configured and the Firestore rules are deployed, signed-in learners can sync study tasks, bookmarks and completed lesson IDs in their own `users/{uid}` document.
+- The dashboard still contains sample learning-progress, streak, study-time and quiz-average figures. These should be replaced with verified analytics before treating them as real learner statistics.
+- Quizzes and course lessons are educational sample content. There is no production admin/content-management backend, live AI tutor, or server-side answer evaluator yet.
+- Firestore rules are included in `firestore.rules`, but must be deployed to your Firebase project before cloud sync will work.
 
-## Optional Firebase setup
+## Firebase setup for accounts and cloud progress
 
 1. Create a Firebase project and register a Web app.
-2. Copy .env.example to .env.local.
-3. Add the Firebase web app configuration values to the VITE_FIREBASE_* variables.
-4. Enable only the Firebase products you need and configure secure rules before storing real user data.
+2. In Firebase Authentication, enable the **Email/Password** sign-in provider.
+3. Create a Cloud Firestore database.
+4. Copy the six web app configuration values from Firebase Project settings.
+5. In GitHub, open **Settings → Secrets and variables → Actions → New repository secret**. Add these secrets using the exact names: `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, and `VITE_FIREBASE_APP_ID`.
+6. Publish the repository's `firestore.rules` file using the Firebase Console's Firestore **Rules** editor, or install the Firebase CLI and run `firebase deploy --only firestore:rules --project YOUR_FIREBASE_PROJECT_ID` from the repository root.
+7. Push a commit to `main` or manually run the GitHub Pages workflow so the site is rebuilt with the Firebase configuration.
+8. Open the deployed site, create a test account, add a task, bookmark a course and complete a lesson. Sign out and back in to confirm that data is restored.
 
-The app exports auth, db, and isFirebaseConfigured from src/firebase.js. Firebase is not required to run the demo UI.
+The app exports `auth`, `db`, and `isFirebaseConfigured` from `src/firebase.js`. Firebase is optional for browsing lessons.
 
-**Security:** Never place service-account credentials, private API keys, or AI provider secrets in client-side VITE_* variables. Privileged operations belong in Cloud Functions or a trusted backend. The starter Firestore rules deny reads and writes by default; design and test ownership-aware rules before production use.
+**Security:** Never put service-account credentials, private keys, or AI provider secrets in client-side `VITE_*` variables. The Firebase web configuration is used by the browser, so access control must be enforced by Security Rules. The included rules restrict learner progress to the authenticated owner and deny all other Firestore paths. Test rules before production use.
 
 ## Deployment with GitHub Actions
 
