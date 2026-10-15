@@ -142,7 +142,7 @@ export default function App() {
     'Docker & Containers': 'Docker & Containers', 'Git & GitHub': 'Git & GitHub', 'Kubernetes': 'Kubernetes',
     'Data Engineering & Big Data': 'Data Engineering / Big Data', 'React': 'React', 'Node.js & Express': 'Node.js & Express',
     'Generative AI': 'Generative AI & LLMs', 'DBMS & Database Design': 'DBMS & Database Design',
-    'Software Testing': 'Software Testing', 'NoSQL & MongoDB': 'NoSQL & MongoDB',
+    'Software Testing': 'Software Testing', 'NoSQL & MongoDB': 'NoSQL & MongoDB', 'Microsoft Azure Cloud & AI': 'Microsoft Azure', 'AWS Cloud Practitioner to Builder': 'AWS Cloud', 'Google Cloud Platform (GCP)': 'Google Cloud', 'Jira with AI for Project Delivery': 'Jira with AI', 'Agile Scrum with AI': 'Agile Scrum with AI', 'Oracle Database & SQL': 'Oracle Database', 'PostgreSQL from SQL to Production': 'PostgreSQL', 'MongoDB Developer Essentials': 'MongoDB', 'Databricks & Lakehouse Engineering': 'Databricks', 'AI for Cloud & DevOps Engineers': 'AI for Cloud & DevOps',
     'Django Web Development': 'Django & FastAPI', 'FastAPI Development': 'Django & FastAPI',
   }
   function getCourseProgress(course) {
@@ -162,11 +162,12 @@ export default function App() {
     const title = course.title.toLowerCase()
     if (/python foundations|java foundations|javascript essentials|c programming|c\+\+|c#|typescript/.test(title)) return 'languages'
     if (/django|flask|fastapi|frameworks & libraries|react/.test(title)) return 'frameworks'
-    if (/sql|database/.test(title)) return 'databases'
-    if (/machine learning|data science|data analyst|data analytics|data engineering|big data|pyspark|generative ai|agentic ai/.test(title)) return 'data-ai'
-    if (/devops|cloud|linux|docker|kubernetes/.test(title)) return 'devops'
+    if (/sql|database|postgres|oracle|mongodb|mongo db|nosql/.test(title)) return 'databases'
+    if (/machine learning|data science|data analyst|data analytics|data engineering|big data|pyspark|generative ai|agentic ai|databricks|ai for cloud/.test(title)) return 'data-ai'
+    if (/devops|cloud|linux|docker|kubernetes|azure|aws|gcp|google cloud/.test(title)) return 'devops'
     if (/html|css|frontend|web design/.test(title)) return 'web'
     if (/testing|quality assurance|pytest/.test(title)) return 'testing'
+    if (/jira|agile|scrum/.test(title)) return 'delivery'
     if (/git|github|rest api|api development|developer tools/.test(title)) return 'tools'
     return 'tools'
   }
@@ -178,6 +179,7 @@ export default function App() {
     ['devops', 'DevOps & cloud'],
     ['web', 'Web & frontend'],
     ['testing', 'Testing & QA'],
+    ['delivery', 'Agile & project delivery'],
     ['tools', 'APIs & developer tools'],
     ['all', 'All courses'],
   ]
@@ -189,7 +191,7 @@ export default function App() {
 
   function openCourse(course) {
     const title = course.title.toLowerCase()
-    const topic = title.includes('manual testing') ? 'Manual Testing' : title.includes('django rest') || title.includes('rest framework') ? 'Django REST Framework' : title.includes('machine learning') ? 'Machine Learning' : title.includes('data analyst') || title.includes('data analytics') ? 'Data Analyst' : title.includes('data science') ? 'Data Science' : title.includes('django') ? 'Django' : title.includes('flask') ? 'Flask' : title.includes('fastapi') ? 'FastAPI' : title.includes('agentic ai') ? 'Agentic AI' : title.includes('generative ai') ? 'Generative AI' : title.includes('python') ? 'Python' : title.includes('sql') || title.includes('database') ? 'SQL' : title.includes('api') ? 'REST APIs' : title.includes('c++') ? 'C++' : title.includes('c#') || title.includes('.net') ? 'C#' : title.includes('c programming') ? 'C Programming' : title.includes('typescript') ? 'TypeScript' : title.includes('react') ? 'React' : title.includes('java') && !title.includes('javascript') ? 'Java' : title.includes('frameworks & libraries') || title.includes('javascript ecosystem') ? 'JavaScript Ecosystem' : title.includes('javascript') ? 'JavaScript' : title.includes('html') || title.includes('css') ? 'HTML & CSS' : title.includes('devops') ? 'DevOps' : title.includes('cloud') ? 'Cloud Fundamentals' : title.includes('linux') ? 'Linux & Shell' : title.includes('docker') ? 'Docker & Containers' : title.includes('git') ? 'Git & GitHub' : title.includes('kubernetes') ? 'Kubernetes' : title.includes('data engineering') || title.includes('pyspark') || title.includes('big data') ? 'Data Engineering / Big Data' : 'All topics'
+    const topic = title.includes('microsoft azure') || title === 'azure' ? 'Microsoft Azure' : title.includes('aws cloud') || title.includes('aws ') ? 'AWS Cloud' : title.includes('google cloud') || title.includes('(gcp)') ? 'Google Cloud' : title.includes('jira with ai') ? 'Jira with AI' : title.includes('agile scrum') ? 'Agile Scrum with AI' : title.includes('oracle database') ? 'Oracle Database' : title.includes('postgresql') ? 'PostgreSQL' : title.includes('mongodb') || title.includes('mongo db') ? 'MongoDB' : title.includes('databricks') ? 'Databricks' : title.includes('ai for cloud') ? 'AI for Cloud & DevOps' : title.includes('manual testing') ? 'Manual Testing' : title.includes('django rest') || title.includes('rest framework') ? 'Django REST Framework' : title.includes('machine learning') ? 'Machine Learning' : title.includes('data analyst') || title.includes('data analytics') ? 'Data Analyst' : title.includes('data science') ? 'Data Science' : title.includes('django') ? 'Django' : title.includes('flask') ? 'Flask' : title.includes('fastapi') ? 'FastAPI' : title.includes('agentic ai') ? 'Agentic AI' : title.includes('generative ai') ? 'Generative AI' : title.includes('python') ? 'Python' : title.includes('sql') || title.includes('database') ? 'SQL' : title.includes('api') ? 'REST APIs' : title.includes('c++') ? 'C++' : title.includes('c#') || title.includes('.net') ? 'C#' : title.includes('c programming') ? 'C Programming' : title.includes('typescript') ? 'TypeScript' : title.includes('react') ? 'React' : title.includes('java') && !title.includes('javascript') ? 'Java' : title.includes('frameworks & libraries') || title.includes('javascript ecosystem') ? 'JavaScript Ecosystem' : title.includes('javascript') ? 'JavaScript' : title.includes('html') || title.includes('css') ? 'HTML & CSS' : title.includes('devops') ? 'DevOps' : title.includes('cloud') ? 'Cloud Fundamentals' : title.includes('linux') ? 'Linux & Shell' : title.includes('docker') ? 'Docker & Containers' : title.includes('git') ? 'Git & GitHub' : title.includes('kubernetes') ? 'Kubernetes' : title.includes('data engineering') || title.includes('pyspark') || title.includes('big data') ? 'Data Engineering / Big Data' : 'All topics'
     setLearningTopic(topic)
     if (activePage !== 'Learning path') rememberCurrentPage()
     setActivePage('Learning path')
