@@ -8,6 +8,7 @@ import {
 import { activities, courses, initialTasks, quizQuestion, tracks } from './data.js'
 import LearningCenter from './LearningCenter.jsx'
 import InterviewPrep from './InterviewPrep.jsx'
+import { ecosystemCourseSpecs } from './ecosystemCourseLessons.js'
 
 const iconMap = { code: Code2, 'book-open': BookOpen }
 const navItems = [
@@ -86,6 +87,7 @@ export default function App() {
 
   function openCourse(course) {
     const title = course.title.toLowerCase()
+    const ecosystemTrack = ecosystemCourseSpecs.find((item) => title.includes(item.title.toLowerCase()) || title === item.track.toLowerCase())?.track
     const topic = title.includes('django rest') || title.includes('rest framework') ? 'Django REST Framework' : title.includes('machine learning') ? 'Machine Learning' : title.includes('data analyst') || title.includes('data analytics') ? 'Data Analyst' : title.includes('data science') ? 'Data Science' : title.includes('django') ? 'Django' : title.includes('flask') ? 'Flask' : title.includes('fastapi') ? 'FastAPI' : title.includes('agentic ai') ? 'Agentic AI' : title.includes('generative ai') ? 'Generative AI' : title.includes('python') ? 'Python' : title.includes('sql') || title.includes('database') ? 'SQL' : title.includes('api') ? 'REST APIs' : title.includes('java') && !title.includes('javascript') ? 'Java' : title.includes('javascript') ? 'JavaScript' : title.includes('c programming') ? 'C Programming' : title.includes('html') || title.includes('css') ? 'HTML & CSS' : title.includes('devops') ? 'DevOps' : title.includes('cloud') ? 'Cloud Fundamentals' : title.includes('linux') ? 'Linux & Shell' : title.includes('docker') ? 'Docker & Containers' : title.includes('git') ? 'Git & GitHub' : title.includes('kubernetes') ? 'Kubernetes' : title.includes('data engineering') || title.includes('pyspark') || title.includes('big data') ? 'Data Engineering / Big Data' : 'All topics'
     setLearningTopic(topic)
     setActivePage('Learning path')
