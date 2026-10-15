@@ -9,6 +9,7 @@ import { machineLearningCourseLessons } from './machineLearningCourseLessons'
 import { dataScienceCourseLessons } from './dataScienceCourseLessons'
 import { dataAnalystCourseLessons } from './dataAnalystCourseLessons'
 import { ecosystemCourseLessons } from './ecosystemCourseLessons'
+import { cCourseLessons } from './cCourseLessons'
 
 export const courseDeepLessons = [
   ...baseCourseDeepLessons,
@@ -21,4 +22,5 @@ export const courseDeepLessons = [
   ...dataScienceCourseLessons,
   ...dataAnalystCourseLessons,
   ...ecosystemCourseLessons,
+  ...cCourseLessons,
 ]
