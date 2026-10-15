@@ -4,6 +4,7 @@ import { fastapiCourseLessons } from './fastapiCourseLessons.js'
 import { drfCourseLessons } from './drfCourseLessons.js'
 import { machineLearningCourseLessons } from './machineLearningCourseLessons.js'
 import { dataScienceCourseLessons } from './dataScienceCourseLessons.js'
+import { dataAnalystCourseLessons } from './dataAnalystCourseLessons.js'
 
 export const tracks = [
   { id: 'it', title: 'IT & technology', subtitle: 'Grow practical, job-ready skills', icon: 'code', color: 'teal', topics: 28 },
@@ -23,6 +24,7 @@ export const courses = [
   { id: 20, title: 'Django REST Framework', category: 'IT · Backend APIs', progress: 0, lessons: `${drfCourseLessons.length} lessons`, color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=85', imageAlt: 'Django REST API development' },
   { id: 21, title: 'Machine Learning', category: 'AI · Machine Learning', progress: 0, lessons: `${machineLearningCourseLessons.length} lessons`, color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=900&q=85', imageAlt: 'Machine learning and data model development' },
   { id: 22, title: 'Data Science', category: 'AI · Data Science', progress: 0, lessons: `${dataScienceCourseLessons.length} lessons`, color: 'orange', icon: 'code', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85', imageAlt: 'Data science analytics dashboard' },
+  { id: 23, title: 'Data Analyst', category: 'IT · Data Analytics', progress: 0, lessons: `${dataAnalystCourseLessons.length} lessons`, color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=85', imageAlt: 'Data analytics charts and reporting dashboard' },
   { id: 2, title: 'Database & SQL Essentials', category: 'IT · Data skills', progress: 0, lessons: '50 lessons', color: 'orange', icon: 'code', image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=900&q=85', imageAlt: 'Abstract data and database visualization' },
   { id: 3, title: 'REST API Development', category: 'IT · Backend', progress: 0, lessons: '12 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=85', imageAlt: 'Server infrastructure representing backend APIs' },
   { id: 4, title: 'Java Foundations', category: 'IT · Programming', progress: 0, lessons: '10 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop with a code editor open' },
