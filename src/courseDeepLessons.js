@@ -8,6 +8,7 @@ import { drfCourseLessons } from './drfCourseLessons'
 import { machineLearningCourseLessons } from './machineLearningCourseLessons'
 import { dataScienceCourseLessons } from './dataScienceCourseLessons'
 import { dataAnalystCourseLessons } from './dataAnalystCourseLessons'
+import { ecosystemCourseLessons } from './ecosystemCourseLessons'
 
 export const courseDeepLessons = [
   ...baseCourseDeepLessons,
@@ -19,4 +20,5 @@ export const courseDeepLessons = [
   ...machineLearningCourseLessons,
   ...dataScienceCourseLessons,
   ...dataAnalystCourseLessons,
+  ...ecosystemCourseLessons,
 ]
