@@ -1,0 +1,86 @@
+/* Desktop sidebar collapse: open by default, compact when the menu button is toggled. */
+@media (min-width: 901px) {
+  .mobile-menu {
+    display: grid !important;
+    flex: 0 0 auto;
+  }
+
+  /* mobileNav is also used by the existing menu button; on desktop its
+     "open" state becomes the compact sidebar state. */
+  .app-shell:has(.sidebar.sidebar-open) .sidebar {
+    width: 76px;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .main-area {
+    margin-left: 76px;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .brand > span:last-child,
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .workspace-label,
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .nav-item > span:not(.nav-count),
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .track-nav > span:not(.track-icon),
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .track-chevron,
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .upgrade-card,
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .profile-copy,
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .profile-more {
+    display: none;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar-top {
+    justify-content: center;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .main-nav,
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .track-nav {
+    align-items: center;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .nav-item,
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .track-nav {
+    justify-content: center;
+    width: 100%;
+    padding-inline: 0;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .track-nav {
+    margin-inline: 0;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .nav-count {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 8px;
+    padding: 2px 4px;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .profile-row {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .mobile-close {
+    display: grid !important;
+    position: absolute;
+    top: 8px;
+    right: 7px;
+    width: 24px;
+    height: 24px;
+    z-index: 3;
+  }
+
+  .app-shell:has(.sidebar:not(.sidebar-open)) .sidebar .mobile-close {
+    display: none;
+  }
+
+  .app-shell:has(.sidebar.sidebar-open) .sidebar .brand-mark {
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  /* On phones/tablets the menu button opens the normal drawer. */
+  .mobile-menu {
+    display: grid !important;
+  }
+}
