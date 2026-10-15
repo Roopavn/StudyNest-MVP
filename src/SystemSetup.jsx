@@ -182,6 +182,12 @@ function SetupCard({ track }) {
 
 export default function SystemSetup({ track }) {
   const selected = common[track] ? track : null
+
+  // Only show setup guides for courses that have a dedicated guide.
+  // "All topics" keeps the setup directory; unrelated/new courses should not
+  // inherit every programming-language setup guide as embedded course content.
+  if (!selected && track !== 'All topics') return null
+
   return <section className="system-setup">
     <div className="system-setup-heading"><span className="system-setup-kicker">STEP 02 · SYSTEM SETUP</span><h2>Install it, verify it, run your first test</h2><p>Every setup guide now explains where commands go, how PATH works, how to verify the installation, and what to check when a command fails.</p></div>
     <TerminalGuide />
