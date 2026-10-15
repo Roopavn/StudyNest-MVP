@@ -10,6 +10,7 @@ import { dataScienceCourseLessons } from './dataScienceCourseLessons'
 import { dataAnalystCourseLessons } from './dataAnalystCourseLessons'
 import { ecosystemCourseLessons } from './ecosystemCourseLessons'
 import { cCourseLessons } from './cCourseLessons'
+import { javaPracticalLessons, javascriptPracticalLessons, typeScriptPracticalLessons, htmlPracticalLessons, cssPracticalLessons, reactPracticalLessons } from './webLanguageCourseLessons'
 
 export const courseDeepLessons = [
   ...baseCourseDeepLessons,
@@ -23,4 +24,10 @@ export const courseDeepLessons = [
   ...dataAnalystCourseLessons,
   ...ecosystemCourseLessons,
   ...cCourseLessons,
+  ...javaPracticalLessons,
+  ...javascriptPracticalLessons,
+  ...typeScriptPracticalLessons,
+  ...htmlPracticalLessons,
+  ...cssPracticalLessons,
+  ...reactPracticalLessons,
 ]
