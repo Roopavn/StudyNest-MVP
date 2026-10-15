@@ -1,0 +1,27 @@
+// Practical machine learning curriculum with concepts, evaluation, deployment and interview practice.
+const topics = [
+["Machine learning overview and workflow","Distinguish supervised, unsupervised and reinforcement learning.","A typical workflow defines a target, prepares representative data, creates a baseline, validates results and monitors the deployed model."],
+["Python environment and ML tools","Set up NumPy, pandas, Matplotlib and scikit-learn in a virtual environment.","Keep project dependencies isolated and record versions. Start with CPU-friendly datasets before adding complex frameworks."],
+["NumPy arrays and vectorized operations","Represent numerical data efficiently and avoid unnecessary Python loops.","Arrays have shapes and dtypes; broadcasting applies compatible operations without manually repeating values."],
+["Pandas data inspection and cleaning","Load CSV files, inspect missing values, types, duplicates and outliers.","Inspect data before filling or dropping values; learn whether missingness itself carries information and avoid leaking target data."],
+["Exploratory data analysis and visualization","Use distributions, group summaries and plots to discover data quality issues.","Check class imbalance, skew, correlations and suspicious features; correlation alone does not prove causation."],
+["Train, validation and test splits","Measure generalization with data that was not used to fit the model.","Split before fitting preprocessing steps. For time series, use time-aware splits; for grouped records, keep groups separated."],
+["Regression with linear models","Predict numeric targets and interpret coefficients and residuals.","Fit a baseline, inspect residual patterns and compare MAE/RMSE; standardize features when the estimator benefits from it."],
+["Classification and logistic regression","Predict classes and interpret probabilities and decision thresholds.","Accuracy can mislead on imbalanced data; consider precision, recall, F1, ROC-AUC and the business cost of errors."],
+["Decision trees and ensemble models","Compare interpretable trees with random forests and gradient boosting.","Control depth and leaf sizes to reduce overfitting; tune on validation data rather than repeatedly checking the test set."],
+["Feature engineering and preprocessing pipelines","Encode categories, scale features and prevent train-test leakage.","Use ColumnTransformer and Pipeline so transformations are fitted only on training folds and applied consistently at inference."],
+["Cross-validation and hyperparameter tuning","Estimate variability and search model configurations responsibly.","Use cross-validation and randomized/grid search with a suitable scoring metric; keep a final test set untouched until model selection ends."],
+["Clustering and dimensionality reduction","Explore unlabeled data using K-means and PCA.","Scale features where appropriate, assess cluster stability and remember that low-dimensional projections can hide structure."],
+["Imbalanced data, leakage and explainability","Detect common evaluation traps and explain model behavior.","Use stratified splits when suitable, fit resampling inside training folds, compare against baselines and communicate feature attribution limitations."],
+["Model persistence, serving and monitoring","Package preprocessing and prediction, validate inputs and monitor drift.","Persist trusted model artifacts with version metadata; monitor input distributions, performance, latency and failures."],
+["Machine learning interview and capstone","Build an end-to-end churn or house-price prediction project.","Explain bias versus variance, overfitting, regularization, leakage, cross-validation, metrics and how the model will be monitored."]
+];
+export const machineLearningCourseLessons = topics.map(([title, summary, explain], i) => ({
+ id: `ml-${i+1}`, track: 'Machine Learning', level: i < 5 ? 'Basic' : i < 11 ? 'Intermediate' : 'Advanced',
+ title, duration: '20 min', kind: 'layers', summary, explain,
+ code: i === 7 ? "from sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import classification_report\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42, stratify=y\n)\nmodel = LogisticRegression(max_iter=1000)\nmodel.fit(X_train, y_train)\nprint(classification_report(y_test, model.predict(X_test)))" : "import pandas as pd\nfrom sklearn.model_selection import train_test_split\n\ndata = pd.read_csv('data.csv')\nprint(data.shape)\nprint(data.isna().sum())",
+ output: 'Run on a suitable sample dataset and compare the results with a simple baseline.',
+ task: `Practice “${title}” on a small dataset. Record assumptions, your metric and one limitation.`,
+ solutionHint: 'Use a reproducible random seed where appropriate, keep the test set separate, and explain why the chosen metric fits the problem.',
+ interviewQuestion: ['Describe a standard ML project workflow.','Why isolate dependencies?','What is broadcasting?','How would you handle missing values?','What do you look for in EDA?','Explain data leakage.','What do MAE and RMSE measure?','Why can accuracy be misleading?','How do random forests reduce variance?','How do pipelines prevent leakage?','What is cross-validation?','How does K-means work?','What is target leakage and how can you explain predictions?','How would you monitor a deployed model?','Explain overfitting and how you would build an end-to-end model.'][i]
+}));
