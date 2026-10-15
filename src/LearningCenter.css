@@ -198,3 +198,11 @@
 .learning-center.practice-only .learning-select-label select{width:100%}
 .learning-center.practice-only .course-practice-hub{order:1;margin:0 0 24px}
 .practice-panel>.learning-center{margin-top:18px}
+
+/* Practical multiple-choice lab: readable snippets and question-type labels. */
+.practical-mcq-heading{margin-top:28px}
+.practical-quiz-question legend{display:block}
+.practical-question-kind{display:inline-block;margin:0 0 7px;padding:4px 7px;border-radius:6px;background:#e8f7f2;color:#087f68;font-size:10px;letter-spacing:.2px}
+.practical-code-snippet{max-width:100%;overflow:auto;margin:0 0 13px;padding:13px;border:1px solid #24354e;border-radius:10px;background:#111c2e;color:#e0ecff;font:12px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+.practical-code-snippet code{font:inherit}
+.practical-quiz-grid{margin-bottom:0}
