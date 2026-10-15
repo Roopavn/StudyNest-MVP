@@ -107,3 +107,7 @@ table { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+
+/* Persistent top-menu back navigation */
+.topbar-back{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:0 0 auto;min-height:36px;padding:0 11px;border:1px solid #e5eaf3;border-radius:8px;background:#fff;color:#52617a;font-size:12px;font-weight:700;white-space:nowrap;transition:background .15s,border-color .15s,color .15s}.topbar-back:hover{background:#eef2ff;border-color:#dbe4ff;color:#284bb0}.topbar{justify-content:flex-start}.breadcrumbs{flex:1;min-width:0}.topbar-actions{flex:0 0 auto}@media(max-width:720px){.topbar{padding:0 14px;gap:8px}.topbar-back{min-height:34px;padding:0 9px;gap:5px}.topbar-back span{display:inline}.breadcrumbs{font-size:11px;gap:5px}.topbar-actions{gap:8px}.search-box{width:min(38vw,190px)}.search-box kbd{display:none}}@media(max-width:430px){.topbar{gap:6px}.topbar-back{width:34px;padding:0}.topbar-back span{display:none}.breadcrumbs{flex:1}.search-box{width:34px;padding:0;justify-content:center}.search-box input,.search-box kbd{display:none}.topbar-actions{gap:5px}}
