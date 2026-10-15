@@ -1,3 +1,4 @@
+import { gitGithubCourseLessons } from './gitGithubCourseLessons.js'
 import { sqlCourseLessons } from './sqlCourseLessons.js'
 import { djangoCourseLessons } from './djangoCourseLessons.js'
 import { flaskCourseLessons } from './flaskCourseLessons.js'
