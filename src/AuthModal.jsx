@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
 } from 'firebase/auth'
 import { auth, isFirebaseConfigured } from './firebase.js'
@@ -15,6 +16,11 @@ export default function AuthModal({ user, onClose }) {
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('')
+
+  async function logout() {
+    if (!auth) return
+    try { await signOut(auth); onClose() } catch (error) { setMessage(error.message || 'Could not sign out.') }
+  }
 
   async function submit(event) {
     event.preventDefault()
@@ -65,7 +71,7 @@ export default function AuthModal({ user, onClose }) {
             <h2 id="auth-title">You're signed in</h2>
             <p className="auth-description">Your learning data is associated with this account.</p>
             <div className="auth-user-summary"><strong>{user.displayName || 'Student'}</strong><span>{user.email}</span></div>
-            <button type="button" className="auth-submit" onClick={onClose}>Back to learning</button>
+            <button type="button" className="auth-submit" onClick={onClose}>Back to learning</button><button type="button" className="auth-signout" onClick={logout}>Sign out</button>
           </>
         ) : (
           <>
