@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - feat/responsive-mobile-desktop
+  pull_request:
+    types: [synchronize]
 
 permissions:
   contents: write
@@ -20,82 +22,66 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import re
           import subprocess
 
           app = Path('src/App.jsx')
           learning = Path('src/LearningCenter.jsx')
           css = Path('src/LearningCenter.css')
-
           a = app.read_text(encoding='utf-8')
           l = learning.read_text(encoding='utf-8')
 
-          # App: persist the last opened lesson per learning topic.
           old = "  const [learningTopic, setLearningTopic] = useState('All topics')\n"
           new = old + """  const [lastOpenedLessons, setLastOpenedLessons] = useState(() => {\n    try { return JSON.parse(localStorage.getItem('studynest.learning.lastOpened') || '{}') } catch { return {} }\n  })\n"""
-          if old not in a:
-              raise SystemExit('App learningTopic anchor not found')
+          if old not in a: raise SystemExit('App learningTopic anchor not found')
           a = a.replace(old, new, 1)
 
           old = "  useEffect(() => {\n    localStorage.setItem('studynest.bookmarks', JSON.stringify(bookmarks))\n  }, [bookmarks])\n"
           new = old + """\n  useEffect(() => {\n    localStorage.setItem('studynest.learning.lastOpened', JSON.stringify(lastOpenedLessons))\n  }, [lastOpenedLessons])\n"""
-          if old not in a:
-              raise SystemExit('App bookmark effect anchor not found')
+          if old not in a: raise SystemExit('App bookmark effect anchor not found')
           a = a.replace(old, new, 1)
 
           old = "          {activePage === 'Learning path' && <LearningCenter key={learningTopic} initialTrack={learningTopic} completedLessons={completedLessons} onCompletedLessonsChange={setCompletedLessons} />}\n"
           new = """          {activePage === 'Learning path' && <LearningCenter\n            key={`${learningTopic}-${lastOpenedLessons[learningTopic] || 'start'}`}\n            initialTrack={learningTopic}\n            initialLessonId={lastOpenedLessons[learningTopic]}\n            completedLessons={completedLessons}\n            onCompletedLessonsChange={setCompletedLessons}\n            onLessonOpened={(topic, lessonId) => setLastOpenedLessons((current) => ({ ...current, [topic]: lessonId }))}\n            onBack={() => setActivePage('My learning')}\n          />}\n"""
-          if old not in a:
-              raise SystemExit('App LearningCenter render anchor not found')
+          if old not in a: raise SystemExit('App LearningCenter render anchor not found')
           a = a.replace(old, new, 1)
 
-          # LearningCenter: expose initial lesson, persist selection, and provide a back button.
           old = "export default function LearningCenter({ initialTrack = 'All topics', completedLessons, onCompletedLessonsChange, practiceOnly = false }) {"
           new = "export default function LearningCenter({ initialTrack = 'All topics', initialLessonId, completedLessons, onCompletedLessonsChange, onLessonOpened, onBack, practiceOnly = false }) {"
-          if old not in l:
-              raise SystemExit('LearningCenter props anchor not found')
+          if old not in l: raise SystemExit('LearningCenter props anchor not found')
           l = l.replace(old, new, 1)
 
           old = "  const [openLesson, setOpenLesson] = useState(() => lessons.find((lesson) => initialTrack === 'All topics' || lesson.track === initialTrack)?.id || 'py-1')\n"
           new = "  const [openLesson, setOpenLesson] = useState(() => initialLessonId || lessons.find((lesson) => initialTrack === 'All topics' || lesson.track === initialTrack)?.id || 'py-1')\n"
-          if old not in l:
-              raise SystemExit('LearningCenter openLesson state anchor not found')
+          if old not in l: raise SystemExit('LearningCenter openLesson state anchor not found')
           l = l.replace(old, new, 1)
 
           old = "  useEffect(() => { setTrack(initialTrack); setQuery('') }, [initialTrack])\n"
-          new = "  useEffect(() => {\n    setTrack(initialTrack)\n    setQuery('')\n    setOpenLesson(initialLessonId || lessons.find((lesson) => initialTrack === 'All topics' || lesson.track === initialTrack)?.id || 'py-1')\n  }, [initialTrack, initialLessonId])\n"
-          if old not in l:
-              raise SystemExit('LearningCenter initialTrack effect anchor not found')
+          new = """  useEffect(() => {\n    setTrack(initialTrack)\n    setQuery('')\n    setOpenLesson(initialLessonId || lessons.find((lesson) => initialTrack === 'All topics' || lesson.track === initialTrack)?.id || 'py-1')\n  }, [initialTrack, initialLessonId])\n"""
+          if old not in l: raise SystemExit('LearningCenter initialTrack effect anchor not found')
           l = l.replace(old, new, 1)
 
           old = "  const markCodingPracticed = (id) => setPracticedCoding((old) => old.includes(id) ? old : [...old, id])\n  const markDone = (id) => setCompleted((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])\n"
-          new = """  const markCodingPracticed = (id) => setPracticedCoding((old) => old.includes(id) ? old : [...old, id])\n  const selectLesson = (id) => {\n    setOpenLesson(id)\n    localStorage.setItem('studynest.learning.lastOpened', JSON.stringify({ ...JSON.parse(localStorage.getItem('studynest.learning.lastOpened') || '{}'), [track]: id }))\n    onLessonOpened?.(track, id)\n  }\n  const markDone = (id) => setCompleted((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])\n"""
-          if old not in l:
-              raise SystemExit('LearningCenter markDone anchor not found')
+          new = """  const markCodingPracticed = (id) => setPracticedCoding((old) => old.includes(id) ? old : [...old, id])\n  const selectLesson = (id) => {\n    setOpenLesson(id)\n    try {\n      const saved = JSON.parse(localStorage.getItem('studynest.learning.lastOpened') || '{}')\n      localStorage.setItem('studynest.learning.lastOpened', JSON.stringify({ ...saved, [track]: id }))\n    } catch { /* keep the in-memory selection */ }\n    onLessonOpened?.(track, id)\n  }\n  const markDone = (id) => setCompleted((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])\n"""
+          if old not in l: raise SystemExit('LearningCenter markDone anchor not found')
           l = l.replace(old, new, 1)
 
           old = "<button key={lesson.id} className={'lesson-list-item '+(openLesson===lesson.id?'lesson-selected':'')} onClick={()=>setOpenLesson(lesson.id)}>"
           new = "<button key={lesson.id} className={'lesson-list-item '+(openLesson===lesson.id?'lesson-selected':'')} onClick={()=>selectLesson(lesson.id)}>"
-          if old not in l:
-              raise SystemExit('LearningCenter lesson selection anchor not found')
+          if old not in l: raise SystemExit('LearningCenter lesson selection anchor not found')
           l = l.replace(old, new, 1)
 
           old = "  return <section className={`learning-center${practiceOnly ? ' practice-only' : ''}`}>\n    <div className=\"learning-hero\">"
           new = """  return <section className={`learning-center${practiceOnly ? ' practice-only' : ''}`}>\n    {onBack && <div className=\"learning-back-row\"><button type=\"button\" className=\"learning-back-button\" onClick={onBack}><ArrowLeft size={17}/> Back to My Learning</button></div>}\n    <div className=\"learning-hero\">"""
-          if old not in l:
-              raise SystemExit('LearningCenter hero anchor not found')
+          if old not in l: raise SystemExit('LearningCenter hero anchor not found')
           l = l.replace(old, new, 1)
 
-          learning_import = "import { BookOpen, CheckCircle2, ChevronDown, CirclePlay, Clock3, Code2, Database, Layers3, Play, Route, Search, Sparkles, Terminal, Trophy } from 'lucide-react'"
-          learning_import_new = "import { ArrowLeft, BookOpen, CheckCircle2, ChevronDown, CirclePlay, Clock3, Code2, Database, Layers3, Play, Route, Search, Sparkles, Terminal, Trophy } from 'lucide-react'"
-          if learning_import not in l:
-              raise SystemExit('LearningCenter lucide import anchor not found')
-          l = l.replace(learning_import, learning_import_new, 1)
+          imp = "import { BookOpen, CheckCircle2, ChevronDown, CirclePlay, Clock3, Code2, Database, Layers3, Play, Route, Search, Sparkles, Terminal, Trophy } from 'lucide-react'"
+          if imp not in l: raise SystemExit('LearningCenter lucide import anchor not found')
+          l = l.replace(imp, "import { ArrowLeft, BookOpen, CheckCircle2, ChevronDown, CirclePlay, Clock3, Code2, Database, Layers3, Play, Route, Search, Sparkles, Terminal, Trophy } from 'lucide-react'", 1)
 
           app.write_text(a, encoding='utf-8')
           learning.write_text(l, encoding='utf-8')
-
-          extra_css = """
+          extra = """
 
 /* Learning navigation: resume the last lesson and return to the course list. */
 .learning-back-row { display: flex; align-items: center; margin: 0 0 14px; }
@@ -103,19 +89,17 @@ jobs:
 .learning-back-button:hover { background: #f7f9fc; }
 @media (max-width: 620px) { .learning-back-button { min-height: 42px; width: 100%; justify-content: center; } }
 """
-          current_css = css.read_text(encoding='utf-8') if css.exists() else ''
-          if 'learning-back-row' not in current_css:
-              css.write_text(current_css + extra_css, encoding='utf-8')
+          c = css.read_text(encoding='utf-8') if css.exists() else ''
+          if 'learning-back-row' not in c: css.write_text(c + extra, encoding='utf-8')
 
-          subprocess.run(['git', 'config', 'user.name', 'github-actions[bot]'], check=True)
-          subprocess.run(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'], check=True)
-          subprocess.run(['git', 'add', 'src/App.jsx', 'src/LearningCenter.jsx', 'src/LearningCenter.css'], check=True)
-          subprocess.run(['git', 'commit', '-m', 'Resume learning from last opened lesson'], check=True)
-          subprocess.run(['git', 'push', 'origin', 'feat/responsive-mobile-desktop'], check=True)
+          subprocess.run(['git','config','user.name','github-actions[bot]'],check=True)
+          subprocess.run(['git','config','user.email','41898282+github-actions[bot]@users.noreply.github.com'],check=True)
+          subprocess.run(['git','add','src/App.jsx','src/LearningCenter.jsx','src/LearningCenter.css'],check=True)
+          subprocess.run(['git','commit','-m','Resume learning from last opened lesson'],check=True)
+          subprocess.run(['git','push','origin','feat/responsive-mobile-desktop'],check=True)
 
-          # Remove this one-shot workflow after the implementation commit.
-          workflow = Path('.github/workflows/implement-learning-resume.yml')
-          workflow.unlink(missing_ok=True)
-          subprocess.run(['git', 'add', str(workflow)], check=True)
-          subprocess.run(['git', 'commit', '-m', 'Remove one-shot learning resume workflow'], check=True)
-          subprocess.run(['git', 'push', 'origin', 'feat/responsive-mobile-desktop'], check=True)
+          wf = Path('.github/workflows/implement-learning-resume.yml')
+          wf.unlink(missing_ok=True)
+          subprocess.run(['git','add',str(wf)],check=True)
+          subprocess.run(['git','commit','-m','Remove one-shot learning resume workflow'],check=True)
+          subprocess.run(['git','push','origin','feat/responsive-mobile-desktop'],check=True)
