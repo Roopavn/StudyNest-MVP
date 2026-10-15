@@ -1,5 +1,5 @@
 // Practical language, framework and Python ecosystem courses.
-import { cppPracticalLessons, csharpPracticalLessons, languageComparisonLessons } from './cFamilyCourseLessons'
+import { cppPracticalLessons, csharpPracticalLessons, languageComparisonLessons } from './cFamilyCourseLessons.js'
 export const ecosystemCourseSpecs = [
   {
     "title": "C++ Programming",
