@@ -737,6 +737,74 @@ const pythonEcosystem = [
   ]}
 ]
 
+
+const practicalCategoryByTrack = {
+  'Python':'programming','Java':'programming','JavaScript':'programming','C Programming':'programming','TypeScript':'programming',
+  'SQL':'sql','DBMS & Database Design':'sql','NoSQL & MongoDB':'nosql',
+  'REST APIs':'web','React':'web','Node.js & Express':'web','Django & FastAPI':'web','HTML & CSS':'web',
+  'DevOps':'devops','Cloud Fundamentals':'devops','Linux & Shell':'devops','Docker & Containers':'devops','Git & GitHub':'devops','Kubernetes':'devops',
+  'Data Engineering / Big Data':'data','Data Structures & Algorithms':'algorithms',
+  'Operating Systems':'systems','Computer Networks':'systems','Software Testing':'testing',
+  'Generative AI & LLMs':'genai','Cybersecurity Fundamentals':'security'
+}
+const practicalQuestionBank = {
+  programming: [
+    { level:'Basic', kind:'Predict the output', q:'What does this code print?', snippet:'values = [2, 4, 6]\nprint(values[1])', options:['2','4','6','An IndexError'], answer:1, why:'Python list indexes start at zero, so index 1 refers to the second item, 4.' },
+    { level:'Intermediate', kind:'Complete the code', q:'Which expression prints the squares [1, 4, 9]?', snippet:'numbers = [1, 2, 3]\nsquares = [____ for n in numbers]\nprint(squares)', options:['n + 1','n ** 2','n * 0','n / 2'], answer:1, why:'The exponent operator ** raises each number to the power of two.' },
+    { level:'Advanced', kind:'Find the bug', q:'This function should return the sum of all values. What is the correct fix?', snippet:'def total(values):\n    result = 0\n    for value in values:\n        result = value\n    return result', options:['Change result = value to result += value','Change return result to print(result)','Remove the loop','Change result = 0 to result = []'], answer:0, why:'Assigning value replaces the previous total on every iteration. Adding each value accumulates the sum.' }
+  ],
+  sql: [
+    { level:'Basic', kind:'Predict the result', q:'Which rows are returned?', snippet:'SELECT name FROM candidates WHERE score >= 70;', options:['Candidates scoring 70 or more','Candidates scoring below 70','Every row regardless of score','Only rows with a NULL score'], answer:0, why:'The WHERE condition keeps rows whose score is at least 70.' },
+    { level:'Intermediate', kind:'Complete the query', q:'Which clause filters groups after COUNT is calculated?', snippet:'SELECT department_id, COUNT(*)\nFROM employees\nGROUP BY department_id\n____ COUNT(*) > 5;', options:['WHERE','HAVING','ORDER BY','LIMIT'], answer:1, why:'HAVING filters grouped results after aggregation; WHERE filters input rows before grouping.' },
+    { level:'Advanced', kind:'Find the bug', q:'Keep every department, including those with no employees. Which join belongs in the blank?', snippet:'SELECT d.name, e.id\nFROM departments d\n____ JOIN employees e ON e.department_id = d.id;', options:['INNER','LEFT','CROSS','SELF'], answer:1, why:'A LEFT JOIN preserves all departments and fills employee columns with NULL when there is no match.' }
+  ],
+  nosql: [
+    { level:'Basic', kind:'Read the query', q:'Which MongoDB filter finds documents where active is true?', snippet:'db.users.find(____)', options:['{ active: true }','active == true','WHERE active = true','[active, true]'], answer:0, why:'MongoDB find() accepts a document-shaped filter such as { active: true }.' },
+    { level:'Intermediate', kind:'Complete the update', q:'Which operator changes only the score field?', snippet:'db.candidates.updateOne({ _id: 7 }, { ____: { score: 90 } })', options:['$set','replace','$match','$group'], answer:0, why:'$set updates named fields while leaving other fields intact.' },
+    { level:'Advanced', kind:'Choose the design', q:'What can improve frequent exact lookups by email?', snippet:'db.users.find({ email: "asha@example.com" })', options:['Create an index on email','Store every user in one array field','Remove the email field','Run an update before each read'], answer:0, why:'An index on email can speed up equality lookups, with storage and write overhead.' }
+  ],
+  web: [
+    { level:'Basic', kind:'Choose the response', q:'A POST request successfully creates a resource. Which status code fits best?', snippet:'POST /api/candidates', options:['200 OK only','201 Created','404 Not Found','500 Internal Server Error'], answer:1, why:'201 Created communicates that the request created a resource.' },
+    { level:'Intermediate', kind:'Complete the code', q:'Which method parses a JSON response body using Fetch?', snippet:'fetch("/api/candidates")\n  .then(response => response.____())\n  .then(data => console.log(data))', options:['json','parseJSON','bodyJSON','decode'], answer:0, why:'Response.json() reads and parses the response body as JSON.' },
+    { level:'Advanced', kind:'Find the bug', q:'A secret key is shipped in frontend JavaScript. What is the correct fix?', snippet:'const apiKey = "private-production-key"\nfetch("/api/data", { headers: { Authorization: apiKey } })', options:['Move the secret to a trusted backend or secret manager','Rename apiKey to _apiKey','Encode it with Base64 in the same file','Hide the key with CSS'], answer:0, why:'Anything shipped to a browser can be inspected. Keep private credentials on a trusted server or secret manager.' }
+  ],
+  devops: [
+    { level:'Basic', kind:'Predict the command', q:'Which command lists files in a Linux directory?', snippet:'____ -la', options:['ls','pwd','cd','mkdir'], answer:0, why:'ls lists directory contents; -la includes hidden entries and detailed metadata.' },
+    { level:'Intermediate', kind:'Complete the Dockerfile', q:'Which instruction sets the default command run when a container starts?', snippet:'FROM python:3.12-slim\nCOPY . /app\nWORKDIR /app\n____ ["python", "app.py"]', options:['RUN','CMD','COPY','EXPOSE'], answer:1, why:'CMD defines the default command executed when a container starts.' },
+    { level:'Advanced', kind:'Choose the safer configuration', q:'A CI workflow needs cloud access without a long-lived client secret. Which approach is preferred when configured?', snippet:'GitHub Actions → cloud authentication → deploy', options:['OIDC federated identity','Commit a client secret','Print credentials in logs','Use a shared personal password'], answer:0, why:'OIDC federation can exchange a trusted workflow identity for short-lived access without storing a long-lived repository secret.' }
+  ],
+  data: [
+    { level:'Basic', kind:'Predict the result', q:'What does count() return here?', snippet:'total = df.filter(df.score >= 70).count()', options:['Number of matching rows','First matching row','A renamed column','A saved file path'], answer:0, why:'count() is an action that returns the number of rows after filtering.' },
+    { level:'Intermediate', kind:'Complete the transformation', q:'Which expression keeps rows where score is at least 70?', snippet:'passed = df.filter(____)', options:['df.score >= 70','count(df.score)','df.collect()','df.write'], answer:0, why:'filter() accepts a Boolean condition that selects rows.' },
+    { level:'Advanced', kind:'Choose the safer operation', q:'You need at most 10 rows from a huge DataFrame for inspection. Which option limits the returned rows?', snippet:'sample = df.____(10)', options:['limit','collect','count','repartition'], answer:0, why:'limit(10) restricts returned rows. An unrestricted collect() can bring the entire dataset to driver memory.' }
+  ],
+  algorithms: [
+    { level:'Basic', kind:'Predict the output', q:'What index does this search return for target 8?', snippet:'values = [3, 8, 10]\nprint(values.index(8))', options:['0','1','2','8'], answer:1, why:'The value 8 is the second item, and Python indexes start at zero.' },
+    { level:'Intermediate', kind:'Complete the condition', q:'Which operator detects an even number?', snippet:'if number ____ 2 == 0:\n    print("even")', options:['%','/','//','**'], answer:0, why:'Modulo % returns the remainder; even numbers have remainder zero when divided by two.' },
+    { level:'Advanced', kind:'Choose the efficient approach', q:'A sorted array is searched repeatedly. Which algorithm usually offers O(log n) search time?', snippet:'values = [2, 5, 8, 12, 17, 21]  # sorted', options:['Binary search','Linear search','Bubble sort','Nested full scan'], answer:0, why:'Binary search halves the remaining search interval each step on sorted data.' }
+  ],
+  systems: [
+    { level:'Basic', kind:'Read the scenario', q:'A process waits for data from a disk or network. What type of workload is this?', snippet:'read_result = read_from_network()', options:['I/O-bound','CPU-bound only','A compile-time error','A deadlock by definition'], answer:0, why:'Waiting for external input/output is characteristic of an I/O-bound workload.' },
+    { level:'Intermediate', kind:'Choose the right tool', q:'Which Linux command commonly inspects listening TCP/UDP sockets?', snippet:'____ -tuln', options:['ss','grep','chmod','touch'], answer:0, why:'ss displays socket statistics; -tuln selects TCP, UDP, listening, and numeric output.' },
+    { level:'Advanced', kind:'Diagnose the issue', q:'Two processes each hold a resource the other needs and neither can proceed. What is illustrated?', snippet:'Process A holds Lock 1 and waits for Lock 2.\nProcess B holds Lock 2 and waits for Lock 1.', options:['Deadlock','Normal termination','DNS resolution','Round-robin scheduling'], answer:0, why:'Each process waits for a resource held by the other, creating circular wait and deadlock.' }
+  ],
+  testing: [
+    { level:'Basic', kind:'Predict the test result', q:'Does this assertion pass?', snippet:'def add(a, b):\n    return a + b\n\nassert add(2, 3) == 5', options:['Passes','Fails with AssertionError','Fails to import pytest','Always skips'], answer:0, why:'add(2, 3) returns 5, matching the expected value.' },
+    { level:'Intermediate', kind:'Complete the test', q:'Which assertion checks that divide(8, 2) returns 4?', snippet:'result = divide(8, 2)\n____', options:['assert result == 4','assert result = 4','expect result := 4','check result is 4.0 only'], answer:0, why:'Python tests commonly use assert expression == expected; a single equals sign is assignment, not comparison.' },
+    { level:'Advanced', kind:'Choose the best test', q:'Which test best checks a boundary case for a function that accepts a list?', snippet:'def average(values): ...', options:['Test an empty list and verify documented behavior','Test only one typical non-empty list','Test an unrelated UI color','Skip all error cases'], answer:0, why:'Boundary and empty-input tests reveal edge-case behavior that normal examples may miss.' }
+  ],
+  genai: [
+    { level:'Basic', kind:'Choose the result', q:'What does this pipeline do?', snippet:'question → retrieve relevant documents → send context to an LLM', options:['Uses retrieved context to ground generation','Trains a new model from scratch','Guarantees every answer is correct','Removes the need for access control'], answer:0, why:'Retrieval-augmented generation supplies relevant source context to the model, but still needs evaluation and controls.' },
+    { level:'Intermediate', kind:'Complete the workflow', q:'What should happen before private documents are sent to a model?', snippet:'User request → retrieve documents → ____ → generate answer', options:['Check authorization and filter allowed context','Ignore document permissions','Log all secrets publicly','Disable validation'], answer:0, why:'Authorization must be enforced before private data is placed into model context.' },
+    { level:'Advanced', kind:'Choose the evaluation', q:'How should a RAG system be evaluated in production?', snippet:'retrieval results + generated answer + source citations', options:['Measure retrieval relevance and answer groundedness','Check only whether the page loads','Assume fluent answers are factual','Disable logging and testing'], answer:0, why:'Retrieval relevance and grounding evaluate whether useful evidence was found and used accurately.' }
+  ],
+  security: [
+    { level:'Basic', kind:'Choose the secure option', q:'Where should a private API token be stored?', snippet:'API_TOKEN = "..."', options:['In a secret manager or protected environment configuration','In a public Git repository','In a browser bundle','In a screenshot'], answer:0, why:'Private tokens must not be committed or exposed to client-side code.' },
+    { level:'Intermediate', kind:'Choose the correct response', q:'A user is authenticated but lacks permission for an admin endpoint. Which response fits?', snippet:'GET /api/admin/users', options:['403 Forbidden','201 Created','301 Moved Permanently','204 No Content'], answer:0, why:'403 indicates the caller is known but is not authorized to access the resource.' },
+    { level:'Advanced', kind:'Find the risky practice', q:'Which deployment practice best reduces credential exposure?', snippet:'CI workflow → cloud resource', options:['Use short-lived federated identity and least privilege','Print secrets for debugging','Share one admin credential across teams','Disable audit logs'], answer:0, why:'Short-lived identity and least privilege limit credential exposure and potential impact.' }
+  ]
+}
+
 export default function LearningCenter({ initialTrack = 'All topics', completedLessons, onCompletedLessonsChange, practiceOnly = false }) {
   const [track, setTrack] = useState(initialTrack)
   const [level, setLevel] = useState('All levels')
@@ -754,6 +822,9 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const [showCodingReference, setShowCodingReference] = useState(false)
   const [practicedCoding, setPracticedCoding] = useState(() => { try { return JSON.parse(localStorage.getItem('studynest.coding.practiced') || '[]') } catch { return [] } })
   const [quizLevel, setQuizLevel] = useState('Basic')
+  const [practicalQuizLevel, setPracticalQuizLevel] = useState('Basic')
+  const [practicalQuizAnswers, setPracticalQuizAnswers] = useState({})
+  const [practicalQuizSubmitted, setPracticalQuizSubmitted] = useState(false)
   const [openLesson, setOpenLesson] = useState(() => lessons.find((lesson) => initialTrack === 'All topics' || lesson.track === initialTrack)?.id || 'py-1')
   const [localCompleted, setLocalCompleted] = useState(() => {
     try { return JSON.parse(localStorage.getItem('studynest.lessons.done') || '[]') } catch { return [] }
@@ -810,15 +881,27 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const codingChallenges = useMemo(() => track === 'All topics' ? [] : trackLessons.filter((lesson) => lesson.task && lesson.code), [track, trackLessons])
   const currentCoding = codingChallenges.length ? codingChallenges[codingIndex % codingChallenges.length] : null
   const courseQuizScore = courseQuizQuestions.reduce((score, question, index) => score + (courseQuizAnswers[index] === question.answer ? 1 : 0), 0)
+  const practicalQuizQuestions = useMemo(() => {
+    if (track === 'All topics') return []
+    const category = practicalCategoryByTrack[track] || 'programming'
+    const questions = practicalQuestionBank[category] || practicalQuestionBank.programming
+    return questions.filter((question) => question.level === practicalQuizLevel)
+  }, [track, practicalQuizLevel])
+  const practicalQuizScore = practicalQuizQuestions.reduce((score, question, index) => score + (practicalQuizAnswers[index] === question.answer ? 1 : 0), 0)
+
   useEffect(() => {
     setCourseQuizAnswers({})
     setCourseQuizSubmitted(false)
     setQuizLevel('Basic')
+    setPracticalQuizLevel('Basic')
+    setPracticalQuizAnswers({})
+    setPracticalQuizSubmitted(false)
     setCodingIndex(0)
     setCodingDraft('')
     setShowCodingReference(false)
   }, [track])
   useEffect(() => { setCourseQuizAnswers({}); setCourseQuizSubmitted(false) }, [quizLevel])
+  useEffect(() => { setPracticalQuizAnswers({}); setPracticalQuizSubmitted(false) }, [practicalQuizLevel])
   useEffect(() => { localStorage.setItem('studynest.coding.practiced', JSON.stringify(practicedCoding)) }, [practicedCoding])
   const markCodingPracticed = (id) => setPracticedCoding((old) => old.includes(id) ? old : [...old, id])
   const markDone = (id) => setCompleted((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
@@ -832,7 +915,12 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
       <div className="course-quiz-level-picker" role="group" aria-label="Choose quiz difficulty">{[{name:'Basic',description:'Foundations'},{name:'Intermediate',description:'Apply concepts'},{name:'Advanced',description:'Deeper understanding'}].map((item)=><button type="button" key={item.name} className={'course-quiz-level '+(quizLevel===item.name?'is-active':'')} aria-pressed={quizLevel===item.name} onClick={()=>setQuizLevel(item.name)}><strong>{item.name}</strong><span>{item.description}</span><small>10 MCQs</small></button>)}</div>
       {courseQuizQuestions.length ? <><div className="course-quiz-grid">{courseQuizQuestions.map((question, index) => <fieldset className="course-quiz-question" key={`${track}-quiz-${index}`}><legend><span>Q{index + 1}</span> {question.q}</legend><div className="course-quiz-options">{question.options.map((option, optionIndex) => <label className={courseQuizSubmitted && optionIndex === question.answer ? 'course-quiz-option is-correct' : courseQuizSubmitted && courseQuizAnswers[index] === optionIndex && optionIndex !== question.answer ? 'course-quiz-option is-wrong' : 'course-quiz-option'} key={option}><input type="radio" name={`course-quiz-${index}`} checked={courseQuizAnswers[index] === optionIndex} disabled={courseQuizSubmitted} onChange={() => setCourseQuizAnswers((old) => ({ ...old, [index]: optionIndex }))}/><span>{String.fromCharCode(65 + optionIndex)}.</span>{option}</label>)}</div>{courseQuizSubmitted && <p className="course-quiz-explanation"><strong>{courseQuizAnswers[index] === question.answer ? 'Correct.' : `Answer: ${question.options[question.answer] || 'Review the lesson'}.`}</strong> {question.why}</p>}</fieldset>)}</div><div className="course-quiz-footer">{courseQuizSubmitted ? <><strong>Your score: {courseQuizScore}/{courseQuizQuestions.length} ({Math.round(courseQuizScore / courseQuizQuestions.length * 100)}%)</strong><button type="button" className="course-practice-button" onClick={() => { setCourseQuizAnswers({}); setCourseQuizSubmitted(false) }}>Try quiz again</button></> : <><span>{Object.keys(courseQuizAnswers).length} of {courseQuizQuestions.length} answered</span><button type="button" className="course-practice-button" disabled={Object.keys(courseQuizAnswers).length !== courseQuizQuestions.length} onClick={() => setCourseQuizSubmitted(true)}>Submit quiz</button></>}</div></> : <p className="course-practice-empty">No quiz questions are available for this course yet.</p>}
 
-      <div className="course-coding-heading"><div><span className="course-practice-kicker"><Code2 size={14}/> HANDS-ON PRACTICE</span><h3>{track} · Coding challenges</h3><p>Write your own solution, then compare it with the lesson example and mark the challenge as practiced.</p></div><span className="course-practice-count">{codingChallenges.filter((item) => practicedCoding.includes(item.id)).length}/{codingChallenges.length} practiced</span></div>
+
+      <div className="course-coding-heading practical-mcq-heading"><div><span className="course-practice-kicker"><Code2 size={14}/> PRACTICAL MCQ LAB</span><h3>{track} · Practical MCQs</h3><p>Apply concepts with code-output, missing-code, debugging, query, and real-world scenario questions. This quiz follows the theoretical MCQs.</p></div><span className="course-practice-count">{practicalQuizQuestions.length} practical questions</span></div>
+      <div className="course-quiz-level-picker" role="group" aria-label="Choose practical quiz difficulty">{[{name:'Basic',description:'Read and predict'},{name:'Intermediate',description:'Complete the code'},{name:'Advanced',description:'Debug and design'}].map((item)=><button type="button" key={item.name} className={'course-quiz-level '+(practicalQuizLevel===item.name?'is-active':'')} aria-pressed={practicalQuizLevel===item.name} onClick={()=>setPracticalQuizLevel(item.name)}><strong>{item.name}</strong><span>{item.description}</span><small>Practical MCQs</small></button>)}</div>
+      {practicalQuizQuestions.length ? <><div className="course-quiz-grid practical-quiz-grid">{practicalQuizQuestions.map((question,index)=><fieldset className="course-quiz-question practical-quiz-question" key={track+'-practical-'+practicalQuizLevel+'-'+index}><legend><span>Q{index+1}</span> <strong className="practical-question-kind">{question.kind}</strong><br/>{question.q}</legend><pre className="practical-code-snippet"><code>{question.snippet}</code></pre><div className="course-quiz-options">{question.options.map((option,optionIndex)=><label className={practicalQuizSubmitted&&optionIndex===question.answer?'course-quiz-option is-correct':practicalQuizSubmitted&&practicalQuizAnswers[index]===optionIndex&&optionIndex!==question.answer?'course-quiz-option is-wrong':'course-quiz-option'} key={option}><input type="radio" name={'practical-quiz-'+index} checked={practicalQuizAnswers[index]===optionIndex} disabled={practicalQuizSubmitted} onChange={()=>setPracticalQuizAnswers((old)=>({...old,[index]:optionIndex}))}/><span>{String.fromCharCode(65+optionIndex)}.</span>{option}</label>)}</div>{practicalQuizSubmitted&&<p className="course-quiz-explanation"><strong>{practicalQuizAnswers[index]===question.answer?'Correct.':'Answer: '+question.options[question.answer]+'.'}</strong> {question.why}</p>}</fieldset>)}</div><div className="course-quiz-footer">{practicalQuizSubmitted?<><strong>Practical score: {practicalQuizScore}/{practicalQuizQuestions.length} ({Math.round(practicalQuizScore/practicalQuizQuestions.length*100)}%)</strong><button type="button" className="course-practice-button" onClick={()=>{setPracticalQuizAnswers({});setPracticalQuizSubmitted(false)}}>Retry practical quiz</button></>:<><span>{Object.keys(practicalQuizAnswers).length} of {practicalQuizQuestions.length} answered</span><button type="button" className="course-practice-button" disabled={Object.keys(practicalQuizAnswers).length!==practicalQuizQuestions.length} onClick={()=>setPracticalQuizSubmitted(true)}>Submit practical quiz</button></>}</div></> : <p className="course-practice-empty">Practical questions for this course are being prepared.</p>}
+
+            <div className="course-coding-heading"><div><span className="course-practice-kicker"><Code2 size={14}/> HANDS-ON PRACTICE</span><h3>{track} · Coding challenges</h3><p>Write your own solution, then compare it with the lesson example and mark the challenge as practiced.</p></div><span className="course-practice-count">{codingChallenges.filter((item) => practicedCoding.includes(item.id)).length}/{codingChallenges.length} practiced</span></div>
       {currentCoding ? <article className="course-coding-card"><div className="course-coding-meta"><span>{currentCoding.level || 'Practice'}</span><span>Challenge {codingIndex + 1} of {codingChallenges.length}</span></div><h4>{currentCoding.title}</h4><p className="course-coding-task">{currentCoding.task}</p><label className="course-coding-label" htmlFor="course-coding-answer">Your solution</label><textarea id="course-coding-answer" value={codingDraft} onChange={(event) => setCodingDraft(event.target.value)} placeholder="Write your code or SQL query here…" rows={8} spellCheck="false"/><div className="course-coding-actions"><button type="button" className="course-practice-button secondary" onClick={() => setShowCodingReference((shown) => !shown)}>{showCodingReference ? 'Hide lesson example' : 'Show lesson example'}</button><button type="button" className="course-practice-button" onClick={() => markCodingPracticed(currentCoding.id)}>{practicedCoding.includes(currentCoding.id) ? 'Practiced ✓' : 'Mark as practiced'}</button><button type="button" className="course-practice-button secondary" onClick={() => { setCodingIndex((index) => (index + 1) % codingChallenges.length); setCodingDraft(''); setShowCodingReference(false) }}>Next challenge →</button></div>{showCodingReference && <div className="course-coding-reference"><strong>Related lesson example (reference only)</strong><pre><code>{currentCoding.code}</code></pre><p>Use this to compare the approach. The app does not execute submitted code; run it in the course's recommended environment to verify the output.</p></div>}</article> : <p className="course-practice-empty">No coding challenges are available for this course yet.</p>}
     </section>}
 
