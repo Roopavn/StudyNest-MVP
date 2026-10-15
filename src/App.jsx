@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ArrowRight, Bell, BookOpen, Bookmark, Brain, BriefcaseBusiness,
   Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, Code2,
@@ -43,6 +43,22 @@ function SectionHeading({ title, action, onAction }) {
 
 export default function App() {
   const [activePage, setActivePage] = useState('Overview')
+  const pageHistory = useRef([])
+  function goBack() {
+    const previousPage = pageHistory.current.pop()
+    if (previousPage) {
+      setActivePage(previousPage)
+      setMobileNav(false)
+      setSearch('')
+    } else {
+      setActivePage('Overview')
+      setMobileNav(false)
+      setSearch('')
+    }
+  }
+  function rememberCurrentPage() {
+    pageHistory.current.push(activePage)
+  }
   const [tasks, setTasks] = useState(() => {
     try {
       const saved = localStorage.getItem('studynest.tasks')
@@ -175,11 +191,13 @@ export default function App() {
     const title = course.title.toLowerCase()
     const topic = title.includes('manual testing') ? 'Manual Testing' : title.includes('django rest') || title.includes('rest framework') ? 'Django REST Framework' : title.includes('machine learning') ? 'Machine Learning' : title.includes('data analyst') || title.includes('data analytics') ? 'Data Analyst' : title.includes('data science') ? 'Data Science' : title.includes('django') ? 'Django' : title.includes('flask') ? 'Flask' : title.includes('fastapi') ? 'FastAPI' : title.includes('agentic ai') ? 'Agentic AI' : title.includes('generative ai') ? 'Generative AI' : title.includes('python') ? 'Python' : title.includes('sql') || title.includes('database') ? 'SQL' : title.includes('api') ? 'REST APIs' : title.includes('c++') ? 'C++' : title.includes('c#') || title.includes('.net') ? 'C#' : title.includes('c programming') ? 'C Programming' : title.includes('typescript') ? 'TypeScript' : title.includes('react') ? 'React' : title.includes('java') && !title.includes('javascript') ? 'Java' : title.includes('frameworks & libraries') || title.includes('javascript ecosystem') ? 'JavaScript Ecosystem' : title.includes('javascript') ? 'JavaScript' : title.includes('html') || title.includes('css') ? 'HTML & CSS' : title.includes('devops') ? 'DevOps' : title.includes('cloud') ? 'Cloud Fundamentals' : title.includes('linux') ? 'Linux & Shell' : title.includes('docker') ? 'Docker & Containers' : title.includes('git') ? 'Git & GitHub' : title.includes('kubernetes') ? 'Kubernetes' : title.includes('data engineering') || title.includes('pyspark') || title.includes('big data') ? 'Data Engineering / Big Data' : 'All topics'
     setLearningTopic(topic)
+    if (activePage !== 'Learning path') rememberCurrentPage()
     setActivePage('Learning path')
     setMobileNav(false)
     setSearch('')
   }
   function navigate(label) {
+    if (label !== activePage) rememberCurrentPage()
     setActivePage(label)
     setMobileNav(false)
     setSearch('')
@@ -224,8 +242,9 @@ export default function App() {
       <main className="main-area">
         <header className="topbar">
           <button className="icon-button mobile-menu" onClick={() => setMobileNav(true)} aria-label="Open navigation"><Menu size={21} /></button>
+          <button className="topbar-back" onClick={goBack} aria-label="Go back to previous page"><ArrowLeft size={17} /><span>Back</span></button>
           <div className="breadcrumbs"><span>Workspace</span><ChevronRight size={14} /><strong>{activePage}</strong></div>
-          <div className="topbar-actions"><label className="search-box"><Search size={17} /><input aria-label="Search courses" placeholder="Search anything..." value={search} onChange={(event) => { setSearch(event.target.value); if (event.target.value) setActivePage('My learning') }} /><kbd>⌘ K</kbd></label><button className="icon-button notification-button" aria-label="Notifications" onClick={() => setNotice('You’re all caught up. Keep up your great work!')}><Bell size={19} /><i /></button><button type="button" className="top-avatar" onClick={() => setShowAuth(true)} aria-label={user ? 'Open account' : 'Sign in'}>{user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'S'}</button></div>
+          <div className="topbar-actions"><label className="search-box"><Search size={17} /><input aria-label="Search courses" placeholder="Search anything..." value={search} onChange={(event) => { if (event.target.value && !search && activePage !== 'My learning') rememberCurrentPage(); setSearch(event.target.value); if (event.target.value) setActivePage('My learning') }} /><kbd>⌘ K</kbd></label><button className="icon-button notification-button" aria-label="Notifications" onClick={() => setNotice('You’re all caught up. Keep up your great work!')}><Bell size={19} /><i /></button><button type="button" className="top-avatar" onClick={() => setShowAuth(true)} aria-label={user ? 'Open account' : 'Sign in'}>{user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'S'}</button></div>
         </header>
 
         <div className="page-content">
