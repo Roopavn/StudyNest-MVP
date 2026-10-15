@@ -2,6 +2,12 @@ const courseModules = [
   {
     id: 'azure', title: 'Microsoft Azure Cloud & AI', track: 'Microsoft Azure', category: 'Cloud · Azure & AI', color: 'blue',
     imageAlt: 'Microsoft Azure cloud architecture and AI services',
+    resources: [
+      { label: 'Microsoft Learn — Azure training', url: 'https://learn.microsoft.com/en-us/training/azure' },
+      { label: 'Azure documentation', url: 'https://learn.microsoft.com/en-us/azure/' },
+      { label: 'Azure Well-Architected Framework', url: 'https://learn.microsoft.com/en-us/azure/well-architected/' },
+      { label: 'Azure AI documentation', url: 'https://learn.microsoft.com/en-us/azure/ai-services/' }
+    ],
     modules: [
       ['Cloud concepts and Azure architecture','Understand regions, availability zones, resource groups, subscriptions and the shared-responsibility model.','Azure resources are organized into a hierarchy. A resource group is a lifecycle boundary; a subscription is a billing and access boundary. Choose regions based on latency, compliance and service availability.','Subscription → Resource group → App Service / Storage / Azure SQL','Sketch a resource-group layout for a web API, database, storage account and monitoring.','Basic'],
       ['Identity, RBAC and secure access','Apply Microsoft Entra ID, managed identities, least privilege and role-based access control.','Prefer managed identity over embedded passwords or client secrets when Azure workloads access supported services. Assign the narrowest role at the narrowest useful scope.','az role assignment list --assignee <principal-id> --output table','Describe how an App Service can access Key Vault without storing a password in source control.','Basic'],
@@ -14,6 +20,12 @@ const courseModules = [
   {
     id: 'aws', title: 'AWS Cloud Practitioner to Builder', track: 'AWS Cloud', category: 'Cloud · AWS', color: 'orange',
     imageAlt: 'AWS cloud architecture and services',
+    resources: [
+      { label: 'AWS Getting Started', url: 'https://docs.aws.amazon.com/getting-started/' },
+      { label: 'AWS Documentation', url: 'https://docs.aws.amazon.com/' },
+      { label: 'AWS Well-Architected Framework', url: 'https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html' },
+      { label: 'Amazon Bedrock User Guide', url: 'https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html' }
+    ],
     modules: [
       ['AWS global infrastructure and IAM','Learn Regions, Availability Zones, IAM users, roles, policies and least privilege.','IAM roles provide temporary credentials to trusted workloads. Prefer role-based access over long-lived access keys and restrict policies to necessary actions and resources.','aws sts get-caller-identity','Explain the difference between an IAM role and an access key, and identify where least privilege applies.','Basic'],
       ['Compute with EC2 and Lambda','Choose virtual machines, serverless functions and managed compute for common workloads.','EC2 offers operating-system control; Lambda runs event-driven code without managing servers. Compare runtime, scaling, execution limits, networking and operational effort.','aws lambda list-functions --region <region>','Choose between EC2 and Lambda for a scheduled image-processing job and justify the trade-off.','Basic'],
@@ -26,6 +38,12 @@ const courseModules = [
   {
     id: 'gcp', title: 'Google Cloud Platform (GCP)', track: 'Google Cloud', category: 'Cloud · GCP & AI', color: 'teal',
     imageAlt: 'Google Cloud platform and data services',
+    resources: [
+      { label: 'Google Cloud documentation', url: 'https://docs.cloud.google.com/docs' },
+      { label: 'Get started with Google Cloud', url: 'https://docs.cloud.google.com/docs/get-started' },
+      { label: 'Google Cloud Architecture Center', url: 'https://docs.cloud.google.com/architecture' },
+      { label: 'Vertex AI documentation', url: 'https://cloud.google.com/vertex-ai/docs' }
+    ],
     modules: [
       ['GCP projects, regions and IAM','Understand organizations, folders, projects, APIs, service accounts and IAM roles.','Projects group resources and provide an administrative boundary. Grant workload identities only the roles they need, and avoid distributing service-account keys.','gcloud config list','Plan project separation for development, staging and production and explain who should have access.','Basic'],
       ['Compute Engine, Cloud Run and GKE','Choose virtual machines, managed containers and Kubernetes for application workloads.','Cloud Run is useful for managed container workloads; Compute Engine offers VM control; GKE manages Kubernetes. Choose based on runtime needs and operations capacity.','gcloud run services list','Select a hosting option for a stateless Django API and describe deployment and scaling considerations.','Basic'],
@@ -38,6 +56,12 @@ const courseModules = [
   {
     id: 'jira-ai', title: 'Jira with AI for Project Delivery', track: 'Jira with AI', category: 'Productivity · Jira & AI', color: 'blue',
     imageAlt: 'Agile project planning board and AI assisted workflows',
+    resources: [
+      { label: 'Jira Software Cloud documentation', url: 'https://support.atlassian.com/jira-software-cloud/' },
+      { label: 'Jira Query Language (JQL)', url: 'https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/' },
+      { label: 'Atlassian Intelligence documentation', url: 'https://support.atlassian.com/organization-administration/docs/what-is-atlassian-intelligence/' },
+      { label: 'Jira automation documentation', url: 'https://support.atlassian.com/cloud-automation/' }
+    ],
     modules: [
       ['Jira projects, issues and workflows','Understand projects/spaces, issue types, statuses, boards, fields and permissions.','Issues represent work such as epics, stories, tasks and bugs. A workflow describes allowed status transitions. Keep issue types and required fields aligned with the team process.','Epic → Story → Sub-task; To Do → In Progress → Done','Create a sample workflow for a bug from report through triage, fix, review and verification.','Basic'],
       ['Backlogs, boards and sprint planning','Organize a backlog, estimate stories and plan a sprint using clear acceptance criteria.','A useful backlog item states the user outcome, acceptance criteria, dependencies and definition of done. Estimate collaboratively and avoid treating estimates as guaranteed delivery dates.','As a <user>, I want <capability>, so that <outcome>.','Rewrite a vague feature request into a story with three testable acceptance criteria.','Basic'],
@@ -50,6 +74,11 @@ const courseModules = [
   {
     id: 'agile-ai', title: 'Agile Scrum with AI', track: 'Agile Scrum with AI', category: 'Productivity · Agile & AI', color: 'teal',
     imageAlt: 'Agile Scrum sprint planning and collaboration',
+    resources: [
+      { label: 'The official Scrum Guide', url: 'https://scrumguides.org/scrum-guide.html' },
+      { label: 'Atlassian Agile Coach', url: 'https://www.atlassian.com/agile' },
+      { label: 'Atlassian Intelligence documentation', url: 'https://support.atlassian.com/organization-administration/docs/what-is-atlassian-intelligence/' }
+    ],
     modules: [
       ['Agile values and Scrum accountabilities','Learn empiricism, transparency, inspection, adaptation and Scrum accountabilities.','Scrum uses short cycles to inspect outcomes and adapt the plan. The Scrum Master, Product Owner and Developers have distinct accountabilities; AI can assist but cannot own team accountability.','Product Goal → Sprint Goal → Increment','Explain how a team should respond when new urgent work threatens a Sprint Goal.','Basic'],
       ['Product backlog and user stories','Write outcome-focused backlog items with acceptance criteria and examples.','A story should be small enough to discuss, estimate and validate. AI can suggest wording and edge cases, but product context and final acceptance remain human responsibilities.','Given <context>, when <action>, then <observable result>','Use AI as a drafting assistant to turn a feature brief into a story, then verify assumptions and acceptance criteria.','Basic'],
@@ -62,6 +91,11 @@ const courseModules = [
   {
     id: 'oracle', title: 'Oracle Database & SQL', track: 'Oracle Database', category: 'Databases · Oracle SQL', color: 'orange',
     imageAlt: 'Relational database tables and SQL development',
+    resources: [
+      { label: 'Oracle Database documentation', url: 'https://docs.oracle.com/en/database/oracle/oracle-database/' },
+      { label: 'Oracle SQL Language Reference', url: 'https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/' },
+      { label: 'Oracle PL/SQL Language Reference', url: 'https://docs.oracle.com/en/database/oracle/oracle-database/23/lnpls/' }
+    ],
     modules: [
       ['Oracle SQL fundamentals','Query tables using SELECT, WHERE, ORDER BY, aliases and NULL-aware expressions.','SQL describes the result set, while the database optimizer chooses an execution plan. NULL means unknown or missing; use IS NULL rather than equality to test it.','SELECT employee_id, salary FROM employees WHERE salary >= 50000 ORDER BY salary DESC;','Write a query that returns the five highest-paid employees and excludes rows with missing salaries.','Basic'],
       ['Joins, grouping and analytic functions','Combine tables, aggregate data and use window functions for ranking and running totals.','Joins express relationships; GROUP BY aggregates rows, while analytic functions calculate values across related rows without collapsing the result set.','SELECT department_id, employee_id, salary, RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS salary_rank FROM employees;','Rank employees within each department and explain the difference between RANK and ROW_NUMBER.','Intermediate'],
@@ -74,6 +108,11 @@ const courseModules = [
   {
     id: 'postgres', title: 'PostgreSQL from SQL to Production', track: 'PostgreSQL', category: 'Databases · PostgreSQL', color: 'blue',
     imageAlt: 'PostgreSQL database engineering and query development',
+    resources: [
+      { label: 'PostgreSQL official tutorial', url: 'https://www.postgresql.org/docs/current/tutorial.html' },
+      { label: 'PostgreSQL current documentation', url: 'https://www.postgresql.org/docs/current/' },
+      { label: 'PostgreSQL SQL commands reference', url: 'https://www.postgresql.org/docs/current/sql-commands.html' }
+    ],
     modules: [
       ['PostgreSQL setup, schemas and psql','Install or connect to PostgreSQL and work with databases, schemas, tables and psql.','A database contains schemas, which organize objects. Use migrations to track schema changes and keep development, test and production changes repeatable.','psql -h localhost -U app_user -d app_db\n\\dt','Create a database and table for support tickets and explain how you would version schema changes.','Basic'],
       ['Filtering, joins, CTEs and window functions','Build readable queries using joins, common table expressions and window functions.','CTEs name intermediate query results and can improve readability. Window functions preserve row detail while calculating rankings or rolling metrics across partitions.',`WITH recent AS (SELECT * FROM tickets WHERE created_at >= CURRENT_DATE - INTERVAL '7 days') SELECT status, COUNT(*) FROM recent GROUP BY status;`,'Report ticket counts by status for the last seven days and compare with a window-function approach.','Intermediate'],
@@ -86,6 +125,12 @@ const courseModules = [
   {
     id: 'mongo', title: 'MongoDB Developer Essentials', track: 'MongoDB', category: 'Databases · NoSQL', color: 'teal',
     imageAlt: 'MongoDB document database and JSON data',
+    resources: [
+      { label: 'MongoDB Manual', url: 'https://www.mongodb.com/docs/manual/' },
+      { label: 'MongoDB CRUD operations', url: 'https://www.mongodb.com/docs/manual/crud/' },
+      { label: 'MongoDB aggregation', url: 'https://www.mongodb.com/docs/manual/aggregation/' },
+      { label: 'MongoDB indexes', url: 'https://www.mongodb.com/docs/manual/indexes/' }
+    ],
     modules: [
       ['Documents, collections and BSON','Understand documents, collections, BSON types and flexible schema design.','MongoDB stores document records. Flexible schema does not mean schema-free design: define expected fields, validation and relationships based on query patterns.','db.tickets.insertOne({ title: "Login issue", status: "open", priority: 2 })','Model a customer support ticket document and identify fields that should be validated.','Basic'],
       ['CRUD, filters and projections','Create, read, update and delete documents with targeted filters.','Use selective filters and projections to retrieve only needed fields. Update operators such as $set make intended changes explicit and reduce accidental replacement of a full document.','db.tickets.find({ status: "open" }, { title: 1, priority: 1 })','Find open high-priority tickets and update their assigned team without overwriting other fields.','Basic'],
@@ -98,6 +143,12 @@ const courseModules = [
   {
     id: 'databricks', title: 'Databricks & Lakehouse Engineering', track: 'Databricks', category: 'Data · Databricks & AI', color: 'orange',
     imageAlt: 'Data engineering lakehouse analytics and Spark',
+    resources: [
+      { label: 'Databricks documentation', url: 'https://docs.databricks.com/' },
+      { label: 'Databricks getting-started tutorials', url: 'https://docs.databricks.com/aws/en/getting-started/' },
+      { label: 'Apache Spark documentation', url: 'https://spark.apache.org/docs/latest/' },
+      { label: 'Delta Lake documentation', url: 'https://docs.delta.io/latest/index.html' }
+    ],
     modules: [
       ['Lakehouse architecture and workspace basics','Understand workspaces, compute, notebooks, catalogs, schemas and data layers.','A lakehouse combines scalable data-lake storage with table management and analytics capabilities. Separate raw, cleaned and curated data and control access through governed catalogs.','Bronze raw → Silver validated → Gold business-ready','Design a medallion architecture for orders arriving from an application database and event stream.','Basic'],
       ['Spark DataFrames and distributed processing','Use DataFrames, transformations, actions and Spark SQL for scalable data work.','Spark transformations build a lazy execution plan; actions trigger computation. Prefer built-in expressions over Python row-by-row functions when possible.','df.filter("amount > 0").groupBy("country").count().show()','Explain why a transformation may not execute until an action is called and rewrite a simple aggregation.','Basic'],
@@ -110,6 +161,12 @@ const courseModules = [
   {
     id: 'cloud-ai', title: 'AI for Cloud & DevOps Engineers', track: 'AI for Cloud & DevOps', category: 'AI · Cloud automation', color: 'blue',
     imageAlt: 'AI assisted cloud operations and DevOps automation',
+    resources: [
+      { label: 'Microsoft Learn — AI and Azure', url: 'https://learn.microsoft.com/en-us/training/azure/' },
+      { label: 'AWS Well-Architected Framework', url: 'https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html' },
+      { label: 'Google Cloud Architecture Center', url: 'https://docs.cloud.google.com/architecture' },
+      { label: 'GitHub Actions security hardening', url: 'https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions' }
+    ],
     modules: [
       ['AI fundamentals for operations','Identify useful and risky AI use cases across incident response, documentation and automation.','AI can summarize logs and draft runbooks, but operational decisions need evidence, permissions and human accountability. Start with low-risk read-only workflows.','Alert → gather approved telemetry → summarize evidence → engineer validates','Choose an incident task suitable for AI assistance and define what must remain human-approved.','Basic'],
       ['Prompting with logs and runbooks','Write structured prompts that request evidence, hypotheses and verification steps.','Provide relevant sanitized context and specify the desired output. Ask the model to distinguish observations from hypotheses and never paste credentials, tokens or sensitive customer data.','Return: observed facts, possible causes, checks, rollback risks, confidence and missing evidence.','Create a reusable prompt template for investigating a failed deployment without exposing secrets.','Basic'],
@@ -125,7 +182,7 @@ export const cloudAiCourseSpecs = courseModules.map(({ id, title, track, categor
   id, title, track, cat: category, color, intro: modules[0][1], imageAlt: title
 }))
 
-export const cloudAiCourseLessons = courseModules.flatMap(({ id, track, modules }) =>
+export const cloudAiCourseLessons = courseModules.flatMap(({ id, track, modules, resources }) =>
   modules.map(([title, summary, explain, code, task, level], index) => ({
     id: `${id}-${index + 1}`,
     track,
@@ -140,6 +197,7 @@ export const cloudAiCourseLessons = courseModules.flatMap(({ id, track, modules 
     output: 'Validate the result in a sandbox or test environment before using it in production.',
     solutionHint: 'Start with the smallest working example, test both normal and edge cases, and explain the security and operational trade-offs.',
     interviewQuestion: `How would you apply ${title.toLowerCase()} in a real project, and what failure or security risks would you test?`,
-    videoTitle: `${track}: ${title}`
+    videoTitle: `${track}: ${title}`,
+    resources
   }))
 )
