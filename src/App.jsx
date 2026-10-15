@@ -8,7 +8,6 @@ import {
 import { activities, courses, initialTasks, quizQuestion, tracks } from './data.js'
 import LearningCenter from './LearningCenter.jsx'
 import InterviewPrep from './InterviewPrep.jsx'
-import { ecosystemCourseSpecs } from './ecosystemCourseLessons.js'
 
 const iconMap = { code: Code2, 'book-open': BookOpen }
 const navItems = [
