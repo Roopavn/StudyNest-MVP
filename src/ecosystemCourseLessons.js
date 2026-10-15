@@ -1,4 +1,5 @@
 // Practical language, framework and Python ecosystem courses.
+import { cppPracticalLessons, csharpPracticalLessons, languageComparisonLessons } from './cFamilyCourseLessons'
 export const ecosystemCourseSpecs = [
   {
     "title": "C++ Programming",
@@ -547,7 +548,7 @@ const interviews = [
   'Walk through your project architecture, test strategy, failure handling and next improvement.'
 ];
 const fill = (text, course, topic) => text.replaceAll('{track}', course.track).replaceAll('{topic}', topic.toLowerCase());
-export const ecosystemCourseLessons = ecosystemCourseSpecs.flatMap(course => course.topics.map((title, index) => ({
+const baseEcosystemCourseLessons = ecosystemCourseSpecs.flatMap(course => course.topics.map((title, index) => ({
   id: course.track.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '-' + (index + 1),
   track: course.track,
   level: index < 3 ? 'Basic' : index < 7 ? 'Intermediate' : 'Advanced',
@@ -562,3 +563,11 @@ export const ecosystemCourseLessons = ecosystemCourseSpecs.flatMap(course => cou
   solutionHint: 'Start with the smallest working example, verify the expected behavior, then add validation and tests. Focus on ' + title.toLowerCase() + '.',
   interviewQuestion: fill(interviews[index], course, title)
 })));
+
+// Expand C++ and C# beyond the introductory ten-topic path, and provide a dedicated comparison track.
+export const ecosystemCourseLessons = [
+  ...baseEcosystemCourseLessons,
+  ...cppPracticalLessons,
+  ...csharpPracticalLessons,
+  ...languageComparisonLessons,
+]
