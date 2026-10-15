@@ -12,6 +12,7 @@ import { ecosystemCourseLessons } from './ecosystemCourseLessons'
 import { cCourseLessons } from './cCourseLessons'
 import { javascriptEcosystemLessons } from './javascriptEcosystemLessons'
 import { manualTestingCourseLessons } from './manualTestingCourseLessons'
+import { dataEngineeringAdvancedLessons } from './dataEngineeringAdvancedLessons'
 import { javaPracticalLessons, javascriptPracticalLessons, typeScriptPracticalLessons, htmlPracticalLessons, cssPracticalLessons, reactPracticalLessons } from './webLanguageCourseLessons'
 
 export const courseDeepLessons = [
@@ -30,6 +31,7 @@ export const courseDeepLessons = [
   ...javascriptPracticalLessons,
   ...javascriptEcosystemLessons,
   ...manualTestingCourseLessons,
+  ...dataEngineeringAdvancedLessons,
   ...typeScriptPracticalLessons,
   ...htmlPracticalLessons,
   ...cssPracticalLessons,
