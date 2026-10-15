@@ -3,9 +3,13 @@
 import { courseDeepLessons as baseCourseDeepLessons } from './courseDeepLessonsBase'
 import { sqlCourseLessons } from './sqlCourseLessons'
 import { djangoCourseLessons } from './djangoCourseLessons'
+import { flaskCourseLessons } from './flaskCourseLessons'
+import { fastapiCourseLessons } from './fastapiCourseLessons'
 
 export const courseDeepLessons = [
   ...baseCourseDeepLessons,
   ...sqlCourseLessons,
   ...djangoCourseLessons,
+  ...flaskCourseLessons,
+  ...fastapiCourseLessons,
 ]
