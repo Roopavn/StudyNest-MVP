@@ -214,3 +214,7 @@
 .learning-back-button:hover{background:#eef3ff;border-color:#b8c9fb;}
 .learning-back-button:focus-visible{outline:3px solid #93b4ff;outline-offset:2px;}
 @media(max-width:640px){.learning-back-row{margin-bottom:10px}.learning-back-button{width:100%;justify-content:flex-start;min-height:44px}}
+
+
+/* Lesson list topic descriptions and collapsible lesson content */
+.lesson-list-summary{font-size:10px;line-height:1.45;color:#78869d;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.lesson-expand-toggle{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:0 0 auto;padding:6px 8px;border:1px solid #dfe6f2;border-radius:7px;background:#f8faff;color:#3159c9;font-size:10px;font-weight:800;white-space:nowrap;cursor:pointer}.lesson-expand-toggle:hover{background:#edf2ff;border-color:#cbd8ff}.lesson-expand-toggle svg{transition:transform .18s}.lesson-expand-toggle svg.is-expanded{transform:rotate(180deg)}.lesson-expanded-content{min-width:0}.lesson-detail-top{flex-wrap:wrap}@media(max-width:560px){.lesson-detail{padding:12px}.lesson-expand-toggle{margin-left:auto}.lesson-list-summary{-webkit-line-clamp:3}}
