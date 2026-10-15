@@ -753,6 +753,7 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const [codingDraft, setCodingDraft] = useState('')
   const [showCodingReference, setShowCodingReference] = useState(false)
   const [practicedCoding, setPracticedCoding] = useState(() => { try { return JSON.parse(localStorage.getItem('studynest.coding.practiced') || '[]') } catch { return [] } })
+  const [quizLevel, setQuizLevel] = useState('Basic')
   const [openLesson, setOpenLesson] = useState(() => lessons.find((lesson) => initialTrack === 'All topics' || lesson.track === initialTrack)?.id || 'py-1')
   const [localCompleted, setLocalCompleted] = useState(() => {
     try { return JSON.parse(localStorage.getItem('studynest.lessons.done') || '[]') } catch { return [] }
@@ -772,26 +773,52 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   const activeQuestion = active && questionSet?.length ? questionSet[(Number(active.id.split('-').pop()) - 1) % questionSet.length] : null
   const courseQuizQuestions = useMemo(() => {
     if (track === 'All topics' || !trackLessons.length) return []
-    if (mcqBank[track]?.length) return mcqBank[track].slice(0, 10)
-    return trackLessons.slice(0, Math.min(10, trackLessons.length)).map((lesson, index) => {
-      const choices = [0, 1, 2, 3].map((offset) => trackLessons[(index + offset) % trackLessons.length])
-      const uniqueChoices = choices.filter((item, choiceIndex) => choices.findIndex((candidate) => candidate.title === item.title) === choiceIndex)
-      const rotated = uniqueChoices.slice(index % Math.max(1, uniqueChoices.length)).concat(uniqueChoices.slice(0, index % Math.max(1, uniqueChoices.length)))
-      const options = rotated.map((item) => item.summary || item.title)
-      const answer = Math.max(0, options.indexOf(lesson.summary || lesson.title))
-      return { q: `What is the main takeaway from “${lesson.title}”?`, options, answer, why: lesson.explain || lesson.summary }
+    const levelLessons = trackLessons.filter((lesson) => (lesson.level || 'Basic').toLowerCase() === quizLevel.toLowerCase())
+    const sourceLessons = levelLessons.length ? levelLessons : trackLessons
+    const questionPrompts = [
+      (title) => `Which statement best describes “${title}”?`,
+      (title) => `In the ${quizLevel.toLowerCase()} level, what should you know about “${title}”?`,
+      (title) => `Which option is most closely related to the lesson “${title}”?`,
+      (title) => `What is the main purpose of “${title}”?`,
+      (title) => `Which concept should you review for “${title}”?`,
+      (title) => `Choose the most accurate summary of “${title}”.`,
+      (title) => `Which learning outcome matches “${title}”?`,
+      (title) => `What is the key idea behind “${title}”?`,
+      (title) => `Which answer best connects to “${title}”?`,
+      (title) => `What should a learner understand after “${title}”?`,
+    ]
+    return Array.from({ length: 10 }, (_, index) => {
+      const lesson = sourceLessons[index % sourceLessons.length]
+      const correct = lesson.summary || lesson.title
+      const distractors = trackLessons
+        .filter((item) => item.id !== lesson.id && (item.summary || item.title) !== correct)
+        .map((item) => item.summary || item.title)
+      const options = [correct, ...distractors.filter((value, itemIndex) => distractors.indexOf(value) === itemIndex).slice(0, 3)]
+      while (options.length < 4) options.push(`Review the ${quizLevel.toLowerCase()} ${track} lesson and its example`)
+      const answer = (index * 3) % options.length
+      const shuffledOptions = [...options]
+      const correctOption = shuffledOptions.splice(0, 1)[0]
+      shuffledOptions.splice(answer, 0, correctOption)
+      return {
+        q: questionPrompts[index](lesson.title),
+        options: shuffledOptions,
+        answer,
+        why: lesson.explain || lesson.summary || `Review the lesson “${lesson.title}” and its practical example.`,
+      }
     })
-  }, [track, trackLessons])
+  }, [track, trackLessons, quizLevel])
   const codingChallenges = useMemo(() => track === 'All topics' ? [] : trackLessons.filter((lesson) => lesson.task && lesson.code), [track, trackLessons])
   const currentCoding = codingChallenges.length ? codingChallenges[codingIndex % codingChallenges.length] : null
   const courseQuizScore = courseQuizQuestions.reduce((score, question, index) => score + (courseQuizAnswers[index] === question.answer ? 1 : 0), 0)
   useEffect(() => {
     setCourseQuizAnswers({})
     setCourseQuizSubmitted(false)
+    setQuizLevel('Basic')
     setCodingIndex(0)
     setCodingDraft('')
     setShowCodingReference(false)
   }, [track])
+  useEffect(() => { setCourseQuizAnswers({}); setCourseQuizSubmitted(false) }, [quizLevel])
   useEffect(() => { localStorage.setItem('studynest.coding.practiced', JSON.stringify(practicedCoding)) }, [practicedCoding])
   const markCodingPracticed = (id) => setPracticedCoding((old) => old.includes(id) ? old : [...old, id])
   const markDone = (id) => setCompleted((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
@@ -801,7 +828,8 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
     <SystemSetup track={track} />
 
     {track !== 'All topics' && <section className="course-practice-hub" aria-label={`${track} quizzes and coding practice`}>
-      <div className="course-practice-heading"><div><span className="course-practice-kicker"><Trophy size={14}/> COURSE ASSESSMENT</span><h3>{track} · MCQ quiz</h3><p>Test your understanding, submit answers, and review explanations for each question.</p></div><span className="course-practice-count">{courseQuizQuestions.length} questions</span></div>
+      <div className="course-practice-heading"><div><span className="course-practice-kicker"><Trophy size={14}/> COURSE ASSESSMENT</span><h3>{track} · MCQ quiz</h3><p>Choose a difficulty to practise 10 questions per level. Each quiz includes answer explanations and a score.</p></div><span className="course-practice-count">{courseQuizQuestions.length} questions</span></div>
+      <div className="course-quiz-level-picker" role="group" aria-label="Choose quiz difficulty">{[{name:'Basic',description:'Foundations'},{name:'Intermediate',description:'Apply concepts'},{name:'Advanced',description:'Deeper understanding'}].map((item)=><button type="button" key={item.name} className={'course-quiz-level '+(quizLevel===item.name?'is-active':'')} aria-pressed={quizLevel===item.name} onClick={()=>setQuizLevel(item.name)}><strong>{item.name}</strong><span>{item.description}</span><small>10 MCQs</small></button>)}</div>
       {courseQuizQuestions.length ? <><div className="course-quiz-grid">{courseQuizQuestions.map((question, index) => <fieldset className="course-quiz-question" key={`${track}-quiz-${index}`}><legend><span>Q{index + 1}</span> {question.q}</legend><div className="course-quiz-options">{question.options.map((option, optionIndex) => <label className={courseQuizSubmitted && optionIndex === question.answer ? 'course-quiz-option is-correct' : courseQuizSubmitted && courseQuizAnswers[index] === optionIndex && optionIndex !== question.answer ? 'course-quiz-option is-wrong' : 'course-quiz-option'} key={option}><input type="radio" name={`course-quiz-${index}`} checked={courseQuizAnswers[index] === optionIndex} disabled={courseQuizSubmitted} onChange={() => setCourseQuizAnswers((old) => ({ ...old, [index]: optionIndex }))}/><span>{String.fromCharCode(65 + optionIndex)}.</span>{option}</label>)}</div>{courseQuizSubmitted && <p className="course-quiz-explanation"><strong>{courseQuizAnswers[index] === question.answer ? 'Correct.' : `Answer: ${question.options[question.answer] || 'Review the lesson'}.`}</strong> {question.why}</p>}</fieldset>)}</div><div className="course-quiz-footer">{courseQuizSubmitted ? <><strong>Your score: {courseQuizScore}/{courseQuizQuestions.length} ({Math.round(courseQuizScore / courseQuizQuestions.length * 100)}%)</strong><button type="button" className="course-practice-button" onClick={() => { setCourseQuizAnswers({}); setCourseQuizSubmitted(false) }}>Try quiz again</button></> : <><span>{Object.keys(courseQuizAnswers).length} of {courseQuizQuestions.length} answered</span><button type="button" className="course-practice-button" disabled={Object.keys(courseQuizAnswers).length !== courseQuizQuestions.length} onClick={() => setCourseQuizSubmitted(true)}>Submit quiz</button></>}</div></> : <p className="course-practice-empty">No quiz questions are available for this course yet.</p>}
 
       <div className="course-coding-heading"><div><span className="course-practice-kicker"><Code2 size={14}/> HANDS-ON PRACTICE</span><h3>{track} · Coding challenges</h3><p>Write your own solution, then compare it with the lesson example and mark the challenge as practiced.</p></div><span className="course-practice-count">{codingChallenges.filter((item) => practicedCoding.includes(item.id)).length}/{codingChallenges.length} practiced</span></div>
