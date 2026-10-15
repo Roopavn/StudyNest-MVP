@@ -1,3 +1,4 @@
+import { cloudAiCourseSpecs, cloudAiCourseLessons } from './cloudAiCourseLessons.js'
 import { courseDeepLessons as baseCourseDeepLessons } from './courseDeepLessonsBase.js'
 import { gitGithubCourseLessons } from './gitGithubCourseLessons.js'
 import { sqlCourseLessons } from './sqlCourseLessons.js'
