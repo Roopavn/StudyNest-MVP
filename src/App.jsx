@@ -8,6 +8,10 @@ import {
 import { activities, courses, initialTasks, quizQuestion, tracks } from './data.js'
 import LearningCenter from './LearningCenter.jsx'
 import InterviewPrep from './InterviewPrep.jsx'
+import AuthModal from './AuthModal.jsx'
+import { onAuthStateChanged } from 'firebase/auth'
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { auth, db } from './firebase.js'
 
 const iconMap = { code: Code2, 'book-open': BookOpen }
 const navItems = [
@@ -54,6 +58,10 @@ export default function App() {
       return []
     }
   })
+  const [completedLessons, setCompletedLessons] = useState(() => { try { return JSON.parse(localStorage.getItem('studynest.lessons.done') || '[]') } catch { return [] } })
+  const [user, setUser] = useState(null)
+  const [showAuth, setShowAuth] = useState(false)
+  const [cloudUserId, setCloudUserId] = useState(null)
   const [search, setSearch] = useState('')
   const [showQuiz, setShowQuiz] = useState(false)
   const [answer, setAnswer] = useState(null)
@@ -64,6 +72,40 @@ export default function App() {
   const [learningTopic, setLearningTopic] = useState('All topics')
   const [showAddTask, setShowAddTask] = useState(false)
   const [newTask, setNewTask] = useState('')
+  useEffect(() => {
+    if (!auth) return undefined
+    return onAuthStateChanged(auth, (nextUser) => setUser(nextUser))
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('studynest.lessons.done', JSON.stringify(completedLessons))
+  }, [completedLessons])
+
+  useEffect(() => {
+    if (!user || !db) { setCloudUserId(null); return undefined }
+    let cancelled = false
+    setCloudUserId(null)
+    getDoc(doc(db, 'users', user.uid)).then((snapshot) => {
+      if (cancelled) return
+      if (snapshot.exists()) {
+        const data = snapshot.data()
+        if (Array.isArray(data.tasks)) setTasks(data.tasks)
+        if (Array.isArray(data.bookmarks)) setBookmarks(data.bookmarks.filter((id) => courses.some((course) => course.id === id)))
+        if (Array.isArray(data.completedLessons)) setCompletedLessons(data.completedLessons)
+      }
+      setCloudUserId(user.uid)
+    }).catch(() => {
+      if (!cancelled) setNotice('Could not load cloud progress. Check your Firebase setup and Firestore rules.')
+    })
+    return () => { cancelled = true }
+  }, [user])
+
+  useEffect(() => {
+    if (!user || !db || cloudUserId !== user.uid) return
+    setDoc(doc(db, 'users', user.uid), { tasks, bookmarks, completedLessons, updatedAt: serverTimestamp() }, { merge: true })
+      .catch(() => setNotice('Cloud save failed. Your latest changes remain in this browser.'))
+  }, [tasks, bookmarks, completedLessons, user, cloudUserId])
+
   useEffect(() => {
     localStorage.setItem('studynest.tasks', JSON.stringify(tasks))
   }, [tasks])
@@ -130,7 +172,7 @@ export default function App() {
         })}
         <div className="sidebar-spacer" />
         <div className="upgrade-card"><div className="upgrade-spark"><Sparkles size={17} /></div><h3>Make learning a habit</h3><p>Small steps today. Big things tomorrow.</p><button onClick={() => setNotice('Your next step: complete one task from today’s plan.')}>Explore your goals <ArrowRight size={14} /></button><div className="upgrade-orb orb-one" /><div className="upgrade-orb orb-two" /></div>
-        <button className="profile-row" onClick={() => setNotice('Profile settings will be available when authentication is connected.')}><div className="avatar">S</div><div className="profile-copy"><strong>Student account</strong><span>Free workspace</span></div><MoreHorizontal size={19} className="profile-more" /></button>
+        <button className="profile-row" onClick={() => setShowAuth(true)}><div className="avatar">{user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'S'}</div><div className="profile-copy"><strong>{user?.displayName || user?.email || 'Student account'}</strong><span>{user ? 'Signed in · cloud sync' : 'Demo workspace'}</span></div><MoreHorizontal size={19} className="profile-more" /></button>
       </aside>
 
       {mobileNav && <button className="mobile-scrim" onClick={() => setMobileNav(false)} aria-label="Close navigation overlay" />}
@@ -138,7 +180,7 @@ export default function App() {
         <header className="topbar">
           <button className="icon-button mobile-menu" onClick={() => setMobileNav(true)} aria-label="Open navigation"><Menu size={21} /></button>
           <div className="breadcrumbs"><span>Workspace</span><ChevronRight size={14} /><strong>{activePage}</strong></div>
-          <div className="topbar-actions"><label className="search-box"><Search size={17} /><input aria-label="Search courses" placeholder="Search anything..." value={search} onChange={(event) => { setSearch(event.target.value); if (event.target.value) setActivePage('My learning') }} /><kbd>⌘ K</kbd></label><button className="icon-button notification-button" aria-label="Notifications" onClick={() => setNotice('You’re all caught up. Keep up your great work!')}><Bell size={19} /><i /></button><div className="top-avatar">S</div></div>
+          <div className="topbar-actions"><label className="search-box"><Search size={17} /><input aria-label="Search courses" placeholder="Search anything..." value={search} onChange={(event) => { setSearch(event.target.value); if (event.target.value) setActivePage('My learning') }} /><kbd>⌘ K</kbd></label><button className="icon-button notification-button" aria-label="Notifications" onClick={() => setNotice('You’re all caught up. Keep up your great work!')}><Bell size={19} /><i /></button><button type="button" className="top-avatar" onClick={() => setShowAuth(true)} aria-label={user ? 'Open account' : 'Sign in'}>{user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'S'}</button></div>
         </header>
 
         <div className="page-content">
@@ -164,7 +206,7 @@ export default function App() {
             <section className="courses-section"><SectionHeading title="Your learning tracks" action="View all courses" onAction={() => navigate('My learning')} /><div className="course-grid">{courses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><img className="course-art-image" src={course.image} alt={course.imageAlt} loading="lazy" /><div className="course-art-shade" /><button className="course-bookmark" onClick={() => toggleBookmark(course.id)} aria-label={bookmarks.includes(course.id) ? `Remove ${course.title} from bookmarks` : `Bookmark ${course.title}`} title={bookmarks.includes(course.id) ? "Remove bookmark" : "Save course"}><Bookmark size={16} fill={bookmarks.includes(course.id) ? "currentColor" : "none"} /></button><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /><span className="course-art-number">0{course.id}</span></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={() => openCourse(course)}>Continue course <ArrowRight size={14} /></button></div></article>})}</div></section>
           </>}
 
-          {activePage === 'Learning path' && <LearningCenter key={learningTopic} initialTrack={learningTopic} />}
+          {activePage === 'Learning path' && <LearningCenter key={learningTopic} initialTrack={learningTopic} completedLessons={completedLessons} onCompletedLessonsChange={setCompletedLessons} />}
 
           {activePage === 'My learning' && <section className="learning-view"><div className="filter-row"><div><h2>All courses</h2><p>Choose a course to continue your journey.</p></div><div className="filter-buttons">{[['all','All courses'],['it','IT skills']].map(([id,label]) => <button key={id} className={selectedTrack === id ? 'filter-active' : ''} onClick={() => setSelectedTrack(id)}>{label}</button>)}</div></div>{filteredCourses.length ? <div className="course-grid">{filteredCourses.map((course) => { const Icon = iconMap[course.icon]; return <article className="course-card" key={course.id}><div className={`course-art ${course.color}`}><img className="course-art-image" src={course.image} alt={course.imageAlt} loading="lazy" /><div className="course-art-shade" /><button className="course-bookmark" onClick={() => toggleBookmark(course.id)} aria-label={bookmarks.includes(course.id) ? `Remove ${course.title} from bookmarks` : `Bookmark ${course.title}`} title={bookmarks.includes(course.id) ? "Remove bookmark" : "Save course"}><Bookmark size={16} fill={bookmarks.includes(course.id) ? "currentColor" : "none"} /></button><div className="course-art-icon"><Icon size={25} /></div><span className="course-art-orbit orbit-a" /><span className="course-art-orbit orbit-b" /><span className="course-art-dot" /></div><div className="course-info"><span className="course-category">{course.category}</span><h3>{course.title}</h3><div className="course-progress-label"><span>{course.lessons}</span><strong>{course.progress}%</strong></div><ProgressBar value={course.progress} color={course.color === 'orange' ? 'orange' : course.color === 'teal' ? 'teal' : 'blue'} /><button className="course-open" onClick={() => openCourse(course)}>Open course <ArrowRight size={14} /></button></div></article>})}</div> : <div className="empty-state"><Search size={25} /><h3>No courses found</h3><p>Try a different search or track filter.</p></div>}</section>}
 
@@ -180,7 +222,9 @@ export default function App() {
 
       {showAddTask && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowAddTask(false) }}><section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="add-task-title"><div className="modal-heading"><div><span className="modal-eyebrow">DAILY PLANNER</span><h2 id="add-task-title">Add a study task</h2></div><button className="icon-button" onClick={() => setShowAddTask(false)} aria-label="Close"><X size={19} /></button></div><form onSubmit={addTask}><label className="field-label" htmlFor="task-name">What would you like to study?</label><input id="task-name" className="task-input" autoFocus value={newTask} onChange={(event) => setNewTask(event.target.value)} placeholder="e.g. Revise Python generators" maxLength={100} required /><div className="modal-actions"><button type="button" className="secondary-button" onClick={() => setShowAddTask(false)}>Cancel</button><button className="primary-button" type="submit"><Plus size={16} /> Add task</button></div></form></section></div>}
 
-      {showQuiz && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowQuiz(false) }}><section className="modal-card quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title"><div className="modal-heading"><div><span className="modal-eyebrow">QUICK PRACTICE · QUESTION 1 OF 1</span><h2 id="quiz-title">Check your understanding</h2></div><button className="icon-button" onClick={() => setShowQuiz(false)} aria-label="Close quiz"><X size={19} /></button></div>{!quizSubmitted ? <><p className="quiz-question">{quizQuestion.question}</p><div className="quiz-options">{quizQuestion.options.map((option, index) => <button key={option} className={`quiz-option ${answer === index ? 'option-selected' : ''}`} onClick={() => setAnswer(index)}><span>{String.fromCharCode(65 + index)}</span>{option}{answer === index && <Check size={17} />}</button>)}</div><button className="primary-button quiz-submit" disabled={answer === null} onClick={() => setQuizSubmitted(true)}>Check answer <ArrowRight size={16} /></button></> : <div className="quiz-result"><span className={`result-icon ${answer === quizQuestion.answer ? 'result-correct' : 'result-incorrect'}`}>{answer === quizQuestion.answer ? <CheckCheck size={26} /> : <BookOpen size={26} />}</span><h3>{answer === quizQuestion.answer ? 'Great work! Correct answer.' : 'Keep learning — you’ve got this.'}</h3><p>{quizQuestion.explanation}</p><div className="answer-key">Correct answer: <strong>Article 21</strong></div><button className="primary-button" onClick={() => setShowQuiz(false)}>Done <Check size={16} /></button><button className="text-action retry-action" onClick={() => { setAnswer(null); setQuizSubmitted(false) }}>Try again</button></div>}</section></div>}
+      {showAuth && <AuthModal user={user} onClose={() => setShowAuth(false)} />}
+
+      {showQuiz && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowQuiz(false) }}><section className="modal-card quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title"><div className="modal-heading"><div><span className="modal-eyebrow">QUICK PRACTICE · QUESTION 1 OF 1</span><h2 id="quiz-title">Check your understanding</h2></div><button className="icon-button" onClick={() => setShowQuiz(false)} aria-label="Close quiz"><X size={19} /></button></div>{!quizSubmitted ? <><p className="quiz-question">{quizQuestion.question}</p><div className="quiz-options">{quizQuestion.options.map((option, index) => <button key={option} className={`quiz-option ${answer === index ? 'option-selected' : ''}`} onClick={() => setAnswer(index)}><span>{String.fromCharCode(65 + index)}</span>{option}{answer === index && <Check size={17} />}</button>)}</div><button className="primary-button quiz-submit" disabled={answer === null} onClick={() => setQuizSubmitted(true)}>Check answer <ArrowRight size={16} /></button></> : <div className="quiz-result"><span className={`result-icon ${answer === quizQuestion.answer ? 'result-correct' : 'result-incorrect'}`}>{answer === quizQuestion.answer ? <CheckCheck size={26} /> : <BookOpen size={26} />}</span><h3>{answer === quizQuestion.answer ? 'Great work! Correct answer.' : 'Keep learning — you’ve got this.'}</h3><p>{quizQuestion.explanation}</p><div className="answer-key">Correct answer: <strong>{quizQuestion.options[quizQuestion.answer]}</strong></div><button className="primary-button" onClick={() => setShowQuiz(false)}>Done <Check size={16} /></button><button className="text-action retry-action" onClick={() => { setAnswer(null); setQuizSubmitted(false) }}>Try again</button></div>}</section></div>}
     </div>
   )
 }
