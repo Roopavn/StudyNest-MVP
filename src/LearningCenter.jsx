@@ -737,7 +737,7 @@ const pythonEcosystem = [
   ]}
 ]
 
-export default function LearningCenter({ initialTrack = 'All topics' }) {
+export default function LearningCenter({ initialTrack = 'All topics', completedLessons, onCompletedLessonsChange }) {
   const [track, setTrack] = useState(initialTrack)
   const [level, setLevel] = useState('All levels')
   const [query, setQuery] = useState('')
@@ -748,9 +748,11 @@ export default function LearningCenter({ initialTrack = 'All topics' }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [quizSubmitted, setQuizSubmitted] = useState(false)
   const [openLesson, setOpenLesson] = useState(() => lessons.find((lesson) => initialTrack === 'All topics' || lesson.track === initialTrack)?.id || 'py-1')
-  const [completed, setCompleted] = useState(() => {
+  const [localCompleted, setLocalCompleted] = useState(() => {
     try { return JSON.parse(localStorage.getItem('studynest.lessons.done') || '[]') } catch { return [] }
   })
+  const completed = completedLessons ?? localCompleted
+  const setCompleted = onCompletedLessonsChange ?? setLocalCompleted
   useEffect(() => { localStorage.setItem('studynest.lessons.done', JSON.stringify(completed)) }, [completed])
   useEffect(() => { setTrack(initialTrack); setQuery('') }, [initialTrack])
   useEffect(() => { setSelectedAnswer(null); setQuizSubmitted(false) }, [openLesson])
