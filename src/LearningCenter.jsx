@@ -61,7 +61,11 @@ const getOfficialDocumentation = (track = '') => {
 
   const name = String(track).toLowerCase()
   const aliases = [
-    [/python|django|flask|fastapi|pydantic|celery/, 'Python'],
+    [/django/, 'Django'],
+    [/flask/, 'Flask'],
+    [/fastapi/, 'FastAPI'],
+    [/django rest framework|\bdrf\b/, 'Django REST Framework'],
+    [/python|pydantic|celery/, 'Python'],
     [/javascript|typescript|react|node\.js|express|npm|frontend|web development/, 'JavaScript'],
     [/\bjava\b/, 'Java'],
     [/\bc programming\b|\blanguage c\b/, 'C Programming'],
