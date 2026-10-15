@@ -178,3 +178,14 @@
 .course-coding-reference p{margin:8px 0 0}
 @media(max-width:760px){.course-quiz-grid{grid-template-columns:minmax(0,1fr)}.course-practice-heading,.course-coding-heading{gap:10px}.course-practice-count{font-size:10px;padding:6px 8px}}
 @media(max-width:480px){.course-practice-heading,.course-coding-heading{flex-direction:column}.course-practice-hub{padding:14px}.course-coding-actions .course-practice-button{flex:1 1 auto}}
+
+
+/* Embed the course assessment hub inside the Practice & quizzes page. */
+.learning-center.practice-only > :not(.course-practice-hub):not(.learning-controls){display:none!important}
+.learning-center.practice-only{width:100%;min-width:0;margin:0}
+.learning-center.practice-only .learning-controls{display:flex;justify-content:flex-start;margin:0 0 18px;padding:0;border:0;background:transparent;box-shadow:none}
+.learning-center.practice-only .learning-search{display:none}
+.learning-center.practice-only .learning-select-label:not(:has(select option:checked)){display:none}
+.learning-center.practice-only .learning-select-label{flex:0 1 280px;min-width:180px}
+.learning-center.practice-only .learning-select-label select{width:100%}
+.practice-panel>.learning-center{margin-top:18px}
