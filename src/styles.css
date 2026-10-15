@@ -11,3 +11,7 @@
 @media(hover:none){
   button,.nav-item,.track-nav,.course-open{touch-action:manipulation}
 }
+
+/* Account control remains visually consistent when rendered as a button. */
+button.top-avatar{border:0;cursor:pointer;font:inherit;font-weight:800;}
+button.top-avatar:focus-visible,.profile-row:focus-visible{outline:3px solid #8ba4ff;outline-offset:3px}
