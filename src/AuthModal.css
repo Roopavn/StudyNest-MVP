@@ -1,0 +1,22 @@
+.auth-backdrop{position:fixed;inset:0;z-index:80;background:#101a30b8;display:grid;place-items:center;padding:18px;backdrop-filter:blur(5px)}
+.auth-card{width:min(100%,440px);max-height:92vh;overflow:auto;background:#fff;border:1px solid #e8edf5;border-radius:18px;padding:28px;box-shadow:0 28px 90px #101a3040;color:#26334b}
+.auth-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.auth-brand-mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#3159c9,#0d9488);display:grid;place-items:center;color:white;font-family:Manrope,sans-serif;font-weight:900;font-size:20px}
+.auth-close{width:34px;height:34px;border:1px solid #e9edf5;border-radius:9px;background:white;color:#65738b;font-size:25px;line-height:1;cursor:pointer}
+.auth-eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#3159c9}
+.auth-card h2{font-family:Manrope,sans-serif;font-size:25px;letter-spacing:-.7px;margin:8px 0}
+.auth-description{font-size:13px;line-height:1.7;color:#7c879b;margin:0 0 22px}
+.auth-form{display:grid;gap:14px}
+.auth-form label{display:grid;gap:7px;font-size:12px;font-weight:700;color:#526078}
+.auth-form input{width:100%;height:44px;border:1px solid #dfe5f0;border-radius:9px;padding:0 12px;color:#26334b;font:inherit;font-weight:400;outline:none}
+.auth-form input:focus{border-color:#6684e3;box-shadow:0 0 0 3px #3159c910}
+.auth-submit{width:100%;min-height:44px;margin-top:5px;border:0;border-radius:9px;background:#3159c9;color:white;font-size:13px;font-weight:800;cursor:pointer}
+.auth-submit:disabled{opacity:.65;cursor:wait}
+.auth-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:17px}
+.auth-links button{border:0;background:transparent;color:#3159c9;font-size:12px;font-weight:700;cursor:pointer}
+.auth-message{margin:0;padding:10px 12px;border:1px solid #f2c9c5;background:#fff5f4;border-radius:8px;color:#a33b34;font-size:12px;line-height:1.6}
+.auth-setup-note{margin:19px 0 0;padding-top:15px;border-top:1px solid #edf0f6;color:#8994a8;font-size:11px;line-height:1.6;text-align:center}
+.auth-user-summary{display:grid;gap:5px;padding:15px;border:1px solid #e8edf5;background:#f8faff;border-radius:10px;margin:20px 0}
+.auth-user-summary strong{font-size:14px}
+.auth-user-summary span{font-size:12px;color:#7c879b;overflow-wrap:anywhere}
+@media(max-width:480px){.auth-card{padding:22px 18px}.auth-card h2{font-size:22px}}
