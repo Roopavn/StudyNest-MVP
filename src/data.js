@@ -5,6 +5,7 @@ import { drfCourseLessons } from './drfCourseLessons.js'
 import { machineLearningCourseLessons } from './machineLearningCourseLessons.js'
 import { dataScienceCourseLessons } from './dataScienceCourseLessons.js'
 import { dataAnalystCourseLessons } from './dataAnalystCourseLessons.js'
+import { ecosystemCourseSpecs, ecosystemCourseLessons } from './ecosystemCourseLessons.js'
 
 export const tracks = [
   { id: 'it', title: 'IT & technology', subtitle: 'Grow practical, job-ready skills', icon: 'code', color: 'teal', topics: 28 },
@@ -17,6 +18,7 @@ export const initialTasks = [
 ]
 
 export const courses = [
+  ...ecosystemCourseSpecs.map((course, index) => ({ id: 24 + index, title: course.title, category: course.cat, progress: 0, lessons: `${ecosystemCourseLessons.filter((lesson) => lesson.track === course.track).length} lessons`, color: course.color, icon: 'code', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=85', imageAlt: course.intro })),
   { id: 1, title: 'Python Foundations', category: 'IT · Programming', progress: 0, lessons: '51 lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop showing a programming workspace' },
   { id: 17, title: 'Django Web Development', category: 'IT · Backend', progress: 0, lessons: `${djangoCourseLessons.length} lessons`, color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=85', imageAlt: 'Django backend web development' },
   { id: 18, title: 'Flask Web Development', category: 'IT · Backend', progress: 0, lessons: `${flaskCourseLessons.length} lessons`, color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=85', imageAlt: 'Flask Python web development' },
