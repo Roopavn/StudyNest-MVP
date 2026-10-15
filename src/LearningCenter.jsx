@@ -737,7 +737,7 @@ const pythonEcosystem = [
   ]}
 ]
 
-export default function LearningCenter({ initialTrack = 'All topics', completedLessons, onCompletedLessonsChange }) {
+export default function LearningCenter({ initialTrack = 'All topics', completedLessons, onCompletedLessonsChange, practiceOnly = false }) {
   const [track, setTrack] = useState(initialTrack)
   const [level, setLevel] = useState('All levels')
   const [query, setQuery] = useState('')
@@ -795,7 +795,7 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
   useEffect(() => { localStorage.setItem('studynest.coding.practiced', JSON.stringify(practicedCoding)) }, [practicedCoding])
   const markCodingPracticed = (id) => setPracticedCoding((old) => old.includes(id) ? old : [...old, id])
   const markDone = (id) => setCompleted((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
-  return <section className="learning-center">
+  return <section className={`learning-center${practiceOnly ? ' practice-only' : ''}`}>
     <div className="learning-hero"><div className="learning-hero-copy"><span className="learning-eyebrow"><Sparkles size={14}/> STRUCTURED LEARNING PATH</span><h2>Start with the basics.<br/><span>Build advanced skills.</span></h2><p>Short lessons, visual explanations, code examples and video explainers—designed for interview preparation.</p><div className="learning-hero-stats"><span><BookOpen size={15}/> {trackLessons.length} lessons</span><span><Clock3 size={15}/> 2–25 min each</span><span><Trophy size={15}/> {trackCompletedCount} completed</span></div></div><div className="learning-hero-art" aria-hidden="true"><div className="hero-orbit hero-orbit-one"/><div className="hero-orbit hero-orbit-two"/><div className="hero-book"><BookOpen size={48}/></div><span className="hero-star">✦</span><span className="hero-spark">✳</span></div></div>
     {activeIntro && <section className="track-intro" aria-labelledby="track-intro-title"><div className="track-intro-heading"><span className="track-intro-kicker">START HERE · COURSE INTRODUCTION</span><h3 id="track-intro-title">What is {track}?</h3><p>{activeIntro.what}</p></div><div className="track-intro-grid"><div><strong>Why do we use it?</strong><p>{activeIntro.why}</p></div><div><strong>Where is it used?</strong><p>{activeIntro.where}</p></div></div><div className="track-intro-path"><strong>Your learning roadmap</strong><p>{activeIntro.path}</p><div className="track-intro-levels"><span>01 · Basic</span><span>02 · Intermediate</span><span>03 · Advanced</span></div></div></section>}
     <SystemSetup track={track} />
