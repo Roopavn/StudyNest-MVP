@@ -76,10 +76,12 @@ Open the local URL printed by Vite.
 Run these before submitting application changes:
 
     npm run lint
+    npm test
     npm run build
     npm run preview
 
 - npm run lint checks the code with ESLint.
+- npm test runs Node's built-in smoke tests for course data and the sample quiz.
 - npm run build creates the production build in dist/.
 - npm run preview serves the production build locally.
 
