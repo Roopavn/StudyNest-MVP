@@ -234,3 +234,16 @@
 .lesson-accordion .lesson-chevron{transition:transform .18s}
 .lesson-accordion .lesson-chevron.is-expanded{transform:rotate(0deg)}
 @media(max-width:560px){.lesson-accordion-content{padding-left:14px}}
+
+
+/* Inline lesson explanations and practical details */
+.lesson-accordion-explanation h4,.lesson-accordion-detail h4{margin:8px 0 5px;color:#273653;font-size:12px;font-weight:800}
+.lesson-accordion-detail{margin-top:12px;padding-top:10px;border-top:1px solid #e2e8f4}
+.lesson-accordion-detail p{margin:5px 0 8px}
+.lesson-accordion-detail pre{max-width:100%;margin:8px 0;padding:12px;overflow-x:auto;border:1px solid #e0e6f1;border-radius:8px;background:#fff;color:#24334e;font-size:12px;line-height:1.6;white-space:pre}
+.lesson-accordion-detail code,.lesson-accordion-output code{overflow-wrap:normal;word-break:normal}
+.lesson-accordion-output{margin:8px 0;padding:8px 10px;border:1px solid #e0e6f1;border-radius:7px;background:#fff}
+.lesson-accordion-output summary{color:#3159c9;font-size:11px;font-weight:800;cursor:pointer}
+.lesson-accordion-output p{margin:8px 0 0}
+.lesson-accordion-open-full{margin-top:12px}
+@media(max-width:560px){.lesson-accordion-content{padding:10px 12px 14px}.lesson-accordion-detail pre{font-size:11px;padding:9px}.lesson-accordion-detail,.lesson-accordion-explanation{min-width:0}}
