@@ -143,5 +143,101 @@ export const dataEngineeringAdvancedLessons = [
     solutionHint: 'Include ownership, alerts, quality gates, reconciliation, retry limits, idempotent backfill, access controls, retention, runbook and escalation path.',
     interviewQuestion: 'What metrics would you monitor to detect a pipeline that succeeds technically but delivers stale or incorrect data?',
     videoTitle: 'Reliable production data pipelines'
+  },
+  {
+    id: 'de-interview-1', track: 'Data Engineering / Big Data', level: 'Beginner',
+    title: 'Data Engineer interview roadmap: explain an end-to-end pipeline', duration: '18 min', kind: 'flow',
+    summary: 'Build a clear answer that connects source systems, ingestion, storage, transformation, serving and monitoring.',
+    explain: 'Interviewers want to understand how you reason about the whole data lifecycle. Describe the business requirement and freshness SLA first, then source systems, batch or streaming ingestion, raw storage, transformation, curated data model, consumers, quality checks, security and observability. Explain why you chose each component, what can fail, and how you recover. Use one project story and clearly separate what you personally built from what the team owned.',
+    code: "def explain_pipeline(requirement):\n    return {\n        'source': 'database, API, files or events',\n        'ingestion': 'batch, CDC or streaming',\n        'storage': 'raw / bronze layer',\n        'processing': 'SQL or Spark transformations',\n        'serving': 'curated tables for BI or applications',\n        'controls': ['quality', 'security', 'monitoring', 'recovery'],\n    }",
+    output: 'A structured explanation connects architecture choices to business needs and operational trade-offs.',
+    task: 'Prepare a two-minute explanation of an e-commerce pipeline that ingests orders, payments and clickstream events into analytics tables.',
+    solutionHint: 'Cover source → ingestion → raw → transform → curated → dashboard, then explain incremental loading, deduplication, data quality, late events, monitoring and cost.',
+    interviewQuestion: 'Walk me through a data pipeline you designed or would design, from source to dashboard. What happens when one stage fails?',
+    videoTitle: 'End-to-end data engineering interview'
+  },
+  {
+    id: 'de-interview-2', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'SQL interview drills: top-N, deduplication, gaps and window functions', duration: '25 min', kind: 'table',
+    summary: 'Practice high-frequency SQL patterns and explain tie handling and correctness.',
+    explain: 'For top-N per group, rank rows with a window function partitioned by the group key. For deduplication, define which record wins—usually by updated timestamp and a deterministic tie-breaker—before filtering row_number to one. Use LAG to compare adjacent rows, a calendar table to find missing dates, and conditional aggregation for business summaries. Always clarify null behavior, duplicate semantics and whether ties should be retained.',
+    code: "WITH latest AS (\n  SELECT *, ROW_NUMBER() OVER (\n    PARTITION BY order_id ORDER BY updated_at DESC, source_version DESC\n  ) AS rn\n  FROM staging_orders\n)\nSELECT order_id, customer_id, amount\nFROM latest\nWHERE rn = 1;\n\n-- Find duplicate business keys\nSELECT order_id, COUNT(*) AS copies\nFROM staging_orders\nGROUP BY order_id\nHAVING COUNT(*) > 1;",
+    output: 'The query keeps one deterministic latest row per order and separately identifies duplicated business keys.',
+    task: 'Write queries for second-highest distinct salary, top three salaries per department, duplicate order IDs and a running daily revenue total.',
+    solutionHint: 'Use DENSE_RANK for distinct salary levels, ROW_NUMBER for selecting a single winning duplicate, GROUP BY/HAVING for duplicate detection and SUM OVER for running totals.',
+    interviewQuestion: 'Why can ROW_NUMBER be safer than DISTINCT for deduplication, and how do you make the chosen row deterministic?',
+    videoTitle: 'SQL coding interview practice for data engineers'
+  },
+  {
+    id: 'de-interview-3', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'Python coding round for data engineers', duration: '22 min', kind: 'code',
+    summary: 'Practice parsing records, counting frequencies, handling malformed data and writing testable transformations.',
+    explain: 'Python interview tasks for data engineers often resemble small ingestion or validation problems. Prefer readable functions, explicit assumptions, predictable error handling and tests for empty input, missing fields, duplicates and malformed values. Use dictionaries and sets for counting and membership checks, generators for large inputs, and logging rather than printing sensitive payloads. Avoid loading a large file fully into memory when it can be streamed line by line.',
+    code: "from collections import Counter\n\ndef count_events(records):\n    counts = Counter()\n    rejected = 0\n    for record in records:\n        event_type = record.get('event_type')\n        if not event_type:\n            rejected += 1\n            continue\n        counts[event_type] += 1\n    return dict(counts), rejected\n\nrecords = [{'event_type': 'click'}, {}, {'event_type': 'view'}]\nprint(count_events(records))",
+    output: "({'click': 1, 'view': 1}, 1)",
+    task: 'Write a function that deduplicates event dictionaries by event_id, keeps the latest event_time and reports records with missing IDs.',
+    solutionHint: 'Use a dictionary keyed by event_id, parse timestamps consistently, define behavior for equal timestamps, and return rejected counts separately. Test empty and malformed input.',
+    interviewQuestion: 'How would you process a multi-gigabyte JSON-lines file without loading the entire file into memory?',
+    videoTitle: 'Python coding patterns for data engineering'
+  },
+  {
+    id: 'de-interview-4', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Spark interview scenarios: slow stages, skew and join optimization', duration: '25 min', kind: 'flow',
+    summary: 'Diagnose Spark jobs using execution plans, shuffle metrics, partition sizes and join strategies.',
+    explain: 'Start with Spark UI and the physical plan instead of immediately increasing cluster size. Identify whether time is spent reading, shuffling, spilling, skewed tasks or writing many small files. Compare input sizes and partition distributions; inspect join keys and filters; broadcast only a genuinely small side that fits executor memory. Repartitioning can help parallelism but causes a shuffle, while coalesce can reduce partitions with less data movement. Validate improvements using runtime and data correctness.',
+    code: "from pyspark.sql import functions as F\nfrom pyspark.sql.functions import broadcast\n\n# Filter and project early to reduce data moved through the join\norders_small = orders.filter(F.col('status') == 'COMPLETE').select('customer_id', 'amount')\ncustomer_attrs = customers.select('customer_id', 'segment')\njoined = orders_small.join(broadcast(customer_attrs), 'customer_id', 'left')\njoined.explain('formatted')",
+    output: 'The plan helps verify whether the chosen join strategy is appropriate; Spark UI metrics are still needed to confirm runtime gains.',
+    task: 'A join takes 40 minutes only at month-end, with one task running far longer than the others. Give a diagnostic sequence and two possible fixes.',
+    solutionHint: 'Inspect skewed key frequencies, task duration and shuffle read; consider salting hot keys, adaptive query execution, pre-aggregation or a suitable join strategy. Measure before and after.',
+    interviewQuestion: 'How do you distinguish data skew from insufficient cluster resources, and what trade-offs do salting and broadcast joins introduce?',
+    videoTitle: 'Spark performance interview scenarios'
+  },
+  {
+    id: 'de-interview-5', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'Azure data engineering interview: ADF, ADLS, Databricks and monitoring', duration: '22 min', kind: 'layers',
+    summary: 'Explain the responsibilities and integration points of a typical Azure data platform.',
+    explain: 'Azure Data Factory commonly orchestrates and moves data; ADLS Gen2 stores lake data; Azure Databricks runs Spark-based engineering and analytics; Delta Lake adds table transactions and merge capabilities; Synapse or another serving layer supports analytics depending on the architecture. Discuss managed identity and least-privilege access, Key Vault for secrets when needed, private networking where required, parameterized pipelines, retries, dependency handling and centralized monitoring. Avoid claiming that one tool alone guarantees data quality or exactly-once business outcomes.',
+    code: "Example pipeline outline:\n1. ADF validates parameters and starts ingestion.\n2. Copy source data to an immutable raw path in ADLS.\n3. Databricks validates and transforms data into Delta tables.\n4. Quality and reconciliation checks gate publication.\n5. ADF records status and sends actionable alerts.",
+    output: 'Each service has a clear responsibility, with orchestration, storage, compute, access control and quality checks connected end to end.',
+    task: 'Design an Azure pipeline that loads daily sales from SQL Server to ADLS and publishes a curated Delta table.',
+    solutionHint: 'Explain authentication, incremental extraction, raw retention, transformation, merge keys, quality gates, retries, monitoring and safe backfills.',
+    interviewQuestion: 'How would you troubleshoot an ADF pipeline that succeeds in copying data but fails in a Databricks transformation?',
+    videoTitle: 'Azure Data Engineer interview preparation'
+  },
+  {
+    id: 'de-interview-6', track: 'Data Engineering / Big Data', level: 'Intermediate',
+    title: 'Data warehousing interview: grain, star schema and SCD', duration: '22 min', kind: 'table',
+    summary: 'Model facts and dimensions and explain how historical attribute changes should be stored.',
+    explain: 'Declare the grain of a fact table before selecting columns: one row per order line, payment event or daily customer snapshot, for example. Fact tables store measurable events; dimensions describe entities used to filter and group facts. A star schema favors simpler analytical joins, while a snowflake normalizes dimension attributes. SCD Type 1 overwrites a value; Type 2 creates a new effective-dated version to preserve history. Define surrogate keys, effective dates, current-row flags and late-arriving dimension behavior.',
+    code: "Example Type 2 customer dimension columns:\ncustomer_sk | customer_id | city | valid_from | valid_to | is_current\n101         | C42         | Pune | 2025-01-01 | 2025-08-31 | false\n245         | C42         | Mysuru | 2025-09-01 | 9999-12-31 | true",
+    output: 'The business key remains stable while a new surrogate-key row preserves the customer city change history.',
+    task: 'Model an order analytics mart with order lines, customers, products and dates. State the grain and choose an SCD approach for customer address.',
+    solutionHint: 'Use one fact row per order line, dimension keys for customer/product/date, additive measures such as quantity and amount, and Type 2 if historical reporting must reflect the address at order time.',
+    interviewQuestion: 'When would you use SCD Type 1 versus Type 2, and how does the choice affect historical reports?',
+    videoTitle: 'Data modeling and warehouse interview questions'
+  },
+  {
+    id: 'de-interview-7', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Production incident mock interview: late, duplicate or incorrect data', duration: '25 min', kind: 'flow',
+    summary: 'Answer incident questions with containment, diagnosis, recovery and prevention.',
+    explain: 'When a dashboard is wrong, first establish impact, affected time range, downstream consumers and whether publication should be paused. Preserve run IDs and logs; compare source, raw, curated and served counts by batch and business key. Check watermarks, CDC offsets, timezone conversions, joins, schema changes and merge conditions. Correct data through a controlled replay or backfill that is safe to repeat, validate reconciliation, communicate the impact and add a regression check. Do not blindly rerun a non-idempotent pipeline.',
+    code: "Incident response checklist:\n1. Scope affected datasets, batches and consumers.\n2. Stop or quarantine unsafe publication if needed.\n3. Compare source-to-target counts and key-level samples.\n4. Identify the failing stage and preserve evidence.\n5. Replay/backfill safely; reconcile before release.\n6. Add a test, alert or runbook to prevent recurrence.",
+    output: 'The response demonstrates ownership: protect consumers, identify root cause, recover safely and prevent recurrence.',
+    task: 'At 9 AM, finance reports that yesterday’s revenue is 12% lower than the source. Explain your first 15 minutes of investigation.',
+    solutionHint: 'Confirm metric definitions and time zones, identify affected batches, compare stage counts and amounts, check late arrivals and filters, then communicate scope before controlled recovery.',
+    interviewQuestion: 'Tell me about a production data incident. How would you structure your answer if you have not personally handled one yet?',
+    videoTitle: 'Production incident interview simulation'
+  },
+  {
+    id: 'de-interview-8', track: 'Data Engineering / Big Data', level: 'Advanced',
+    title: 'Data platform system design and 30-day interview practice plan', duration: '20 min', kind: 'layers',
+    summary: 'Structure design answers and build a repeatable interview preparation routine.',
+    explain: 'For a system-design question, clarify volume, growth, freshness, correctness, retention, privacy, consumers, budget and recovery objectives. Sketch ingestion, durable raw storage, processing, curated serving, orchestration and observability. Explain partition keys, replay strategy, schema evolution, backpressure, access control and failure boundaries. A practical four-week routine is: week 1 SQL and Python; week 2 Spark and data modeling; week 3 cloud orchestration and reliability; week 4 mock interviews, project walkthroughs and weak-area revision. Practice explaining trade-offs aloud rather than memorizing scripts.',
+    code: "A concise design answer:\nRequirement and SLA -> Source and ingestion -> Raw storage -> Transform and validate\n-> Curated model -> Consumers -> Monitoring and recovery\n\nFor every stage, state: expected failure, detection signal, retry/replay method, and cost or correctness trade-off.",
+    output: 'The candidate can explain a coherent design, justify trade-offs and identify how the system behaves during failures.',
+    task: 'Design a clickstream platform for 100 million events per day with a five-minute freshness target and one year of retention.',
+    solutionHint: 'Estimate throughput and storage, choose batch/streaming based on SLA, define event IDs and late-data policy, partition by date, plan compaction, quality checks, monitoring, replay and access controls.',
+    interviewQuestion: 'How would you design a reliable data platform, and what would you change if the freshness target moved from one day to five minutes?',
+    videoTitle: 'Data engineering system design and mock interviews'
   }
 ]
