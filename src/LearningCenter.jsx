@@ -739,7 +739,7 @@ const pythonEcosystem = [
 
 
 const practicalCategoryByTrack = {
-  'Python':'programming','Java':'programming','JavaScript':'programming','C Programming':'programming','TypeScript':'programming',
+  'Python':'programming','Java':'java','JavaScript':'javascript','C Programming':'c','TypeScript':'typescript',
   'SQL':'sql','DBMS & Database Design':'sql','NoSQL & MongoDB':'nosql',
   'REST APIs':'web','React':'web','Node.js & Express':'web','Django & FastAPI':'web','HTML & CSS':'web',
   'DevOps':'devops','Cloud Fundamentals':'devops','Linux & Shell':'devops','Docker & Containers':'devops','Git & GitHub':'devops','Kubernetes':'devops',
@@ -748,6 +748,26 @@ const practicalCategoryByTrack = {
   'Generative AI & LLMs':'genai','Cybersecurity Fundamentals':'security'
 }
 const practicalQuestionBank = {
+  java: [
+    { level:'Basic', kind:'Predict the output', q:'What does this Java code print?', snippet:'int[] values = {2, 4, 6};\nSystem.out.println(values[1]);', options:['2','4','6','A compile error'], answer:1, why:'Java arrays are zero-indexed, so index 1 is the second element, 4.' },
+    { level:'Intermediate', kind:'Complete the code', q:'Which expression calculates the square of n?', snippet:'int square(int n) {\n    return ____;\n}', options:['n * n','n + n','n / n','n - n'], answer:0, why:'Multiplying n by itself returns its square.' },
+    { level:'Advanced', kind:'Find the bug', q:'The method should total all numbers. What should replace total = value?', snippet:'int total = 0;\nfor (int value : values) {\n    total = value;\n}', options:['total += value;','total == value;','total = 0;','break;'], answer:0, why:'The accumulator must add each value instead of overwriting the previous total.' }
+  ],
+  javascript: [
+    { level:'Basic', kind:'Predict the output', q:'What does this JavaScript print?', snippet:'const values = [2, 4, 6];\nconsole.log(values[1]);', options:['2','4','6','undefined'], answer:1, why:'JavaScript arrays are zero-indexed, so index 1 returns 4.' },
+    { level:'Intermediate', kind:'Complete the code', q:'Which expression creates [1, 4, 9] from numbers?', snippet:'const numbers = [1, 2, 3];\nconst squares = numbers.map(n => ____);', options:['n ** 2','n + 1','n / 2','n === 2'], answer:0, why:'map() returns each callback result, and n ** 2 squares each number.' },
+    { level:'Advanced', kind:'Find the bug', q:'This function should accumulate all values. What is the correct fix?', snippet:'function total(values) {\n  let result = 0;\n  for (const value of values) {\n    result = value;\n  }\n  return result;\n}', options:['Change result = value to result += value','Change return to console.log only','Remove the loop','Change result to a string'], answer:0, why:'Assignment overwrites the running total; += accumulates each value.' }
+  ],
+  c: [
+    { level:'Basic', kind:'Predict the output', q:'What does this C program print?', snippet:'#include <stdio.h>\nint main(void) {\n  int values[] = {2, 4, 6};\n  printf("%d", values[1]);\n  return 0;\n}', options:['2','4','6','Compilation always fails'], answer:1, why:'C arrays start at index zero, so values[1] is 4.' },
+    { level:'Intermediate', kind:'Complete the code', q:'Which expression tests whether n is even?', snippet:'if (n ____ 2 == 0) {\n  printf("even");\n}', options:['%','/','*','+'], answer:0, why:'The modulo operator % returns the remainder after division.' },
+    { level:'Advanced', kind:'Find the bug', q:'What is the required fix to safely use this allocation?', snippet:'int *values = malloc(5 * sizeof(int));\nvalues[0] = 10;', options:['Check values != NULL before dereferencing','Call free(values) before writing','Use sizeof(int*) as the element count','Remove the pointer declaration'], answer:0, why:'malloc can return NULL when allocation fails; check the pointer before dereferencing it.' }
+  ],
+  typescript: [
+    { level:'Basic', kind:'Predict the output', q:'What does this TypeScript code print at runtime?', snippet:'const values: number[] = [2, 4, 6];\nconsole.log(values[1]);', options:['2','4','6','A type error'], answer:1, why:'The array is zero-indexed, and the element at index 1 is 4.' },
+    { level:'Intermediate', kind:'Complete the type', q:'Which type should be used for a function that returns a number?', snippet:'function square(n: number): ____ {\n  return n * n;\n}', options:['number','string','boolean','void'], answer:0, why:'The function returns the numeric result of multiplying n by itself.' },
+    { level:'Advanced', kind:'Find the bug', q:'How should this function be corrected to return the total?', snippet:'function total(values: number[]): number {\n  let result = 0;\n  for (const value of values) result = value;\n  return result;\n}', options:['Use result += value inside the loop','Change number[] to string','Return values.length only','Remove result initialization'], answer:0, why:'The accumulator must add each value rather than overwrite the previous total.' }
+  ],
   programming: [
     { level:'Basic', kind:'Predict the output', q:'What does this code print?', snippet:'values = [2, 4, 6]\nprint(values[1])', options:['2','4','6','An IndexError'], answer:1, why:'Python list indexes start at zero, so index 1 refers to the second item, 4.' },
     { level:'Intermediate', kind:'Complete the code', q:'Which expression prints the squares [1, 4, 9]?', snippet:'numbers = [1, 2, 3]\nsquares = [____ for n in numbers]\nprint(squares)', options:['n + 1','n ** 2','n * 0','n / 2'], answer:1, why:'The exponent operator ** raises each number to the power of two.' },
