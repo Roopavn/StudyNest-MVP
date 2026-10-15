@@ -245,3 +245,21 @@
 .lesson-detail-inline .lesson-real-world,.lesson-detail-inline .lesson-deep-dive,.lesson-detail-inline .lesson-section,.lesson-detail-inline .lesson-mcq,.lesson-detail-inline .lesson-video{max-width:100%;min-width:0}
 @media(max-width:900px){.lesson-list-column{max-height:none;overflow:visible}.lesson-detail-inline{padding-top:12px}}
 @media(max-width:560px){.lesson-detail-inline{padding-top:10px}.lesson-detail-inline .lesson-complete-button,.lesson-detail-inline .lesson-navigation{max-width:none}.lesson-detail-inline .lesson-code{font-size:10px;padding:10px}}
+
+
+/* Python ecosystem: expand each framework/library inline below its own title. */
+.python-library-inline-layout{display:block}
+.python-library-inline-layout .python-library-groups{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.python-library-inline-layout .python-library-group{overflow:visible}
+.python-library-inline-layout .python-library-items{display:grid;gap:8px;padding:10px}
+.python-library-inline-layout .python-library-item-wrap{min-width:0}
+.python-library-inline-layout .python-library-item{width:100%;min-height:42px;padding:11px 12px;font-size:13px}
+.python-library-inline-layout .python-library-item>svg{transform:none;flex-shrink:0}
+.python-library-inline-layout .python-library-detail{margin:8px 0 2px;padding:17px;border-color:#dce5f2;box-shadow:0 4px 16px #1b376408}
+.python-library-inline-layout .python-library-curriculum{margin-top:16px}
+.python-library-inline-layout .python-library-lesson{margin-top:9px}
+@media(max-width:760px){
+  .python-library-inline-layout .python-library-detail{padding:12px}
+  .python-library-inline-layout .python-library-install code{overflow-wrap:anywhere}
+  .python-library-inline-layout .python-library-example pre{overflow:auto;max-width:100%}
+}
