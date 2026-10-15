@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowLeft, BookOpen, CheckCircle2, ChevronDown, CirclePlay, Clock3, Code2, Database, Layers3, Play, Route, Search, Sparkles, Terminal, Trophy } from 'lucide-react'
+import { ArrowLeft, BookOpen, CheckCircle2, ChevronDown, ChevronRight, CirclePlay, Clock3, Code2, Database, Layers3, Play, Route, Search, Sparkles, Terminal, Trophy } from 'lucide-react'
 import './LearningCenter.css'
 import SystemSetup from './SystemSetup'
 import { courseDeepLessons } from './courseDeepLessons'
