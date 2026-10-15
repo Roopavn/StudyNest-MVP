@@ -263,3 +263,15 @@
   .python-library-inline-layout .python-library-install code{overflow-wrap:anywhere}
   .python-library-inline-layout .python-library-example pre{overflow:auto;max-width:100%}
 }
+
+
+/* Course-specific official documentation and further reading */
+.lesson-resources{margin:18px 0;padding:18px 20px;border:1px solid var(--border-color,#dbe4ef);border-radius:14px;background:var(--surface-soft,#f8fafc)}
+.lesson-resources>div{display:flex;align-items:center;gap:8px;color:var(--text-primary,#172033)}
+.lesson-resources h4{margin:0;font-size:15px}
+.lesson-resources>div svg{flex-shrink:0;color:var(--accent,#2563eb)}
+.lesson-resources>p{margin:8px 0 12px;color:var(--text-secondary,#5b6474);font-size:13px;line-height:1.55}
+.lesson-resources ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:8px;margin:0;padding:0;list-style:none}
+.lesson-resources li a{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;height:100%;padding:10px 12px;border:1px solid var(--border-color,#dbe4ef);border-radius:9px;background:var(--surface,#fff);color:var(--accent,#2458a6);font-size:13px;line-height:1.45;text-decoration:none}
+.lesson-resources li a:hover{text-decoration:underline;border-color:var(--accent,#2563eb)}
+.lesson-resources li a:focus-visible{outline:2px solid var(--accent,#2563eb);outline-offset:2px}
