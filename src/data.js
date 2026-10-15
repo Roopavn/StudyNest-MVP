@@ -24,6 +24,7 @@ export const initialTasks = [
 ]
 
 export const courses = [
+  ...cloudAiCourseSpecs.map((course, index) => ({ id: 200 + index, title: course.title, track: course.track, category: course.cat, progress: 0, lessons: `${cloudAiCourseLessons.filter((lesson) => lesson.track === course.track).length} lessons`, color: course.color, icon: 'code', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=85', imageAlt: course.imageAlt || course.intro })),
   ...ecosystemCourseSpecs.map((course, index) => ({ id: 24 + index, title: course.title, category: course.cat, progress: 0, lessons: `${ecosystemCourseLessons.filter((lesson) => lesson.track === course.track).length} lessons`, color: course.color, icon: 'code', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=85', imageAlt: course.intro })),
   { id: 1, title: 'Python Foundations', category: 'IT · Programming', progress: 0, lessons: '51 lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop showing a programming workspace' },
   { id: 17, title: 'Django Web Development', category: 'IT · Backend', progress: 0, lessons: `${djangoCourseLessons.length} lessons`, color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=85', imageAlt: 'Django backend web development' },
