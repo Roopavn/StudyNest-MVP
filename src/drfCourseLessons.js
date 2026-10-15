@@ -1,0 +1,25 @@
+// Django REST Framework curriculum: fundamentals through secure production APIs and interview practice.
+const topics = [
+["DRF architecture and request lifecycle","Understand serializers, views, routers, permissions and response handling.","A DRF request passes through Django middleware, URL routing, authentication and permission checks before a view returns a Response."],
+["Install DRF and configure a Django project","Install djangorestframework and enable rest_framework in INSTALLED_APPS.","Use a project virtual environment and pin dependencies. Add rest_framework to INSTALLED_APPS, then run python manage.py check."],
+["Serializers and data validation","Convert model instances and validated input to and from primitive data.","Serializers define fields and validation rules. Call is_valid(raise_exception=True) before save; never trust client input."],
+["ModelSerializer and field customization","Build serializers from models while explicitly controlling exposed fields.","Use fields = [...] rather than exposing every model field. Mark server-controlled fields read-only."],
+["Function-based API views and APIView","Create endpoints with explicit HTTP method handling.","APIView supports authentication, permissions, parsing and content negotiation while returning DRF Response objects."],
+["Generic views and mixins","Use ListAPIView, RetrieveAPIView and mixins to avoid repeated CRUD code.","Generic views combine queryset, serializer_class and standard behavior; override get_queryset for user-scoped data."],
+["ViewSets and routers","Group related CRUD actions and generate URL patterns.","ModelViewSet supplies standard CRUD actions; routers register a prefix and viewset. Keep custom actions narrowly scoped."],
+["Authentication and permissions","Protect endpoints using session, token or JWT authentication and permission classes.","Authentication identifies a caller; permissions decide access. IsAuthenticated alone does not provide object-level ownership checks."],
+["Filtering, search, ordering and pagination","Build discoverable collection endpoints without returning unbounded data.","Configure filter backends and pagination. Validate allowed ordering fields and set a maximum page size."],
+["Nested relationships and writable serializers","Represent related resources safely and intentionally.","Nested writes require explicit create/update behavior or a clear separate-resource workflow. Avoid accidental unbounded nested responses."],
+["Testing APIs with APIClient","Test success, validation, permissions and error responses.","Use APITestCase or APIClient and assert status, response data and database changes; include unauthenticated and forbidden cases."],
+["Throttling, security and production readiness","Add request limits, safe errors, schema docs and deployment checks.","Use TLS, least privilege, environment-based secrets, safe logging and throttling; throttling is not a complete denial-of-service defense."],
+["DRF interview and capstone","Build a paginated, authenticated inventory API with tests.","Explain Serializer versus ModelSerializer, APIView versus ViewSet, authentication versus permissions, and 401 versus 403."]
+];
+export const drfCourseLessons = topics.map(([title, summary, explain], i) => ({
+ id: `drf-${i+1}`, track: 'Django REST Framework', level: i < 4 ? 'Basic' : i < 9 ? 'Intermediate' : 'Advanced',
+ title, duration: '20 min', kind: 'layers', summary, explain,
+ code: i === 2 ? "from rest_framework import serializers\n\nclass ProductSerializer(serializers.Serializer):\n    name = serializers.CharField(max_length=120)\n    price = serializers.DecimalField(max_digits=8, decimal_places=2)\n\n    def validate_price(self, value):\n        if value < 0:\n            raise serializers.ValidationError('Price must be non-negative')\n        return value" : "from rest_framework.response import Response\nfrom rest_framework.views import APIView\n\nclass HealthView(APIView):\n    def get(self, request):\n        return Response({'status': 'ok'})",
+ output: 'Expected behavior: a validated, documented API response; run the tests in your own Django project.',
+ task: i === 12 ? 'Design and test a secure CRUD API with pagination and ownership checks.' : `Apply “${title}” to a small products API and verify both a successful request and an error case.`,
+ solutionHint: 'Follow the topic explanation, use Django/DRF documentation, and add an automated APIClient test.',
+ interviewQuestion: ['What responsibilities do serializers handle?','How do APIView, generic views and ViewSets differ?','How do serializer validation hooks work?','Why should serializers explicitly list fields?','What does APIView add over a plain Django view?','When should you use a generic view?','What actions does ModelViewSet provide?','How are authentication and permissions different?','Why paginate collection endpoints?','How do you handle nested writes safely?','What should an API test assert?','How do throttling and authorization differ?','How would you design a secure CRUD API?'][i]
+}));
