@@ -12,6 +12,7 @@ export const initialTasks = [
 
 export const courses = [
   { id: 1, title: 'Python Foundations', category: 'IT · Programming', progress: 0, lessons: '51 lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop showing a programming workspace' },
+  { id: 17, title: 'Django Web Development', category: 'IT · Backend', progress: 0, lessons: `${djangoCourseLessons.length} lessons`, color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=85', imageAlt: 'Django backend web development' },
   { id: 2, title: 'Database & SQL Essentials', category: 'IT · Data skills', progress: 0, lessons: '50 lessons', color: 'orange', icon: 'code', image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=900&q=85', imageAlt: 'Abstract data and database visualization' },
   { id: 3, title: 'REST API Development', category: 'IT · Backend', progress: 0, lessons: '12 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=85', imageAlt: 'Server infrastructure representing backend APIs' },
   { id: 4, title: 'Java Foundations', category: 'IT · Programming', progress: 0, lessons: '10 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop with a code editor open' },
@@ -27,7 +28,6 @@ export const courses = [
   { id: 14, title: 'Generative AI Foundations to Production', category: 'AI · Generative AI', progress: 0, lessons: '8 detailed lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=85', imageAlt: 'Abstract artificial intelligence neural network visualization' },
   { id: 15, title: 'Agentic AI: Beginner to Advanced', category: 'AI · Agentic AI', progress: 0, lessons: '8 detailed lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&w=900&q=85', imageAlt: 'Artificial intelligence system visualization' },
   { id: 16, title: 'Data Engineering / Big Data (PySpark)', category: 'IT · Data Engineering', progress: 0, lessons: '8 lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85', imageAlt: 'Data analytics dashboard representing data engineering' },
-  { id: 17, title: 'Django Web Development', category: 'IT · Backend', progress: 0, lessons: `${djangoCourseLessons.length} lessons`, color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=85', imageAlt: 'Django backend web development' },
 ]
 
 export const activities = [
