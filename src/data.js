@@ -7,6 +7,7 @@ import { dataScienceCourseLessons } from './dataScienceCourseLessons.js'
 import { dataAnalystCourseLessons } from './dataAnalystCourseLessons.js'
 import { ecosystemCourseSpecs, ecosystemCourseLessons } from './ecosystemCourseLessons.js'
 import { javascriptEcosystemLessons } from './javascriptEcosystemLessons.js'
+import { manualTestingCourseLessons } from './manualTestingCourseLessons.js'
 
 export const tracks = [
   { id: 'it', title: 'IT & technology', subtitle: 'Grow practical, job-ready skills', icon: 'code', color: 'teal', topics: 28 },
@@ -32,6 +33,7 @@ export const courses = [
   { id: 3, title: 'REST API Development', category: 'IT · Backend', progress: 0, lessons: '12 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=85', imageAlt: 'Server infrastructure representing backend APIs' },
   { id: 4, title: 'Java Foundations', category: 'IT · Programming', progress: 0, lessons: '10 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=85', imageAlt: 'Laptop with a code editor open' },
   { id: 5, title: 'JavaScript Essentials', category: 'IT · Web development', progress: 0, lessons: '10 lessons', color: 'orange', icon: 'code', image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&w=900&q=85', imageAlt: 'JavaScript development on a screen' },
+  { id: 100, title: 'Manual Testing', category: 'IT · Quality Assurance', progress: 0, lessons: `${manualTestingCourseLessons.length} lessons`, color: 'orange', icon: 'book-open', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85', imageAlt: 'Software quality assurance and manual testing checklist' },
   { id: 99, title: 'JavaScript Frameworks & Libraries', category: 'IT · Frontend ecosystem', progress: 0, lessons: `${javascriptEcosystemLessons.length} lessons`, color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=900&q=85', imageAlt: 'JavaScript framework and library learning path' },
   { id: 6, title: 'C Programming', category: 'IT · Programming', progress: 0, lessons: '53 lessons', color: 'teal', icon: 'code', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=85', imageAlt: 'Programming code on a monitor' },
   { id: 7, title: 'HTML & CSS Web Design', category: 'IT · Frontend', progress: 0, lessons: '10 lessons', color: 'blue', icon: 'code', image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=900&q=85', imageAlt: 'Website design and responsive layout' },
