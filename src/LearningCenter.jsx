@@ -777,9 +777,9 @@ export default function LearningCenter({ initialTrack = 'All topics', completedL
       const choices = [0, 1, 2, 3].map((offset) => trackLessons[(index + offset) % trackLessons.length])
       const uniqueChoices = choices.filter((item, choiceIndex) => choices.findIndex((candidate) => candidate.title === item.title) === choiceIndex)
       const rotated = uniqueChoices.slice(index % Math.max(1, uniqueChoices.length)).concat(uniqueChoices.slice(0, index % Math.max(1, uniqueChoices.length)))
-      const options = rotated.map((item) => item.title)
-      const answer = Math.max(0, options.indexOf(lesson.title))
-      return { q: `Which lesson covers this objective: “${lesson.summary}”?`, options, answer, why: lesson.explain || lesson.summary }
+      const options = rotated.map((item) => item.summary || item.title)
+      const answer = Math.max(0, options.indexOf(lesson.summary || lesson.title))
+      return { q: `What is the main takeaway from “${lesson.title}”?`, options, answer, why: lesson.explain || lesson.summary }
     })
   }, [track, trackLessons])
   const codingChallenges = useMemo(() => track === 'All topics' ? [] : trackLessons.filter((lesson) => lesson.task && lesson.code), [track, trackLessons])
