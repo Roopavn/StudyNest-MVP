@@ -206,3 +206,11 @@
 .practical-code-snippet{max-width:100%;overflow:auto;margin:0 0 13px;padding:13px;border:1px solid #24354e;border-radius:10px;background:#111c2e;color:#e0ecff;font:12px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
 .practical-code-snippet code{font:inherit}
 .practical-quiz-grid{margin-bottom:0}
+
+
+/* Resume-learning navigation: accessible, touch-friendly back link. */
+.learning-back-row{display:flex;align-items:center;margin:0 0 14px;}
+.learning-back-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 13px;border:1px solid #dbe4f2;border-radius:10px;background:#fff;color:#294b9a;font-size:13px;font-weight:800;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;}
+.learning-back-button:hover{background:#eef3ff;border-color:#b8c9fb;}
+.learning-back-button:focus-visible{outline:3px solid #93b4ff;outline-offset:2px;}
+@media(max-width:640px){.learning-back-row{margin-bottom:10px}.learning-back-button{width:100%;justify-content:flex-start;min-height:44px}}
