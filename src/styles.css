@@ -15,3 +15,16 @@
 /* Account control remains visually consistent when rendered as a button. */
 button.top-avatar{border:0;cursor:pointer;font:inherit;font-weight:800;}
 button.top-avatar:focus-visible,.profile-row:focus-visible{outline:3px solid #8ba4ff;outline-offset:3px}
+
+
+/* Overview catalog category filters */
+.overview-catalog>.section-heading{align-items:flex-start}
+.overview-catalog .catalog-subtitle{margin:5px 0 0;color:#8994a8;font-size:12px;line-height:1.5}
+.overview-category-buttons{display:flex;flex-wrap:wrap;gap:8px;padding:0;border:0;background:transparent;margin:14px 0}
+.overview-category-buttons button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:145px;border:1px solid #e8ecf4;background:#fff;color:#596780;font-size:11px;font-weight:700;border-radius:9px;padding:10px 12px;text-align:left}
+.overview-category-buttons button small{font-size:10px;font-weight:500;color:#8994a8}
+.overview-category-buttons button.filter-active{background:#eef2ff;border-color:#cfd8ff;color:#3159c9}
+.overview-category-buttons button.filter-active small{color:#526bc0}
+.catalog-live-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 13px;padding:10px 12px;border-radius:8px;background:#f7f8fc;color:#53617a;font-size:11px}
+.catalog-live-summary strong{color:#293750;font-size:12px}
+@media(max-width:680px){.overview-category-buttons button{flex:1 1 calc(50% - 8px);min-width:0}.catalog-live-summary{align-items:flex-start;flex-direction:column;gap:4px}.overview-catalog>.section-heading{flex-direction:column}}
