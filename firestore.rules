@@ -1,8 +1,24 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Starter deny-by-default policy. Add authenticated, ownership-aware rules
-    // before using Firestore in production.
+    function signedInAs(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // Each learner can access only their own progress document.
+    // The client is limited to the fields used by the learning workspace.
+    match /users/{userId} {
+      allow read, delete: if signedInAs(userId);
+      allow create, update: if signedInAs(userId)
+        && request.resource.data.keys().hasOnly(['tasks', 'bookmarks', 'completedLessons', 'updatedAt'])
+        && request.resource.data.tasks is list
+        && request.resource.data.bookmarks is list
+        && request.resource.data.completedLessons is list
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    // Course content remains read-only from the public client until an
+    // authenticated, role-protected content-management backend is implemented.
     match /{document=**} {
       allow read, write: if false;
     }
