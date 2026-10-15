@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  ArrowRight, Bell, BookOpen, Bookmark, Brain, BriefcaseBusiness,
+  ArrowLeft, ArrowRight, Bell, BookOpen, Bookmark, Brain, BriefcaseBusiness,
   Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, Code2,
   GraduationCap, LayoutDashboard, Menu, MoreHorizontal, Play, Plus,
   Search, Sparkles, Target, X,
