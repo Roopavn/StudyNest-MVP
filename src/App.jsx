@@ -160,7 +160,7 @@ export default function App() {
   }
   const courseGroupFor = (course) => {
     const title = course.title.toLowerCase()
-    if (/python foundations|java foundations|javascript essentials|c programming|c\+\+|c#|typescript/.test(title)) return 'languages'
+    if (/full python course|python foundations|python fundamentals|java foundations|javascript essentials|c programming|c\+\+|c#|typescript/.test(title)) return 'languages'
     if (/django|flask|fastapi|frameworks & libraries|react/.test(title)) return 'frameworks'
     if (/sql|database|postgres|oracle|mongodb|mongo db|nosql/.test(title)) return 'databases'
     if (/machine learning|data science|data analyst|data analytics|data engineering|big data|pyspark|generative ai|agentic ai|databricks|ai for cloud/.test(title)) return 'data-ai'
