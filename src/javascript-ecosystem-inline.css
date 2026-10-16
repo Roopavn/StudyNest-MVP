@@ -1,0 +1,26 @@
+/* JavaScript ecosystem: keep framework/library details below the list instead of a side panel. */
+.python-library-layout:not(.python-library-inline-layout){
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:14px;
+  align-items:start;
+}
+
+.python-library-layout:not(.python-library-inline-layout) .python-library-groups{
+  min-width:0;
+  width:100%;
+}
+
+.python-library-layout:not(.python-library-inline-layout) > .python-library-detail{
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  margin-top:0;
+}
+
+/* Keep the JavaScript ecosystem comfortable on smaller screens too. */
+@media (max-width:760px){
+  .python-library-layout:not(.python-library-inline-layout){
+    gap:10px;
+  }
+}
