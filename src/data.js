@@ -13,6 +13,7 @@ import { ecosystemCourseSpecs, ecosystemCourseLessons } from './ecosystemCourseL
 import { javascriptEcosystemLessons } from './javascriptEcosystemLessons.js'
 import { manualTestingCourseLessons } from './manualTestingCourseLessons.js'
 import { dataEngineeringAdvancedLessons } from './dataEngineeringAdvancedLessons.js'
+import { pythonBasicCourseLessons } from './pythonBasicCourseLessons.js'
 
 export const tracks = [
   { id: 'it', title: 'IT & technology', subtitle: 'Grow practical, job-ready skills', icon: 'code', color: 'teal', topics: 28 },
