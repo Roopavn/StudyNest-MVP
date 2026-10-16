@@ -1,5 +1,6 @@
 // Combined course lesson export used by LearningCenter.
 import { courseDeepLessons as baseCourseDeepLessons } from './courseDeepLessonsBase'
+import { pythonInterviewLessons } from './pythonInterviewLessons'
 import { sqlCourseLessons } from './sqlCourseLessons'
 import { djangoCourseLessons } from './djangoCourseLessons'
 import { flaskCourseLessons } from './flaskCourseLessons'
@@ -18,6 +19,7 @@ import { javaPracticalLessons, javascriptPracticalLessons, typeScriptPracticalLe
 
 export const courseDeepLessons = [
   ...baseCourseDeepLessons,
+  ...pythonInterviewLessons,
   ...sqlCourseLessons,
   ...djangoCourseLessons,
   ...flaskCourseLessons,
