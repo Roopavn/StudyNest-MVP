@@ -4,14 +4,12 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
 } from 'firebase/auth'
 import { auth, isFirebaseConfigured } from './firebase.js'
 import './AuthModal.css'
 
 export default function AuthModal({ user, onClose }) {
   const [mode, setMode] = useState('signin')
-  const [name, setName] = useState('')
   const [email, setEmail] = useState(user?.email || '')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
@@ -35,8 +33,7 @@ export default function AuthModal({ user, onClose }) {
         await sendPasswordResetEmail(auth, email.trim())
         setMessage('Password reset email sent. Check your inbox and spam folder.')
       } else if (mode === 'signup') {
-        const credential = await createUserWithEmailAndPassword(auth, email.trim(), password)
-        if (name.trim()) await updateProfile(credential.user, { displayName: name.trim() })
+        await createUserWithEmailAndPassword(auth, email.trim(), password)
         onClose()
       } else {
         await signInWithEmailAndPassword(auth, email.trim(), password)
@@ -77,9 +74,9 @@ export default function AuthModal({ user, onClose }) {
           <>
             <span className="auth-eyebrow">YOUR LEARNING SPACE</span>
             <h2 id="auth-title">{mode === 'signup' ? 'Create your account' : mode === 'reset' ? 'Reset your password' : 'Welcome back'}</h2>
-            <p className="auth-description">{mode === 'signup' ? 'Save your progress and continue learning on another device.' : mode === 'reset' ? 'We’ll send you a link to choose a new password.' : 'Sign in to sync your courses, tasks and completed lessons.'}</p>
+            <p className="auth-description">{mode === 'signup' ? 'Create an account to save your progress and continue learning on another device.' : mode === 'reset' ? 'We’ll send you a link to choose a new password.' : 'Sign in to sync your courses, tasks and completed lessons.'}</p>
+            {mode !== 'reset' && <div className="auth-privacy-note"><strong>🔐 Your learning stays yours</strong><p>We only ask for your email address and password to create or access your account. We use your account to show your own completed lessons, learning progress, study tasks and saved courses.</p><span>No unnecessary profile details are required. Your password is handled by Firebase Authentication, not stored in your learning profile.</span></div>}
             <form className="auth-form" onSubmit={submit}>
-              {mode === 'signup' && <label>Display name<input autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} placeholder="Your name" maxLength={80} required /></label>}
               <label>Email address<input type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" required /></label>
               {mode !== 'reset' && <label>Password<input type="password" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} value={password} onChange={(event) => setPassword(event.target.value)} placeholder={mode === 'signup' ? 'At least 6 characters' : 'Your password'} minLength={6} required /></label>}
               {message && <p className="auth-message" role="alert">{message}</p>}
