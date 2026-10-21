@@ -58,17 +58,17 @@ export default function ThemeController() {
         :root[data-theme="system"] .nav-item, :root[data-theme="system"] .track-nav, :root[data-theme="system"] .profile-row { color:var(--theme-muted); }
         :root[data-theme="dark"] .nav-item.active, :root[data-theme="system"] .nav-item.active { background:#263b69; color:#bfdbfe; }
         :root[data-theme="dark"] .upgrade-card, :root[data-theme="system"] .upgrade-card { background:#172554; border-color:#273b70; }
-        .theme-switcher { position:fixed; right:22px; bottom:22px; z-index:100; font-family:inherit; }
-        .theme-toggle { display:flex; align-items:center; gap:8px; border:1px solid #dfe5ef; background:#fff; color:#34415a; border-radius:10px; padding:9px 12px; box-shadow:0 8px 24px #17233d18; font-size:12px; font-weight:700; }
+        .theme-switcher { position:relative; flex:0 0 auto; z-index:100; font-family:inherit; }
+        .theme-toggle { display:flex; align-items:center; justify-content:center; gap:0; width:38px; height:38px; border:1px solid #dfe5ef; background:#fff; color:#34415a; border-radius:10px; padding:0; box-shadow:0 4px 12px #17233d10; font-size:12px; font-weight:700; cursor:pointer; }\n        .theme-toggle span { display:none; }
         [data-theme="dark"] .theme-toggle, [data-theme="system"] .theme-toggle { background:#1e293b; color:#e5e7eb; border-color:#475569; }
-        .theme-menu { position:absolute; right:0; bottom:48px; width:158px; padding:6px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; box-shadow:0 12px 35px #17233d22; }
+        .theme-menu { position:absolute; right:0; top:calc(100% + 8px); bottom:auto; width:158px; padding:6px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; box-shadow:0 12px 35px #17233d22; }
         [data-theme="dark"] .theme-menu, [data-theme="system"] .theme-menu { background:#111827; border-color:#334155; }
         .theme-option { width:100%; display:flex; align-items:center; gap:9px; border:0; background:transparent; border-radius:8px; padding:9px; color:#475569; font-size:12px; text-align:left; }
         [data-theme="dark"] .theme-option, [data-theme="system"] .theme-option { color:#cbd5e1; }
         .theme-option:hover { background:#f1f5f9; }
         [data-theme="dark"] .theme-option:hover, [data-theme="system"] .theme-option:hover { background:#1e293b; }
         .theme-option .theme-check { margin-left:auto; }
-        @media (max-width:640px) { .theme-switcher { right:14px; bottom:14px; } .theme-toggle span { display:none; } }
+        @media (max-width:640px) { .theme-toggle { width:36px; height:36px; } }
       `}</style>
       <div className="theme-switcher">
         {open && <div className="theme-menu" role="menu" aria-label="Choose theme">
