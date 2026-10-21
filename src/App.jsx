@@ -3,12 +3,13 @@ import {
   ArrowLeft, ArrowRight, Bell, BookOpen, Bookmark, Brain, BriefcaseBusiness,
   Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, Code2,
   GraduationCap, LayoutDashboard, Menu, MoreHorizontal, Play, Plus,
-  Search, Sparkles, Target, X,
+  Search, Sparkles, Target, X, Palette,
 } from 'lucide-react'
 import { courses, initialTasks, quizQuestion, tracks } from './data.js'
 import LearningCenter, { lessons as learningLessons } from './LearningCenter.jsx'
 import InterviewPrep from './InterviewPrep.jsx'
 import AuthModal from './AuthModal.jsx'
+import ThemeController from './ThemeController.jsx'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { auth, db } from './firebase.js'
@@ -240,7 +241,7 @@ export default function App() {
           <button className="icon-button mobile-menu" onClick={() => setMobileNav(true)} aria-label="Open navigation"><Menu size={21} /></button>
           <button className="topbar-back" onClick={goBack} aria-label="Go back to previous page"><ArrowLeft size={17} /><span>Back</span></button>
           <div className="breadcrumbs"><span>Workspace</span><ChevronRight size={14} /><strong>{activePage}</strong></div>
-          <div className="topbar-actions"><label className="search-box"><Search size={17} /><input aria-label="Search courses" placeholder="Search anything..." value={search} onChange={(event) => { if (event.target.value && !search && activePage !== 'My learning') rememberCurrentPage(); setSearch(event.target.value); if (event.target.value) setActivePage('My learning') }} /><kbd>⌘ K</kbd></label><button className="icon-button notification-button" aria-label="Notifications" onClick={() => setNotice('You’re all caught up. Keep up your great work!')}><Bell size={19} /><i /></button><button type="button" className="top-avatar" onClick={() => setShowAuth(true)} aria-label={user ? 'Open account' : 'Sign in'}>{user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'S'}</button></div>
+          <div className="topbar-actions"><ThemeController /><label className="search-box"><Search size={17} /><input aria-label="Search courses" placeholder="Search anything..." value={search} onChange={(event) => { if (event.target.value && !search && activePage !== 'My learning') rememberCurrentPage(); setSearch(event.target.value); if (event.target.value) setActivePage('My learning') }} /><kbd>⌘ K</kbd></label><button className="icon-button notification-button" aria-label="Notifications" onClick={() => setNotice('You’re all caught up. Keep up your great work!')}><Bell size={19} /><i /></button><button type="button" className="top-avatar" onClick={() => setShowAuth(true)} aria-label={user ? 'Open account' : 'Sign in'}>{user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'S'}</button></div>
         </header>
 
         <div className="page-content">
