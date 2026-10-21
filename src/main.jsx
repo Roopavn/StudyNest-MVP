@@ -1,6 +1,7 @@
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
+import ThemeController from './ThemeController.jsx'
 
 class AppErrorBoundary extends React.Component {
   constructor(props) {
@@ -31,6 +32,9 @@ import './styles.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AppErrorBoundary><App /></AppErrorBoundary>
+    <AppErrorBoundary>
+      <App />
+      <ThemeController />
+    </AppErrorBoundary>
   </StrictMode>,
 )
