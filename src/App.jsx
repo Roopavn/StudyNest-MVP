@@ -3,7 +3,7 @@ import {
   ArrowLeft, ArrowRight, Bell, BookOpen, Bookmark, Brain, BriefcaseBusiness,
   Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, Clock3, Code2,
   GraduationCap, LayoutDashboard, Menu, MoreHorizontal, Play, Plus,
-  Search, Sparkles, Target, X, Palette,
+  Search, Sparkles, Target, X,
 } from 'lucide-react'
 import { courses, initialTasks, quizQuestion, tracks } from './data.js'
 import LearningCenter, { lessons as learningLessons } from './LearningCenter.jsx'
