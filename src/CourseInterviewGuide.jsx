@@ -4,6 +4,7 @@ import './CourseInterviewGuide.css'
 
 const bankTopicByTrack = {
   Python: 'Python',
+  'Full Python Course': 'Python',
   'Operating Systems': 'Operating Systems',
   'Operating System': 'Operating Systems',
   OS: 'Operating Systems',
@@ -65,9 +66,12 @@ const bankTopicByTrack = {
   Kubernetes: 'Kubernetes',
   'Kubernetes Basics': 'Kubernetes',
   'Generative AI': 'Generative AI',
+  'Generative AI Foundations to Production': 'Generative AI',
   'Generative AI & LLMs': 'Generative AI',
   'Agentic AI': 'Agentic AI',
+  'Agentic AI: Beginner to Advanced': 'Agentic AI',
   'Data Engineering / Big Data': 'Data Engineering / Big Data',
+  'Data Engineering / Big Data (PySpark)': 'Data Engineering / Big Data',
   Databricks: 'Data Engineering / Big Data',
 }
 
