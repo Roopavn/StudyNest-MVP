@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { BookOpen, Check, ChevronDown, ChevronUp, Code2, Search, Sparkles } from 'lucide-react'
 import './InterviewPrep.css'
 import { pythonInterviewQuestions } from './pythonInterviewQuestions.js'
+import { courseInterviewQuestions } from './courseInterviewQuestions.js'
 
 const baseQuestions = [
   { id:1, topic:'Python', level:'Basic', title:'What is the difference between a list and a tuple?', prompt:'Explain mutability and show when you would use each.', answer:'A list is ordered and mutable, so you can add, remove, or replace items. A tuple is ordered but immutable after creation. Use lists for collections that change and tuples for fixed records or values that should not be reassigned.', syntax:`skills = ["Python", "SQL"]
@@ -391,11 +392,19 @@ const topics = [
   { name: 'Generative AI', subtitle: 'LLMs, RAG, evaluation and production safety', icon: 'network', color: 'genai' },
   { name: 'Agentic AI', subtitle: 'Agents, safe tools and reliable workflows', icon: 'network', color: 'agentic' },
   { name: 'Data Engineering / Big Data', subtitle: 'Spark, PySpark, lazy execution and performance', icon: 'database', color: 'spark' },
+  { name: 'Operating Systems', subtitle: 'Processes, threads, memory and synchronization', icon: 'code', color: 'linux' },
+  { name: 'DBMS', subtitle: 'Data modelling, normalization and transactions', icon: 'database', color: 'sql' },
+  { name: 'Computer Networks', subtitle: 'TCP/IP, DNS, HTTP and network architecture', icon: 'network', color: 'api' },
+  { name: 'Data Structures & Algorithms', subtitle: 'Problem solving, complexity and common patterns', icon: 'code', color: 'java' },
+  { name: 'React', subtitle: 'Components, hooks, rendering and performance', icon: 'code', color: 'javascript' },
+  { name: 'Object-Oriented Programming', subtitle: 'OOP principles, design and dependency injection', icon: 'code', color: 'java' },
+  { name: 'Software Testing', subtitle: 'Test design, defect management and API testing', icon: 'check-circle', color: 'devops' },
+  { name: 'System Design', subtitle: 'Scalability, caching, availability and trade-offs', icon: 'network', color: 'cloud' },
 ]
 const levels = ['All levels', 'Basic', 'Intermediate', 'Advanced']
 const levelOrder = { Basic: 0, Intermediate: 1, Advanced: 2 }
 
-const questions = [...baseQuestions, ...additionalQuestions.map((question, index) => ({ ...question, id: 25 + index })), ...pythonInterviewQuestions.map((question, index) => ({ ...question, id: 1000 + index }))]
+const questions = [...baseQuestions, ...additionalQuestions.map((question, index) => ({ ...question, id: 25 + index })), ...pythonInterviewQuestions.map((question, index) => ({ ...question, id: 1000 + index })), ...courseInterviewQuestions.map((question, index) => ({ ...question, id: 2000 + index }))]
 
 export default function InterviewPrep({ initialTopic = null } = {}) {
   const [topic, setTopic] = useState(initialTopic)
