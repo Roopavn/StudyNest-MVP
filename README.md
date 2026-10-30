@@ -30,6 +30,7 @@ AR-CodeLab is an all-in-one IT learning lab for structured courses, practical co
 
 ### Interview preparation
 - Dedicated, separate interview-preparation buttons for **all 16 learning tracks**, not just Python, SQL and REST APIs.
+- Every individual course learning path now includes a **course-wise Interview Guide** with tailored focus areas, a practical interview routine and a matching question bank when one is available. Python and Python backend courses link to the InterviewBit Python interview-question reference.
 - **63 interview questions** across Python (10), SQL (7), REST APIs (7), Java (3), JavaScript (3), C Programming (3), HTML & CSS (3), DevOps (3), Cloud Fundamentals (3), Linux & Shell (3), Docker & Containers (3), Git & GitHub (3), Kubernetes (3), Generative AI (3), Agentic AI (3), and Data Engineering / Big Data (3).
 - Each track includes Basic, Intermediate and Advanced questions. Expand a question to see an interview-ready explanation, example syntax, expected output or behavior, and a practical interview tip.
 - Search questions by keyword, filter by difficulty, follow the Basic → Intermediate → Advanced roadmap, and copy code examples for practice.
