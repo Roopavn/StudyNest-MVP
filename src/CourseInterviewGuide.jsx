@@ -86,6 +86,6 @@ export default function CourseInterviewGuide({ track }) {
       </article>
     </div>
     {bankTopic ? <div className="course-interview-bank"><div className="course-interview-bank-heading"><BookOpen size={17}/><div><h4>Question bank and model answers</h4><p>Use the course question bank below, filtered to the matching subject.</p></div></div><InterviewPrep initialTopic={bankTopic} /></div> : <div className="course-interview-coming"><ListChecks size={18}/><p><strong>Course-specific question bank</strong><br/>Use the preparation roadmap above while the dedicated question set for this subject is being expanded.</p></div>}
-    { /python|django|flask|fastapi/i.test(track) && <a className="course-interview-resource" href="https://www.interviewbit.com/python-interview-questions/" target="_blank" rel="noreferrer"><ExternalLink size={15}/> InterviewBit · Python interview questions <span>Reference resource</span></a>}
+    { /python|django|flask|fastapi/i.test(track) && <div className="course-interview-resources"><a className="course-interview-resource" href="https://www.interviewbit.com/python-interview-questions/" target="_blank" rel="noreferrer"><ExternalLink size={15}/> InterviewBit · Python interview questions <span>Reference resource</span></a><a className="course-interview-resource" href="https://www.geeksforgeeks.org/python/python-interview-questions/" target="_blank" rel="noreferrer"><ExternalLink size={15}/> GeeksforGeeks · Python interview questions <span>Additional reference</span></a></div>}
   </section>
 }
