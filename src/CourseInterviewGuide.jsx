@@ -4,6 +4,23 @@ import './CourseInterviewGuide.css'
 
 const bankTopicByTrack = {
   Python: 'Python',
+  'Operating Systems': 'Operating Systems',
+  'Operating System': 'Operating Systems',
+  OS: 'Operating Systems',
+  DBMS: 'DBMS',
+  'Database Management Systems': 'DBMS',
+  'Computer Networks': 'Computer Networks',
+  Networking: 'Computer Networks',
+  'Data Structures & Algorithms': 'Data Structures & Algorithms',
+  DSA: 'Data Structures & Algorithms',
+  React: 'React',
+  'React.js': 'React',
+  'ReactJS': 'React',
+  'Object-Oriented Programming': 'Object-Oriented Programming',
+  OOP: 'Object-Oriented Programming',
+  'Software Testing': 'Software Testing',
+  'Manual Testing': 'Software Testing',
+  'System Design': 'System Design',
   SQL: 'SQL',
   'Database & SQL Essentials': 'SQL',
   'DBMS & Database Design': 'SQL',
@@ -23,7 +40,6 @@ const bankTopicByTrack = {
   JavaScript: 'JavaScript',
   'JavaScript Essentials': 'JavaScript',
   'JavaScript Ecosystem': 'JavaScript',
-  React: 'JavaScript',
   TypeScript: 'JavaScript',
   'Node.js & Express': 'JavaScript',
   'C Programming': 'C Programming',
@@ -45,6 +61,105 @@ const bankTopicByTrack = {
   'Agentic AI': 'Agentic AI',
   'Data Engineering / Big Data': 'Data Engineering / Big Data',
   Databricks: 'Data Engineering / Big Data',
+}
+
+const interviewResourcesByTopic = {
+  Python: [
+    ['GeeksforGeeks', 'Python interview questions', 'https://www.geeksforgeeks.org/python/python-interview-questions/'],
+    ['InterviewBit', 'Python interview questions', 'https://www.interviewbit.com/python-interview-questions/'],
+  ],
+  SQL: [
+    ['GeeksforGeeks', 'SQL interview questions', 'https://www.geeksforgeeks.org/sql/sql-interview-questions/'],
+    ['InterviewBit', 'SQL interview questions', 'https://www.interviewbit.com/sql-interview-questions/'],
+  ],
+  'REST APIs': [
+    ['GeeksforGeeks', 'Software developer interview preparation', 'https://www.geeksforgeeks.org/interview-experiences/software-developer-interview-questions/'],
+    ['InterviewBit', 'System design interview questions', 'https://www.interviewbit.com/system-design-interview-questions/'],
+  ],
+  Java: [
+    ['GeeksforGeeks', 'Java interview questions', 'https://www.geeksforgeeks.org/java/java-interview-questions/'],
+    ['InterviewBit', 'Java interview questions', 'https://www.interviewbit.com/java-interview-questions/'],
+  ],
+  JavaScript: [
+    ['GeeksforGeeks', 'JavaScript interview questions', 'https://www.geeksforgeeks.org/javascript/javascript-interview-questions/'],
+    ['InterviewBit', 'JavaScript interview questions', 'https://www.interviewbit.com/javascript-interview-questions/'],
+  ],
+  'C Programming': [
+    ['GeeksforGeeks', 'C interview questions', 'https://www.geeksforgeeks.org/c/c-interview-questions/'],
+    ['InterviewBit', 'C interview questions', 'https://www.interviewbit.com/c-interview-questions/'],
+  ],
+  'HTML & CSS': [
+    ['GeeksforGeeks', 'Web technology interview questions', 'https://www.geeksforgeeks.org/interview-experiences/web-technologies-questions/'],
+    ['InterviewBit', 'HTML and CSS interview questions', 'https://www.interviewbit.com/html-css-interview-questions/'],
+  ],
+  DevOps: [
+    ['GeeksforGeeks', 'DevOps interview questions', 'https://www.geeksforgeeks.org/devops/devops-interview-questions/'],
+    ['InterviewBit', 'DevOps interview questions', 'https://www.interviewbit.com/devops-interview-questions/'],
+  ],
+  'Cloud Fundamentals': [
+    ['GeeksforGeeks', 'Cloud computing interview questions', 'https://www.geeksforgeeks.org/cloud-computing/cloud-computing-interview-questions/'],
+    ['InterviewBit', 'Cloud computing interview questions', 'https://www.interviewbit.com/cloud-computing-interview-questions/'],
+  ],
+  'Linux & Shell': [
+    ['GeeksforGeeks', 'Linux interview questions', 'https://www.geeksforgeeks.org/linux-unix/linux-interview-questions/'],
+    ['InterviewBit', 'Linux interview questions', 'https://www.interviewbit.com/linux-interview-questions/'],
+  ],
+  'Docker & Containers': [
+    ['GeeksforGeeks', 'Docker interview questions', 'https://www.geeksforgeeks.org/devops/docker-interview-questions/'],
+    ['InterviewBit', 'Docker interview questions', 'https://www.interviewbit.com/docker-interview-questions/'],
+  ],
+  'Git & GitHub': [
+    ['GeeksforGeeks', 'Git interview questions', 'https://www.geeksforgeeks.org/git/git-interview-questions/'],
+    ['InterviewBit', 'Git interview questions', 'https://www.interviewbit.com/git-interview-questions/'],
+  ],
+  Kubernetes: [
+    ['GeeksforGeeks', 'Kubernetes interview questions', 'https://www.geeksforgeeks.org/devops/kubernetes-interview-questions/'],
+    ['InterviewBit', 'Kubernetes interview questions', 'https://www.interviewbit.com/kubernetes-interview-questions/'],
+  ],
+  'Generative AI': [
+    ['GeeksforGeeks', 'Generative AI interview questions', 'https://www.geeksforgeeks.org/artificial-intelligence/generative-ai-interview-questions/'],
+    ['InterviewBit', 'Machine learning interview questions', 'https://www.interviewbit.com/machine-learning-interview-questions/'],
+  ],
+  'Agentic AI': [
+    ['GeeksforGeeks', 'Software developer interview preparation', 'https://www.geeksforgeeks.org/interview-experiences/software-developer-interview-questions/'],
+    ['InterviewBit', 'System design interview questions', 'https://www.interviewbit.com/system-design-interview-questions/'],
+  ],
+  'Data Engineering / Big Data': [
+    ['GeeksforGeeks', 'Big data interview questions', 'https://www.geeksforgeeks.org/big-data/big-data-interview-questions/'],
+    ['InterviewBit', 'Data engineering interview questions', 'https://www.interviewbit.com/data-engineering-interview-questions/'],
+  ],
+  'Operating Systems': [
+    ['GeeksforGeeks', 'Operating system interview questions', 'https://www.geeksforgeeks.org/operating-systems/operating-systems-interview-questions/'],
+    ['InterviewBit', 'Operating system interview questions', 'https://www.interviewbit.com/operating-system-interview-questions/'],
+  ],
+  DBMS: [
+    ['GeeksforGeeks', 'DBMS interview questions', 'https://www.geeksforgeeks.org/dbms/commonly-asked-dbms-interview-questions/'],
+    ['InterviewBit', 'DBMS interview questions', 'https://www.interviewbit.com/dbms-interview-questions/'],
+  ],
+  'Computer Networks': [
+    ['GeeksforGeeks', 'Computer networks interview questions', 'https://www.geeksforgeeks.org/computer-networks/computer-network-interview-questions/'],
+    ['InterviewBit', 'Computer networks interview questions', 'https://www.interviewbit.com/computer-network-interview-questions/'],
+  ],
+  'Data Structures & Algorithms': [
+    ['GeeksforGeeks', 'DSA practice and interview preparation', 'https://www.geeksforgeeks.org/dsa/'],
+    ['InterviewBit', 'Programming and data structures practice', 'https://www.interviewbit.com/courses/programming/'],
+  ],
+  React: [
+    ['GeeksforGeeks', 'React interview questions', 'https://www.geeksforgeeks.org/reactjs/reactjs-interview-questions/'],
+    ['InterviewBit', 'React interview questions', 'https://www.interviewbit.com/react-interview-questions/'],
+  ],
+  'Object-Oriented Programming': [
+    ['GeeksforGeeks', 'OOP interview questions', 'https://www.geeksforgeeks.org/object-oriented-programming-oops/'],
+    ['InterviewBit', 'OOP interview questions', 'https://www.interviewbit.com/oops-interview-questions/'],
+  ],
+  'Software Testing': [
+    ['GeeksforGeeks', 'Software testing interview questions', 'https://www.geeksforgeeks.org/software-testing/software-testing-interview-questions/'],
+    ['InterviewBit', 'Software testing interview questions', 'https://www.interviewbit.com/software-testing-interview-questions/'],
+  ],
+  'System Design': [
+    ['GeeksforGeeks', 'System design interview questions', 'https://www.geeksforgeeks.org/system-design/microsoft-system-design-interview-questions/'],
+    ['InterviewBit', 'System design interview questions', 'https://www.interviewbit.com/system-design-interview-questions/'],
+  ],
 }
 
 const focusByPattern = [
@@ -86,6 +201,6 @@ export default function CourseInterviewGuide({ track }) {
       </article>
     </div>
     {bankTopic ? <div className="course-interview-bank"><div className="course-interview-bank-heading"><BookOpen size={17}/><div><h4>Question bank and model answers</h4><p>Use the course question bank below, filtered to the matching subject.</p></div></div><InterviewPrep initialTopic={bankTopic} /></div> : <div className="course-interview-coming"><ListChecks size={18}/><p><strong>Course-specific question bank</strong><br/>Use the preparation roadmap above while the dedicated question set for this subject is being expanded.</p></div>}
-    { /python|django|flask|fastapi/i.test(track) && <div className="course-interview-resources"><a className="course-interview-resource" href="https://www.interviewbit.com/python-interview-questions/" target="_blank" rel="noreferrer"><ExternalLink size={15}/> InterviewBit · Python interview questions <span>Reference resource</span></a><a className="course-interview-resource" href="https://www.geeksforgeeks.org/python/python-interview-questions/" target="_blank" rel="noreferrer"><ExternalLink size={15}/> GeeksforGeeks · Python interview questions <span>Additional reference</span></a></div>}
+    {bankTopic && interviewResourcesByTopic[bankTopic] && <div className="course-interview-resources"><h4>Explore trusted interview references</h4>{interviewResourcesByTopic[bankTopic].map(([source, label, url]) => <a className="course-interview-resource" href={url} target="_blank" rel="noreferrer" key={source}><ExternalLink size={15}/> {source} · {label} <span>Open reference</span></a>)}</div>}
   </section>
 }
