@@ -106,6 +106,18 @@ const bankTopicByTrack = {
 }
 
 const interviewResourcesByTopic = {
+  'C++': [
+    ['GeeksforGeeks', 'C++ interview questions', 'https://www.geeksforgeeks.org/cpp/cpp-interview-questions/'],
+  ],
+  'C# and .NET': [
+    ['GeeksforGeeks', 'C# interview questions', 'https://www.geeksforgeeks.org/c-sharp/c-sharp-interview-questions/'],
+  ],
+  PHP: [
+    ['GeeksforGeeks', 'PHP interview questions', 'https://www.geeksforgeeks.org/php/php-interview-questions-and-answers/'],
+  ],
+  'R Programming': [
+    ['GeeksforGeeks', 'R interview questions', 'https://www.geeksforgeeks.org/r-language/r-interview-questions/'],
+  ],
   Python: [
     ['GeeksforGeeks', 'Python interview questions', 'https://www.geeksforgeeks.org/python/python-interview-questions/'],
     ['InterviewBit', 'Python interview questions', 'https://www.interviewbit.com/python-interview-questions/'],
