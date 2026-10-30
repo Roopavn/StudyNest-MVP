@@ -4,6 +4,7 @@ import './CourseInterviewGuide.css'
 
 const bankTopicByTrack = {
   Python: 'Python',
+  'Full Python Course': 'Python',
   SQL: 'SQL',
   'Database & SQL Essentials': 'SQL',
   'DBMS & Database Design': 'SQL',
