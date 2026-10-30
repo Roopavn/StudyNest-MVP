@@ -173,3 +173,7 @@ No license has been added yet. Add a license file before accepting external cont
 
 ### Data Engineering / Big Data
 - Added a dedicated, visible course card for **Data Engineering / Big Data (PySpark)** in the dashboard and course catalog. Opening the card takes learners directly to the eight PySpark & Apache Spark lessons.
+
+### Python interview preparation
+- The Python interview-preparation bank contains **120 questions total** (10 existing questions plus 110 additional original questions), organized by Basic, Intermediate and Advanced difficulty.
+- Each question includes an interview-ready answer and a practical follow-up prompt. The Python course links to the [InterviewBit Python interview questions](https://www.interviewbit.com/python-interview-questions/) page as an additional study reference; course explanations are independently written.
