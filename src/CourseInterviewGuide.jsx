@@ -30,11 +30,23 @@ const bankTopicByTrack = {
   'NoSQL & MongoDB': 'SQL',
   'REST APIs': 'REST APIs',
   'REST API Development': 'REST APIs',
-  'Django & FastAPI': 'Python',
-  'Django Web Development': 'Python',
-  'Flask Web Development': 'Python',
-  'FastAPI Development': 'REST APIs',
-  'Django REST Framework': 'REST APIs',
+  'Django & FastAPI': 'Django',
+  'Django Web Development': 'Django',
+  Django: 'Django',
+  'Flask Web Development': 'Flask',
+  Flask: 'Flask',
+  'FastAPI Development': 'FastAPI',
+  FastAPI: 'FastAPI',
+  'Django REST Framework': 'Django REST Framework',
+  DRF: 'Django REST Framework',
+  'Machine Learning': 'Machine Learning',
+  'Data Science': 'Data Science',
+  'Data Analyst': 'Data Analyst',
+  'Manual Testing': 'Manual Testing',
+  'Software Testing': 'Software Testing',
+  'JavaScript Frameworks & Libraries': 'JavaScript Frameworks & Libraries',
+  'JavaScript Ecosystem': 'JavaScript Frameworks & Libraries',
+  'Node.js & Express': 'JavaScript Frameworks & Libraries',
   Java: 'Java',
   'Java Foundations': 'Java',
   JavaScript: 'JavaScript',
@@ -68,6 +80,32 @@ const interviewResourcesByTopic = {
     ['GeeksforGeeks', 'Python interview questions', 'https://www.geeksforgeeks.org/python/python-interview-questions/'],
     ['InterviewBit', 'Python interview questions', 'https://www.interviewbit.com/python-interview-questions/'],
   ],
+  Django: [
+    ['GeeksforGeeks', 'Django interview questions', 'https://www.geeksforgeeks.org/python/django-interview-questions/'],
+  ],
+  Flask: [
+    ['GeeksforGeeks', 'Flask interview questions', 'https://www.geeksforgeeks.org/python/flask-interview-questions-and-answers/'],
+  ],
+  FastAPI: [
+    ['GeeksforGeeks', 'FastAPI interview questions', 'https://www.geeksforgeeks.org/python/fastapi-interview-questions-and-answers/'],
+  ],
+  'Machine Learning': [
+    ['GeeksforGeeks', 'Machine Learning interview questions', 'https://www.geeksforgeeks.org/machine-learning/machine-learning-interview-questions/'],
+  ],
+  'Data Science': [
+    ['GeeksforGeeks', 'Data Science interview questions', 'https://www.geeksforgeeks.org/data-science/data-science-interview-questions-and-answers/'],
+  ],
+  'Data Analyst': [
+    ['GeeksforGeeks', 'Data Analyst interview questions', 'https://www.geeksforgeeks.org/data-analysis/data-analyst-interview-questions-and-answers/'],
+  ],
+  'Manual Testing': [
+    ['GeeksforGeeks', 'Manual Testing interview questions', 'https://www.geeksforgeeks.org/category/software-testing/manual-testing/'],
+    ['InterviewBit', 'Manual Testing interview questions', 'https://www.interviewbit.com/manual-testing-interview-questions/'],
+  ],
+  'JavaScript Frameworks & Libraries': [
+    ['GeeksforGeeks', 'JavaScript interview questions', 'https://www.geeksforgeeks.org/javascript/javascript-interview-questions/'],
+    ['InterviewBit', 'JavaScript interview questions', 'https://www.interviewbit.com/javascript-interview-questions/'],
+  ],
   SQL: [
     ['GeeksforGeeks', 'SQL interview questions', 'https://www.geeksforgeeks.org/sql/sql-interview-questions/'],
     ['InterviewBit', 'SQL interview questions', 'https://www.interviewbit.com/sql-interview-questions/'],
@@ -75,10 +113,6 @@ const interviewResourcesByTopic = {
   'REST APIs': [
     ['GeeksforGeeks', 'Software developer interview preparation', 'https://www.geeksforgeeks.org/interview-experiences/software-developer-interview-questions/'],
     ['InterviewBit', 'System design interview questions', 'https://www.interviewbit.com/system-design-interview-questions/'],
-  ],
-  Java: [
-    ['GeeksforGeeks', 'Java interview questions', 'https://www.geeksforgeeks.org/java/java-interview-questions/'],
-    ['InterviewBit', 'Java interview questions', 'https://www.interviewbit.com/java-interview-questions/'],
   ],
   Java: [
     ['GeeksforGeeks', 'Java interview questions', 'https://www.geeksforgeeks.org/java/java-interview-questions/'],
