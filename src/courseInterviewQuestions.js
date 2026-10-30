@@ -244,4 +244,152 @@ try {
   }
 }
 const square = memoizeSquare()`, output: 'Repeated calls with the same number reuse the stored result.', tip: 'Memoization is not automatically beneficial; include cache size limits or invalidation when inputs can grow without bound.' },
+
+  { topic: 'Java', level: 'Basic', title: 'What are JDK, JRE and JVM?', prompt: 'Explain the roles of the development kit, runtime environment and virtual machine.', answer: 'JVM executes Java bytecode and provides runtime services such as memory management and garbage collection. JRE traditionally refers to the JVM plus libraries and files needed to run Java applications. JDK includes development tools such as the compiler and debugger along with the runtime components. Modern Java distributions may package these components differently.', syntax: `Java source (.java)
+    → javac compiler
+    → bytecode (.class)
+    → JVM executes bytecode`, output: 'The JDK is used to develop and run Java applications; the JVM is the engine that executes bytecode.', tip: 'Avoid saying the JVM itself is platform independent in the same way as bytecode. JVM implementations are platform-specific.' },
+  { topic: 'Java', level: 'Basic', title: 'Why is Java platform independent?', prompt: 'Explain bytecode and the role of a platform-specific JVM.', answer: 'The Java compiler converts source code into platform-neutral bytecode. A compatible JVM on each operating system interprets or compiles that bytecode into native instructions. This enables the same compiled application to run across supported platforms, subject to compatible runtime versions and dependencies.', syntax: `javac Hello.java
+java Hello`, output: 'The same Hello.class bytecode can run on different systems that provide a compatible Java runtime.', tip: 'The slogan is "write once, run anywhere", but native libraries and environment-specific dependencies can limit portability.' },
+  { topic: 'Java', level: 'Basic', title: 'What are the primitive data types in Java?', prompt: 'List the eight primitive types and distinguish them from reference types.', answer: 'Java has eight primitive types: byte, short, int, long, float, double, char and boolean. Variables of reference types hold references to objects, such as String, arrays and user-defined classes. Primitive types have defined value ranges and are not objects.', syntax: `int count = 12;
+long population = 8_000_000_000L;
+double price = 19.95;
+char grade = 'A';
+boolean active = true;`, output: 'The declarations store primitive values directly in variables (subject to JVM implementation details).', tip: 'Remember the L suffix for long literals outside the int range and F for float literals.' },
+  { topic: 'Java', level: 'Basic', title: 'What is the difference between == and equals()?', prompt: 'Explain primitive comparison, reference identity and logical equality.', answer: 'For primitives, == compares values. For object references, == checks whether both references point to the same object. equals() is a method whose implementation can define logical equality; Object.equals() defaults to identity unless overridden. Classes that override equals() should also implement a consistent hashCode().', syntax: `String first = new String("Java");
+String second = new String("Java");
+System.out.println(first == second);      // false
+System.out.println(first.equals(second)); // true`, output: 'false, then true', tip: 'String overrides equals() for content comparison; do not assume every class does.' },
+  { topic: 'Java', level: 'Basic', title: 'Why is String immutable in Java?', prompt: 'Discuss security, string pooling, thread safety and hash codes.', answer: 'A String cannot be changed after it is created; operations that appear to modify it return another String. Immutability supports safe sharing, stable hash codes for map keys, string pooling and safer handling of values such as class names and file paths. It also makes String naturally thread-safe.', syntax: `String language = "Java";
+language.concat(" SE");
+System.out.println(language); // Java`, output: 'Java — concat returns a new String and the result is ignored here.', tip: 'Use StringBuilder for repeated concatenation in a loop when you need a mutable buffer.' },
+  { topic: 'Java', level: 'Basic', title: 'What is the difference between String, StringBuilder and StringBuffer?', prompt: 'Compare mutability, synchronization and common use cases.', answer: 'String is immutable. StringBuilder is mutable and generally preferred for efficient string construction in a single thread because it does not synchronize its methods. StringBuffer is mutable and synchronizes its methods, which can help with shared access but adds overhead; synchronization does not automatically make a multi-step operation logically safe.', syntax: `StringBuilder builder = new StringBuilder("Core");
+builder.append(" Java");
+System.out.println(builder); // Core Java`, output: 'Core Java', tip: 'Prefer StringBuilder for local string assembly; use StringBuffer only when its synchronization behavior is specifically required.' },
+  { topic: 'Java', level: 'Basic', title: 'What are the four pillars of object-oriented programming?', prompt: 'Explain encapsulation, abstraction, inheritance and polymorphism.', answer: 'Encapsulation bundles state and behavior and controls access to state. Abstraction exposes essential operations while hiding implementation details. Inheritance creates a subtype from an existing type. Polymorphism allows code using a common parent type or interface to work with different concrete implementations.', syntax: `interface Payment {
+  void pay(int amount);
+}
+class CardPayment implements Payment {
+  public void pay(int amount) {
+    System.out.println("Paid by card: " + amount);
+  }
+}`, output: 'A caller can invoke pay() through the Payment interface without depending on the concrete payment class.', tip: 'Give one practical example for each pillar rather than only reciting definitions.' },
+  { topic: 'Java', level: 'Basic', title: 'What is the difference between an interface and an abstract class?', prompt: 'Compare contracts, state, constructors and multiple inheritance.', answer: 'An interface defines a contract and can include abstract, default, static and private methods depending on Java version. A class can implement multiple interfaces. An abstract class can hold instance state, constructors and concrete or abstract methods, but a class can extend only one class. Choose based on shared state/implementation versus a capability contract.', syntax: `interface Printable { void print(); }
+abstract class Document {
+  protected String title;
+  Document(String title) { this.title = title; }
+}`, output: 'A concrete class may extend Document and implement Printable.', tip: 'Modern interfaces can have default and static methods; avoid the outdated claim that interfaces contain only abstract methods.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What is the difference between method overloading and overriding?', prompt: 'Explain compile-time selection and runtime dispatch.', answer: 'Overloading defines multiple methods with the same name but different parameter lists in the same class or hierarchy; the compiler selects the applicable overload. Overriding provides a subclass implementation of an inherited instance method with a compatible signature; runtime dispatch selects the implementation based on the actual object. Static methods are hidden, not overridden.', syntax: `class Printer {
+  void print(String value) {}
+  void print(int value) {} // overload
+}
+class SmartPrinter extends Printer {
+  @Override void print(String value) {} // override
+}`, output: 'The compiler resolves overloads using declared argument types; overridden instance methods dispatch at runtime.', tip: 'Return type alone cannot distinguish overloaded methods. Mention covariant return types when discussing overriding.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What is the difference between final, finally and finalize()?', prompt: 'Distinguish a keyword, an exception-handling block and a legacy method.', answer: 'final is a keyword used to prevent reassignment, overriding or inheritance depending on where it is applied. finally is an exception-handling block that normally runs after try/catch completion. finalize() was a garbage-collection-related hook that is deprecated for removal and should not be used for resource cleanup; use try-with-resources or explicit close methods.', syntax: `final int maxRetries = 3;
+try {
+  runTask();
+} finally {
+  releaseLocalLock();
+}`, output: 'The finally block normally executes whether the try block completes or throws, subject to abrupt JVM termination and similar exceptional cases.', tip: 'Do not claim finally always executes: Runtime.halt(), process termination or a JVM crash can prevent it.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What is the difference between checked and unchecked exceptions?', prompt: 'Explain compile-time handling requirements and examples.', answer: 'Checked exceptions are checked by the compiler and must be caught or declared, such as IOException. Unchecked exceptions are RuntimeException subclasses (and Errors) and do not have that compile-time requirement, such as NullPointerException or IllegalArgumentException. Use exception types to communicate recoverability and programming errors clearly.', syntax: `try {
+  Files.readString(Path.of("notes.txt"));
+} catch (IOException error) {
+  System.err.println(error.getMessage());
+}`, output: 'The checked IOException must be caught or declared by the calling method.', tip: 'Errors usually represent serious JVM or environment problems and should not be treated as ordinary application exceptions.' },
+  { topic: 'Java', level: 'Intermediate', title: 'How does the Java Collections Framework work?', prompt: 'Compare List, Set, Queue and Map at the interface level.', answer: 'The Collections Framework provides interfaces, implementations and algorithms for working with groups of objects. List represents an ordered sequence and permits duplicates; Set models uniqueness; Queue represents elements awaiting processing; Map stores key-value associations and is not a subtype of Collection. Select an implementation based on ordering, lookup, concurrency and performance needs.', syntax: `List<String> names = new ArrayList<>();
+Set<String> unique = new HashSet<>();
+Queue<String> jobs = new ArrayDeque<>();
+Map<Integer, String> users = new HashMap<>();`, output: 'Each variable is declared using an interface and instantiated with a concrete implementation.', tip: 'Program to interfaces so implementations can be changed without changing callers.' },
+  { topic: 'Java', level: 'Intermediate', title: 'Compare ArrayList and LinkedList.', prompt: 'Discuss internal structure, access, insertion and memory overhead.', answer: 'ArrayList uses a resizable array and offers constant-time indexed access; inserting or removing in the middle shifts elements. LinkedList uses a doubly linked list; indexed access requires traversal, while insertion/removal at a known node is constant time. LinkedList uses extra memory for node links. In many real workloads ArrayList is the better default due to cache locality.', syntax: `List<String> values = new ArrayList<>();
+values.add("A");
+values.add("B");
+System.out.println(values.get(1));`, output: 'B', tip: 'Do not say LinkedList insertion is always O(1): locating the insertion point may take O(n).' },
+  { topic: 'Java', level: 'Intermediate', title: 'How does HashMap work internally?', prompt: 'Explain hashing, buckets, collisions, equals and resizing.', answer: 'HashMap computes a hash from the key and maps it to a bucket index. Colliding keys share a bucket; equality checks distinguish keys within that bucket. When size exceeds the capacity multiplied by the load factor, the table resizes and entries are redistributed. Modern Java implementations can treeify heavily collided buckets under specified conditions.', syntax: `Map<String, Integer> scores = new HashMap<>();
+scores.put("Asha", 90);
+scores.put("Ravi", 85);
+System.out.println(scores.get("Asha")); // 90`, output: '90', tip: 'Correct equals() and hashCode() implementations are essential for reliable key lookup.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What is the contract between equals() and hashCode()?', prompt: 'Explain the rules required by HashMap and HashSet.', answer: 'If two objects are equal according to equals(), they must return the same hashCode(). Unequal objects may share a hash code. hashCode should remain consistent while equality-relevant state is unchanged. Overriding one method without the other can make hash-based collections behave incorrectly.', syntax: `@Override
+public boolean equals(Object other) {
+  if (this == other) return true;
+  if (!(other instanceof User user)) return false;
+  return id == user.id;
+}
+@Override
+public int hashCode() {
+  return Integer.hashCode(id);
+}`, output: 'User objects with the same equality-defining id compare equal and produce the same hash code.', tip: 'Avoid mutating fields used in equals/hashCode while an object is stored as a HashMap key.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What is the difference between HashMap, Hashtable and ConcurrentHashMap?', prompt: 'Compare synchronization, null handling and concurrency.', answer: 'HashMap is not synchronized and allows one null key and null values. Hashtable is a legacy synchronized Map and disallows null keys and values. ConcurrentHashMap is designed for concurrent access with finer-grained coordination and does not allow null keys or values. Prefer ConcurrentHashMap for common concurrent map use cases.', syntax: `Map<String, Integer> counts = new ConcurrentHashMap<>();
+counts.merge("java", 1, Integer::sum);`, output: 'The merge operation atomically inserts or updates the mapping for the key.', tip: 'A synchronized wrapper and ConcurrentHashMap have different iteration and concurrency characteristics; choose based on the access pattern.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What is the difference between Comparable and Comparator?', prompt: 'Explain natural ordering versus external custom ordering.', answer: 'Comparable defines a class’s natural ordering through compareTo(). Comparator defines an external comparison strategy through compare(), allowing multiple sort orders without modifying the class. Both should provide ordering consistent with the intended equality semantics, especially when used in sorted sets or maps.', syntax: `List<String> names = new ArrayList<>(List.of("Zoe", "Asha"));
+names.sort(Comparator.comparingInt(String::length)
+                     .thenComparing(Comparator.naturalOrder()));`, output: 'Names are sorted by length and then alphabetically.', tip: 'Use Comparator.comparing(), reversed() and thenComparing() to compose readable sort rules.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What are generics and why are they useful?', prompt: 'Explain compile-time type safety, reusable code and type erasure.', answer: 'Generics allow classes, interfaces and methods to work with parameterized types while providing compile-time type checking and reducing casts. Java implements generics primarily through type erasure, so most generic type parameters are not available as distinct runtime types. Primitive types use wrapper classes with generics.', syntax: `List<String> languages = new ArrayList<>();
+languages.add("Java");
+// languages.add(10); // compile-time error
+String first = languages.get(0);`, output: 'The list accepts String values and returns String without an explicit cast.', tip: 'Know that List<Integer> is not a subtype of List<Number>; generic types are invariant.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What are lambda expressions and functional interfaces?', prompt: 'Explain target typing and a single abstract method contract.', answer: 'A lambda expression provides an implementation for a functional interface, which has one abstract method (default and static methods do not count toward that single abstract method). The compiler infers the target functional-interface type from context. Lambdas are commonly used with streams, comparators and callbacks.', syntax: `@FunctionalInterface
+interface Calculator {
+  int apply(int a, int b);
+}
+Calculator add = (a, b) -> a + b;
+System.out.println(add.apply(2, 3));`, output: '5', tip: 'Common functional interfaces include Predicate, Function, Consumer and Supplier.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What is the Stream API?', prompt: 'Describe source, intermediate operations, terminal operations and laziness.', answer: 'A stream pipeline processes data from a source through intermediate operations such as filter, map and sorted, then a terminal operation such as collect, reduce or count. Intermediate operations are generally lazy. A stream is not a data structure and should normally be consumed only once.', syntax: `List<Integer> values = List.of(2, 5, 8, 9);
+List<Integer> evenSquares = values.stream()
+    .filter(n -> n % 2 == 0)
+    .map(n -> n * n)
+    .toList();`, output: '[4, 64]', tip: 'Avoid side effects in stream operations and use parallel streams only after measuring and understanding the workload.' },
+  { topic: 'Java', level: 'Intermediate', title: 'What is the difference between map() and flatMap() in streams?', prompt: 'Explain one-to-one transformation versus flattening nested results.', answer: 'map transforms each input element into one output element, so mapping a value to a list produces a stream of lists. flatMap transforms each input into a stream and flattens those streams into one stream, which is useful for nested collections or optional values.', syntax: `List<List<String>> groups =
+    List.of(List.of("A", "B"), List.of("C"));
+List<String> all = groups.stream()
+    .flatMap(List::stream)
+    .toList();`, output: '[A, B, C]', tip: 'Use map when the transformation returns one value per input; use flatMap when the result itself is a container to flatten.' },
+  { topic: 'Java', level: 'Advanced', title: 'How does multithreading work in Java?', prompt: 'Explain Thread, Runnable, shared state and concurrency risks.', answer: 'Java supports concurrent execution using threads. Tasks can be represented with Runnable or Callable and executed directly or through executor services. Threads share process memory, so shared mutable state requires safe coordination to avoid race conditions, visibility bugs and deadlocks.', syntax: `Runnable task = () -> System.out.println(
+    Thread.currentThread().getName());
+Thread worker = new Thread(task);
+worker.start();`, output: 'The task runs on a new thread; the exact thread name is runtime-dependent.', tip: 'Call start() to begin a new thread. Calling run() directly is an ordinary method call on the current thread.' },
+  { topic: 'Java', level: 'Advanced', title: 'What does synchronized do?', prompt: 'Explain intrinsic locks, mutual exclusion and memory visibility.', answer: 'The synchronized keyword acquires an object monitor before entering a synchronized block or method and releases it when the block exits. It provides mutual exclusion for code using the same monitor and establishes memory-visibility guarantees between unlock and subsequent lock operations on that monitor.', syntax: `class Counter {
+  private int value;
+  public synchronized void increment() {
+    value++;
+  }
+  public synchronized int get() {
+    return value;
+  }
+}`, output: 'Calls using the same Counter instance serialize access to the synchronized methods.', tip: 'Lock identity matters: synchronizing on different objects does not coordinate access to the same shared data.' },
+  { topic: 'Java', level: 'Advanced', title: 'What is the volatile keyword?', prompt: 'Explain visibility and ordering, and why volatile does not make increments atomic.', answer: 'volatile ensures reads and writes of a field have specified visibility and ordering effects across threads. A write to a volatile field happens-before a subsequent read of that field. It does not make compound operations such as count++ atomic; use synchronization or atomic classes for read-modify-write operations.', syntax: `private volatile boolean running = true;
+// Thread A:
+while (running) {
+  // work
+}
+// Thread B:
+running = false;`, output: 'The worker thread can observe the updated running flag.', tip: 'Use AtomicInteger for atomic counters or synchronized/locks for compound invariants.' },
+  { topic: 'Java', level: 'Advanced', title: 'What is a deadlock and how can you prevent it?', prompt: 'Describe circular waiting and practical prevention techniques.', answer: 'A deadlock occurs when threads wait indefinitely for locks held by one another. The classic necessary conditions are mutual exclusion, hold and wait, no preemption and circular wait. Prevention includes consistent lock ordering, minimizing nested locks, using timed tryLock where suitable and avoiding calls to unknown code while holding locks.', syntax: `Thread 1: holds Lock A → waits for Lock B
+Thread 2: holds Lock B → waits for Lock A`, output: 'Neither thread can progress until the lock cycle is broken.', tip: 'Explain how you would diagnose a deadlock using a thread dump and identify the blocked monitor ownership.' },
+  { topic: 'Java', level: 'Advanced', title: 'Why use ExecutorService and thread pools?', prompt: 'Explain task submission, reuse, lifecycle and bounded resource management.', answer: 'ExecutorService separates task submission from thread management. A thread pool reuses worker threads, controls concurrency and avoids creating a new thread for every task. Applications should choose queue and pool sizing carefully and shut down executors gracefully when their lifecycle ends.', syntax: `ExecutorService pool = Executors.newFixedThreadPool(4);
+try {
+  Future<Integer> result = pool.submit(() -> 2 + 3);
+  System.out.println(result.get());
+} finally {
+  pool.shutdown();
+}`, output: '5', tip: 'For production services, understand queue growth, rejection policies, graceful shutdown and why an unbounded queue can hide overload.' },
+  { topic: 'Java', level: 'Advanced', title: 'What are the main JVM memory areas?', prompt: 'Describe heap, Java stacks, method area/metaspace and program counter.', answer: 'Each thread has a private Java stack containing frames for method calls and local variables. The heap is shared and stores objects and arrays. The method area is a JVM specification concept for class metadata; HotSpot uses native-memory Metaspace for class metadata. Each thread also has a program counter register, and native methods use native stacks.', syntax: `Thread stack: method frames / local variables
+Heap: objects and arrays
+Metaspace (HotSpot): class metadata`, output: 'A StackOverflowError commonly relates to excessive call depth; an OutOfMemoryError can result from exhausted heap or other memory areas.', tip: 'Do not say all Java memory lives on the heap. Distinguish per-thread memory from shared runtime memory.' },
+  { topic: 'Java', level: 'Advanced', title: 'How does garbage collection work in Java?', prompt: 'Explain reachability, roots and why System.gc() is not a guarantee.', answer: 'Garbage collectors reclaim heap objects that are no longer reachable from GC roots such as active thread stacks, static references and JNI references. Collectors use different algorithms and may organize the heap into generations or regions. System.gc() is only a request and does not guarantee immediate collection.', syntax: `Object data = new Object();
+data = null; // the object may now be eligible for collection`, output: 'The object becomes eligible for collection if no other reachable reference points to it; collection timing is nondeterministic.', tip: 'Eligible for collection does not mean collected immediately. Resource cleanup should use try-with-resources, not finalization.' },
+  { topic: 'Java', level: 'Advanced', title: 'What is class loading and the parent delegation model?', prompt: 'Explain loading, linking, initialization and class loader hierarchy.', answer: 'Class loading brings class definitions into the JVM. The lifecycle includes loading, linking (verification, preparation and resolution) and initialization. In the traditional parent-delegation model, a class loader asks its parent to load a class before attempting its own lookup, helping avoid duplicate core classes and improving safety. Custom loaders can use different delegation strategies.', syntax: `Class<?> type = Class.forName("java.util.ArrayList");
+System.out.println(type.getName());`, output: 'java.util.ArrayList', tip: 'Distinguish class loading from object creation. A class can be loaded without immediately creating an instance.' },
+  { topic: 'Java', level: 'Advanced', title: 'What is the difference between fail-fast and weakly consistent iterators?', prompt: 'Explain concurrent modification behavior without overstating guarantees.', answer: 'Many standard collection iterators are fail-fast on a best-effort basis and may throw ConcurrentModificationException when structural modification is detected outside the iterator. Concurrent collections often provide weakly consistent iterators that can reflect some concurrent updates without throwing that exception. Fail-fast behavior is not a thread-safety guarantee.', syntax: `List<Integer> values = new ArrayList<>(List.of(1, 2, 3));
+for (Integer value : values) {
+  // Structural modification here may trigger
+  // ConcurrentModificationException.
+}`, output: 'Modifying the list structurally during enhanced-for iteration is unsafe; use the iterator’s remove method or an appropriate concurrent collection.', tip: 'Avoid calling all concurrent iterators "fail-safe"; weakly consistent and snapshot iterators have distinct semantics.' },
+  { topic: 'Java', level: 'Advanced', title: 'What is serialization in Java and what are its risks?', prompt: 'Explain object serialization, serialVersionUID and safer data exchange.', answer: 'Java serialization converts an object graph into a byte stream and can reconstruct it later. Serializable marks a class as eligible for this mechanism; serialVersionUID identifies a version for compatibility checks. Native Java deserialization of untrusted data can be dangerous, so prefer safer formats and strict validation for external data.', syntax: `class Course implements Serializable {
+  private static final long serialVersionUID = 1L;
+  private String title;
+}`, output: 'A Course instance can participate in Java object serialization.', tip: 'Never deserialize untrusted bytes without a carefully designed allowlist and filtering strategy.' },
+  { topic: 'Java', level: 'Advanced', title: 'What are records and sealed classes in modern Java?', prompt: 'Explain concise data carriers and restricted inheritance.', answer: 'Records provide a concise way to model transparent data carriers with final component fields and generated accessors, equals, hashCode and toString. Sealed classes and interfaces restrict which types may extend or implement them using permits (or related declarations). Both features make domain models more expressive; availability depends on the Java language version.', syntax: `record Point(int x, int y) {}
+sealed interface Shape permits Circle {}
+record Circle(double radius) implements Shape {}`, output: 'Point and Circle are record types; Shape restricts its permitted direct implementations.', tip: 'Mention the project’s target Java version before using newer language features in an interview or codebase.' },
 ]
