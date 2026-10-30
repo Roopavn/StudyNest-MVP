@@ -80,6 +80,10 @@ const interviewResourcesByTopic = {
     ['GeeksforGeeks', 'Java interview questions', 'https://www.geeksforgeeks.org/java/java-interview-questions/'],
     ['InterviewBit', 'Java interview questions', 'https://www.interviewbit.com/java-interview-questions/'],
   ],
+  Java: [
+    ['GeeksforGeeks', 'Java interview questions', 'https://www.geeksforgeeks.org/java/java-interview-questions/'],
+    ['InterviewBit', 'Java interview questions', 'https://www.interviewbit.com/java-interview-questions/'],
+  ],
   JavaScript: [
     ['GeeksforGeeks', 'JavaScript interview questions', 'https://www.geeksforgeeks.org/javascript/javascript-interview-questions/'],
     ['InterviewBit', 'JavaScript interview questions', 'https://www.interviewbit.com/javascript-interview-questions/'],
