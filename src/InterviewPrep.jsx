@@ -394,8 +394,8 @@ const topics = [
 const levels = ['All levels', 'Basic', 'Intermediate', 'Advanced']
 const levelOrder = { Basic: 0, Intermediate: 1, Advanced: 2 }
 
-export default function InterviewPrep() {
-  const [topic, setTopic] = useState(null)
+export default function InterviewPrep({ initialTopic = null } = {}) {
+  const [topic, setTopic] = useState(initialTopic)
   const [level, setLevel] = useState('All levels')
   const [query, setQuery] = useState('')
   const [opened, setOpened] = useState([])
