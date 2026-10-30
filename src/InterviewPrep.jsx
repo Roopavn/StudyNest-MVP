@@ -404,7 +404,7 @@ const topics = [
 const levels = ['All levels', 'Basic', 'Intermediate', 'Advanced']
 const levelOrder = { Basic: 0, Intermediate: 1, Advanced: 2 }
 
-const questions = [...baseQuestions, ...additionalQuestions.map((question, index) => ({ ...question, id: 25 + index })), ...pythonInterviewQuestions.map((question, index) => ({ ...question, id: 1000 + index })), ...courseInterviewQuestions.map((question, index) => ({ ...question, id: 2000 + index }))]
+const questions = [...baseQuestions.filter((question) => question.topic !== 'Java'), ...additionalQuestions.map((question, index) => ({ ...question, id: 25 + index })), ...pythonInterviewQuestions.map((question, index) => ({ ...question, id: 1000 + index })), ...courseInterviewQuestions.map((question, index) => ({ ...question, id: 2000 + index }))]
 
 export default function InterviewPrep({ initialTopic = null } = {}) {
   const [topic, setTopic] = useState(initialTopic)
