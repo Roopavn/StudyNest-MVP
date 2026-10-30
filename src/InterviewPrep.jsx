@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import { BookOpen, Check, ChevronDown, ChevronUp, Code2, Search, Sparkles } from 'lucide-react'
 import './InterviewPrep.css'
+import { pythonInterviewQuestions } from './pythonInterviewQuestions.js'
 
-const questions = [
+const baseQuestions = [
   { id:1, topic:'Python', level:'Basic', title:'What is the difference between a list and a tuple?', prompt:'Explain mutability and show when you would use each.', answer:'A list is ordered and mutable, so you can add, remove, or replace items. A tuple is ordered but immutable after creation. Use lists for collections that change and tuples for fixed records or values that should not be reassigned.', syntax:`skills = ["Python", "SQL"]
 skills.append("Django")
 print(skills)
@@ -394,6 +395,8 @@ const topics = [
 const levels = ['All levels', 'Basic', 'Intermediate', 'Advanced']
 const levelOrder = { Basic: 0, Intermediate: 1, Advanced: 2 }
 
+const questions = [...baseQuestions, ...pythonInterviewQuestions.map((question, index) => ({ ...question, id: 1000 + index }))]
+
 export default function InterviewPrep({ initialTopic = null } = {}) {
   const [topic, setTopic] = useState(initialTopic)
   const [level, setLevel] = useState('All levels')
@@ -450,10 +453,9 @@ export default function InterviewPrep({ initialTopic = null } = {}) {
             </button>
             {isOpen && <div className="interview-answer">
               <div className="interview-explanation"><h3><Check size={16} /> Interview-ready answer</h3><p>{q.answer}</p></div>
-              <div className="interview-code-heading"><span><Code2 size={15} /> Syntax and example</span><button onClick={() => navigator.clipboard?.writeText(q.syntax)} type="button">Copy code</button></div>
-              <pre><code>{q.syntax}</code></pre>
-              <div className="interview-output"><strong>Expected output / behavior</strong><p>{q.output}</p></div>
-              <div className="interview-tip"><Sparkles size={15} /><p><strong>Interview tip:</strong> {q.tip}</p></div>
+              {q.syntax && <><div className="interview-code-heading"><span><Code2 size={15} /> Syntax and example</span><button onClick={() => navigator.clipboard?.writeText(q.syntax)} type="button">Copy code</button></div><pre><code>{q.syntax}</code></pre></>}
+              {q.output && <div className="interview-output"><strong>Expected output / behavior</strong><p>{q.output}</p></div>}
+              {q.tip && <div className="interview-tip"><Sparkles size={15} /><p><strong>Interview tip:</strong> {q.tip}</p></div>}
             </div>}
           </article>
         })}
