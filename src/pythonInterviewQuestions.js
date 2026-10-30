@@ -882,4 +882,206 @@ export const pythonInterviewQuestions = [
     "answer": "Use argparse to define positional arguments, options, types, defaults and validation. It also generates help and useful error messages.",
     "tip": "Answer in your own words, then support it with a small example. Mention trade-offs and edge cases rather than memorizing a definition."
   }
+,
+
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "What is the difference between == and is?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "== compares values for equality, while is checks whether two references point to the exact same object. Use is None for None checks; do not use is as a general value comparison.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "What is the difference between / and // in Python?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "/ performs true division and returns a floating-point result for ordinary numeric operands. // performs floor division, rounding the quotient down toward negative infinity; its result type depends on the operands.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "How do you floor a number in Python?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Use math.floor(value) to return the greatest integer less than or equal to a number. Be careful with negative values: floor(-2.3) is -3, not -2.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "How is a set different from a dictionary?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "A set stores unique hashable values and is useful for membership tests and removing duplicates. A dictionary stores key-value pairs and provides lookup by unique hashable keys.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "How is a dictionary different from a list?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "A list stores an ordered sequence accessed mainly by integer position. A dictionary stores key-value mappings and is accessed by keys; dictionaries preserve insertion order in modern Python.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "What is the difference between Python arrays and lists?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "A list is a flexible built-in container that can hold mixed object types. The array module stores elements of a declared type more compactly; NumPy arrays provide efficient vectorized numerical operations.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "When should you use a for loop versus a while loop?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Use for to iterate over an iterable or known sequence of items. Use while when repetition depends on a condition that may change during execution; ensure the condition eventually becomes false.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "What do map(), filter() and reduce() do?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "map() transforms each item, filter() keeps items matching a predicate, and functools.reduce() combines items into one accumulated result. In Python 3, map() and filter() return iterators.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "How are arguments passed to Python functions?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Python uses object sharing (call by assignment): the function receives a reference to the same object. Mutating a shared mutable object can be visible to the caller, while rebinding a local parameter does not rebind the caller's name.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "How do append() and extend() differ?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "append(item) adds the supplied object as one element. extend(iterable) adds each item from the iterable to the list.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "What is the difference between remove(), pop() and del?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "remove(value) deletes the first matching value; pop(index) removes and returns an item (last by default); del removes an indexed item, slice or name binding and does not return the removed value.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "What is list comprehension?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "A list comprehension builds a new list from an iterable using an expression and optional condition, for example [n * n for n in numbers if n > 0]. It is concise but should remain readable.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "Does Python support tuple comprehension?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Python has no dedicated tuple-comprehension syntax. Parentheses around a comprehension expression create a generator expression; pass it to tuple(...) to materialize a tuple.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Advanced",
+    "title": "Which sorting algorithm does Python use?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Python's built-in sorting uses Timsort, a stable adaptive sorting algorithm derived from merge sort and insertion sort. Its worst-case time complexity is O(n log n).",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "What is the difference between sort() and sorted()?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "list.sort() sorts a list in place and returns None. sorted(iterable) accepts any iterable and returns a new sorted list, leaving the original iterable unchanged.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "What is a namespace in Python?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "A namespace maps names to objects and helps keep identifiers distinct. Common namespaces include built-in, global/module and local namespaces; scope rules determine how names are resolved.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "How do you delete a file using Python?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Use pathlib.Path(path).unlink() or os.remove(path) to remove a file. Handle FileNotFoundError and PermissionError where appropriate, and verify the target path before deletion.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Basic",
+    "title": "What does zip() do in Python?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "zip(*iterables) returns an iterator of tuples containing items at matching positions. By default it stops at the shortest input; use strict=True in supported Python versions when unequal lengths should raise an error.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Advanced",
+    "title": "What is the difference between __new__() and __init__()?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "__new__() creates and returns an instance, while __init__() initializes an already-created instance. __new__ is especially relevant for immutable types and customized instance creation.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "What are public, protected and private attributes in Python?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Public names have no leading underscore. A single leading underscore signals an internal-use convention; a double leading underscore triggers name mangling, not strict access control.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Advanced",
+    "title": "What are Exception Groups in Python?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "ExceptionGroup, introduced in Python 3.11, groups multiple exceptions so they can be raised together. The except* syntax handles matching exception types within the group.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "What are function annotations in Python?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Annotations attach metadata to parameters and return values, commonly used for type hints. Python does not enforce those types automatically; static checkers and tools can interpret the annotations.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "What is the walrus operator (:=)?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "The assignment expression operator := assigns a value as part of a larger expression. It can avoid repeating a calculation, but should be used only when it improves clarity; it was introduced in Python 3.8.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "Does Python have a switch statement?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "Python has no traditional switch statement. Python 3.10 introduced structural pattern matching with match and case, which can express many switch-like branches and richer patterns.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  },
+  {
+    "topic": "Python",
+    "level": "Intermediate",
+    "title": "What is xrange() and how does it differ from range()?",
+    "prompt": "Explain the concept, show a short example, and mention a version detail or edge case an interviewer may ask about.",
+    "answer": "xrange() existed in Python 2 and is not available in Python 3. In Python 3, range() is a lazy, immutable sequence-like object and covers the common use case that xrange() served.",
+    "tip": "Clarify the behavior with a small example, then explain when you would choose this approach in production code."
+  }
 ]

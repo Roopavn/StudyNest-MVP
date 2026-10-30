@@ -173,3 +173,9 @@ No license has been added yet. Add a license file before accepting external cont
 
 ### Data Engineering / Big Data
 - Added a dedicated, visible course card for **Data Engineering / Big Data (PySpark)** in the dashboard and course catalog. Opening the card takes learners directly to the eight PySpark & Apache Spark lessons.
+
+
+### Python interview preparation references
+- Expanded the Python interview question bank with additional concepts after comparing the existing questions against GeeksforGeeks' Python interview question guide. Existing entries are retained and overlapping topics are not duplicated.
+- Added GeeksforGeeks as a second external reference alongside InterviewBit in Python-related course interview guides.
+- Reference: https://www.geeksforgeeks.org/python/python-interview-questions/ (reviewed 30 October 2026).
