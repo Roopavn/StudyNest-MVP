@@ -40,7 +40,6 @@ const bankTopicByTrack = {
   JavaScript: 'JavaScript',
   'JavaScript Essentials': 'JavaScript',
   'JavaScript Ecosystem': 'JavaScript',
-  React: 'React',
   TypeScript: 'JavaScript',
   'Node.js & Express': 'JavaScript',
   'C Programming': 'C Programming',
