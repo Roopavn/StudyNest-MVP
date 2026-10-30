@@ -372,7 +372,7 @@ result = (df.filter("event_date >= '2026-01-01'")
             .groupBy("customer_id")
             .sum("amount"))`, output:'The plan exposes logical/physical operators; the aggregation may shuffle data by customer_id.', tip:'Measure before tuning. More partitions or caching is not always faster, and skew may require a different strategy.' },
 ]
-questions.push(...additionalQuestions.map((question, index) => ({ ...question, id: 25 + index })))
+
 
 const topics = [
   { name: 'Python', subtitle: 'Core language, data structures and backend coding', icon: 'code', color: 'python' },
@@ -395,7 +395,7 @@ const topics = [
 const levels = ['All levels', 'Basic', 'Intermediate', 'Advanced']
 const levelOrder = { Basic: 0, Intermediate: 1, Advanced: 2 }
 
-const questions = [...baseQuestions, ...pythonInterviewQuestions.map((question, index) => ({ ...question, id: 1000 + index }))]
+const questions = [...baseQuestions, ...additionalQuestions.map((question, index) => ({ ...question, id: 25 + index })), ...pythonInterviewQuestions.map((question, index) => ({ ...question, id: 1000 + index }))]
 
 export default function InterviewPrep({ initialTopic = null } = {}) {
   const [topic, setTopic] = useState(initialTopic)
