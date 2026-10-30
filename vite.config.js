@@ -34,4 +34,7 @@ export default defineConfig({
     })
   ],
   base: process.env.GITHUB_PAGES === 'true' ? '/StudyNest-MVP/' : '/',
+  build: {
+    sourcemap: true,
+  },
 })
