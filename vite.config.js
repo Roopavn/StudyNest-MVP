@@ -7,6 +7,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        // The app bundle currently exceeds Workbox's default 2 MiB precache limit.
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
+      },
       includeAssets: ['favicon.svg'],
       manifest: {
         name: 'AR CodeLab — IT Learning Lab',
@@ -30,4 +34,22 @@ export default defineConfig({
     })
   ],
   base: process.env.GITHUB_PAGES === 'true' ? '/StudyNest-MVP/' : '/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
+            return 'react-vendor'
+          }
+          if (id.includes('/firebase/') || id.includes('/@firebase/')) {
+            return 'firebase-vendor'
+          }
+          if (id.includes('/lucide-react/')) {
+            return 'icons-vendor'
+          }
+        }
+      }
+    }
+  },
 })
